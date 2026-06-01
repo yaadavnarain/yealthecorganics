@@ -82,18 +82,18 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3 font-body text-base">
               <li>
                 <a
-                  href="mailto:support@muktish.com"
+                  href="mailto:support@yealth.mu"
                   className="text-yealth-offwhite/70 transition-colors hover:text-yealth-gold"
                 >
-                  support@muktish.com
+                  support@yealth.mu
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+23055111364"
+                  href="tel:+23054523432"
                   className="text-yealth-offwhite/70 transition-colors hover:text-yealth-gold"
                 >
-                  +230 5511 1364
+                  +230 5452 3432
                 </a>
               </li>
               <li className="text-yealth-offwhite/70">Mauritius</li>
