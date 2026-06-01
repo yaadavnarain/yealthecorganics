@@ -35,7 +35,7 @@ app/
     ├── footer.tsx           static server component
     └── ui/                  stat-card, reason-card, form-field
 lib/motion.ts                fadeUp helper
-public/{images,video,icons}  assets
+public/{images,videos}  assets
 ```
 
 ## Assets — placeholders
@@ -54,6 +54,6 @@ real screenshot photography when available, then update the `src`/`poster` paths
 The video module already renders a real `<video>` element that plays
 `/video/office.mp4` on click and falls back to the poster when no footage exists.
 
-`vk.svg` / `instagram.svg` are real brand glyphs.
+Social icons are inline React components in `app/components/ui/social-icons.tsx` (e.g. `InstagramIcon`), not static SVG files.
 
 All Russian copy is verbatim from the spec.
