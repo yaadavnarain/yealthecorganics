@@ -1,19 +1,55 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2, ShieldCheck, Clock } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Clock, MessageCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
 import { FormField, FormTextarea } from "@/app/components/ui/form-field";
 
+const FORMSPREE_ID = "meedbngg";
+
+type Status = "idle" | "submitting" | "sent" | "error";
+
 export function ContactSection() {
   const [form, setForm] = useState({ name: "", phone: "", comment: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
+    setStatus("submitting");
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          comment: form.comment,
+          _subject: `New Yealth webinar signup: ${form.name}`,
+        }),
+      });
+
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
+
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   };
+
+  const buttonLabel = {
+    idle: "Secure my spot",
+    submitting: "Sending…",
+    sent: "Submitted — Muktish will be in touch",
+    error: "Try again",
+  }[status];
 
   return (
     <section
@@ -52,6 +88,21 @@ export function ContactSection() {
               <span>No follow-up calls unless you ask for one.</span>
             </li>
           </ul>
+
+          <p className="mt-6 flex items-center gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
+            <MessageCircle className="h-5 w-5 flex-shrink-0 text-yealth-gold" aria-hidden />
+            <span>
+              Prefer to chat?{" "}
+              <a
+                href="https://wa.me/23054523432"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-yealth-gold underline decoration-yealth-gold/40 underline-offset-2 transition-colors hover:decoration-yealth-gold"
+              >
+                Message Muktish on WhatsApp
+              </a>
+            </span>
+          </p>
         </motion.div>
 
         <motion.form
@@ -86,11 +137,16 @@ export function ContactSection() {
           />
           <button
             type="submit"
-            disabled={sent}
+            disabled={status === "submitting" || status === "sent"}
             className="gold-cta mt-2 h-14 w-full rounded-yealth font-heading text-base disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {sent ? "Submitted — check your phone" : "Secure my spot"}
+            {buttonLabel}
           </button>
+          {status === "error" && (
+            <p className="text-center font-body text-xs text-red-400 md:text-sm">
+              Something went wrong. Please try again, or message Muktish on WhatsApp.
+            </p>
+          )}
           <p className="text-center font-body text-xs text-yealth-offwhite/50 md:text-sm">
             By submitting, you agree to our{" "}
             <a
