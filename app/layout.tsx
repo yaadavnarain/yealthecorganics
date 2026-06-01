@@ -19,9 +19,27 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Yealth — Own a Farm in Mauritius",
+  title: "Yealth — Become a Farm Owner in Mauritius",
   description:
-    "Become a farm owner for Rs 1,288/mo. Monthly passive income, real assets, generational wealth.",
+    "Own a piece of a real farm in Mauritius. Monthly passive income, real assets, generational wealth. Join the next webinar.",
+  metadataBase: new URL("https://yealth.mu"),
+  openGraph: {
+    title: "Yealth — Become a Farm Owner in Mauritius",
+    description:
+      "Own a piece of a real farm in Mauritius. Monthly passive income, real assets, generational wealth. Join the next webinar.",
+    url: "https://yealth.mu",
+    siteName: "Yealth",
+    type: "website",
+    locale: "en",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yealth — Become a Farm Owner in Mauritius",
+    description:
+      "Own a piece of a real farm in Mauritius. Monthly passive income, real assets, generational wealth. Join the next webinar.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
