@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
+import { Glow } from "@/app/components/ui/glow";
 
 const STEPS = [
   {
@@ -33,8 +34,8 @@ export function HowItWorksSection() {
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/nature-how-v2.png')",
-          opacity: 0.42,
+          backgroundImage: "url('/images/aquaponics-how-it-works.jpg')",
+          opacity: 0.38,
         }}
         aria-hidden
       />
@@ -46,6 +47,10 @@ export function HowItWorksSection() {
         }}
         aria-hidden
       />
+      <Glow
+        variant="teal"
+        className="left-1/2 top-1/2 h-[160%] w-[110%] -translate-x-1/2 -translate-y-1/2"
+      />
 
       <div className="section-pad relative z-10 mx-auto max-w-[1200px] px-6 md:px-8">
         <motion.h2
@@ -55,7 +60,7 @@ export function HowItWorksSection() {
             textShadow: "0 2px 20px rgba(0,0,0,0.8)",
           }}
         >
-          How It Works
+          How It <span className="text-yealth-mint">Works</span>
         </motion.h2>
 
         <div className="relative">

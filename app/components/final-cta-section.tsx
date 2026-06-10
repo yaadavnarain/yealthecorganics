@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
+import { Glow } from "@/app/components/ui/glow";
 
 export function FinalCtaSection() {
   return (
@@ -12,13 +13,11 @@ export function FinalCtaSection() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute -inset-[30%]"
         aria-hidden
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(245, 200, 66, 0.12) 0%, rgba(245, 200, 66, 0.06) 35%, rgba(245, 200, 66, 0.02) 60%, transparent 80%)",
-        }}
-      />
+      >
+        <Glow variant="gold" className="inset-0" />
+      </motion.div>
 
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-yealth-gold/40 to-transparent"
@@ -28,7 +27,7 @@ export function FinalCtaSection() {
       <div className="section-pad relative z-10 mx-auto max-w-[800px] px-6 text-center md:px-8">
         <motion.p
           {...fadeUp(0)}
-          className="font-heading text-sm font-bold uppercase tracking-[0.2em] text-yealth-gold/80 md:text-base"
+          className="font-heading text-sm font-medium uppercase tracking-[0.2em] text-yealth-mint md:text-base"
         >
           The next step is yours
         </motion.p>

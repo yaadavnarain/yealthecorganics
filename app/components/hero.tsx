@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { fadeUp } from "@/lib/motion";
 import FlywheelHeroAnimation from "./flywheel-hero-animation";
 import { AnimatedCounter } from "@/app/components/ui/animated-counter";
+import { Glow } from "@/app/components/ui/glow";
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -22,32 +23,32 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen overflow-hidden bg-yealth-black"
+      className="relative flex min-h-[88vh] items-center overflow-hidden bg-yealth-black"
     >
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at top right, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.04) 35%, rgba(34,197,94,0.015) 60%, rgba(34,197,94,0) 80%), radial-gradient(ellipse at bottom left, rgba(234,179,8,0.06) 0%, rgba(234,179,8,0.03) 35%, rgba(234,179,8,0.01) 60%, rgba(234,179,8,0) 80%)",
-        }}
-        aria-hidden
+      <Glow
+        variant="teal"
+        className="-right-[40%] -top-[40%] h-[110%] w-[90%]"
+      />
+      <Glow
+        variant="gold"
+        className="-bottom-[40%] -left-[40%] h-[110%] w-[90%]"
       />
 
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-10 mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-6 pt-32 pb-20 md:grid-cols-[1.1fr_1fr] md:gap-16 md:px-8 md:pt-40"
+        className="relative z-10 mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-12 px-6 pt-32 pb-20 md:grid-cols-[1.1fr_1fr] md:gap-16 md:px-8 md:pt-40 xl:max-w-[1320px] xl:grid-cols-[1fr_1.15fr] xl:gap-20 2xl:max-w-[1440px]"
       >
         <div className="flex flex-col justify-center">
           <motion.h1
             {...fadeUp(0)}
-            className="font-heading text-[40px] font-bold leading-[1.05] text-yealth-offwhite md:text-[64px]"
+            className="font-heading text-[40px] font-bold leading-[1.05] text-yealth-offwhite md:text-[64px] xl:text-[72px] 2xl:text-[80px]"
           >
             Become a farm owner for <span className="whitespace-nowrap text-yealth-gold">Rs 1,288/mo.</span>
           </motion.h1>
 
           <motion.p
             {...fadeUp(0.1)}
-            className="mt-6 max-w-[480px] font-body text-lg text-yealth-offwhite/85 md:text-xl"
+            className="mt-6 max-w-[480px] font-body text-lg text-yealth-offwhite/85 md:text-xl xl:max-w-[560px] xl:text-2xl"
           >
             Monthly Passive Income. Own Assets. Retire Early. Generational Wealth.
           </motion.p>
@@ -57,26 +58,26 @@ export function Hero() {
             className="mt-10 grid grid-cols-3 gap-6 border-y border-yealth-offwhite/10 py-6"
           >
             <div>
-              <div className="font-heading text-2xl font-bold text-yealth-gold md:text-3xl">
+              <div className="font-heading text-2xl font-bold text-yealth-gold md:text-3xl xl:text-4xl">
                 <AnimatedCounter end={16} prefix="Rs " suffix="M+" />
               </div>
-              <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
+              <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm xl:text-base">
                 raised so far
               </div>
             </div>
             <div>
-              <div className="font-heading text-2xl font-bold text-yealth-gold md:text-3xl">
+              <div className="font-heading text-2xl font-bold text-yealth-gold md:text-3xl xl:text-4xl">
                 <AnimatedCounter end={4000} suffix="+" />
               </div>
-              <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
+              <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm xl:text-base">
                 people already in
               </div>
             </div>
             <div>
-              <div className="font-heading text-2xl font-bold text-yealth-gold md:text-3xl">
+              <div className="font-heading text-2xl font-bold text-yealth-gold md:text-3xl xl:text-4xl">
                 <AnimatedCounter end={150} suffix="+" />
               </div>
-              <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
+              <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm xl:text-base">
                 {"Gen Z & Millennials"}
               </div>
             </div>
@@ -106,7 +107,7 @@ export function Hero() {
         <motion.div
           {...fadeUp(0.2)}
           style={{ y: animY }}
-          className="relative mx-auto w-full max-w-[480px] self-center md:mx-0 md:max-w-none"
+          className="relative mx-auto w-full max-w-[480px] self-center md:mx-0 lg:max-w-[560px] xl:max-w-[660px] 2xl:max-w-[760px]"
         >
           <FlywheelHeroAnimation />
           <motion.div

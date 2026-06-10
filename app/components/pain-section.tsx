@@ -69,9 +69,13 @@ export function PainSection() {
 
         <motion.div
           {...fadeUp(0.2)}
-          className="mt-12 rounded-yealth border border-yealth-gold/20 bg-yealth-black/75 p-6 backdrop-blur-md md:mt-16 md:p-8"
+          className="mt-12 rounded-r-yealth border-l-[3px] border-yealth-mint p-6 backdrop-blur-md md:mt-16 md:p-8"
+          style={{ backgroundColor: "rgba(52, 211, 153, 0.06)" }}
         >
-          <p className="font-heading text-xl font-bold text-yealth-gold md:text-2xl">
+          <p className="font-heading text-xs font-medium uppercase tracking-[0.2em] text-yealth-mint">
+            Reality check
+          </p>
+          <p className="mt-3 font-heading text-xl font-bold text-yealth-offwhite md:text-2xl">
             You&apos;re not lazy. The system just wasn&apos;t built for you to win.
           </p>
         </motion.div>

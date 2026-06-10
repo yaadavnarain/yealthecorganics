@@ -49,7 +49,7 @@ export function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-yealth-offwhite/10 text-yealth-offwhite/60 transition-colors hover:border-yealth-gold/40 hover:bg-yealth-gold/5 hover:text-yealth-gold"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-yealth-offwhite/10 text-yealth-offwhite/60 transition-colors hover:border-yealth-mint/40 hover:bg-yealth-mint/5 hover:text-yealth-mint"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -66,7 +66,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-yealth-offwhite/70 transition-colors hover:text-yealth-gold"
+                    className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                   >
                     {link.label}
                   </a>
@@ -83,7 +83,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:support@yealth.mu"
-                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-gold"
+                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                 >
                   support@yealth.mu
                 </a>
@@ -91,7 +91,7 @@ export function Footer() {
               <li>
                 <a
                   href="tel:+23054523432"
-                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-gold"
+                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                 >
                   +230 5452 3432
                 </a>
@@ -110,7 +110,7 @@ export function Footer() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className="text-yealth-offwhite/50 transition-colors hover:text-yealth-gold"
+                  className="text-yealth-offwhite/50 transition-colors hover:text-yealth-mint"
                 >
                   {link.label}
                 </a>

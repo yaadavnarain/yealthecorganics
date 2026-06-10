@@ -3,15 +3,17 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
+import { Glow } from "@/app/components/ui/glow";
 
 export function FounderSection() {
   return (
     <section className="section-pad relative overflow-hidden bg-yealth-black">
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center"
+        className="pointer-events-none absolute inset-0 bg-cover"
         style={{
-          backgroundImage: "url('/images/nature-founder-v2.png')",
-          opacity: 0.45,
+          backgroundImage: "url('/images/founder-aqua.jpg')",
+          backgroundPosition: "70% center",
+          opacity: 0.38,
           mixBlendMode: "lighten",
         }}
         aria-hidden
@@ -24,13 +26,9 @@ export function FounderSection() {
         }}
         aria-hidden
       />
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(245, 200, 66, 0.14) 0%, rgba(245, 200, 66, 0.07) 35%, rgba(245, 200, 66, 0.025) 60%, transparent 80%)",
-        }}
+      <Glow
+        variant="teal"
+        className="left-1/2 top-[45%] h-[150%] w-[120%] -translate-x-1/2 -translate-y-1/2"
       />
 
       <div className="relative z-10 mx-auto max-w-[720px] px-6 text-center md:px-8">

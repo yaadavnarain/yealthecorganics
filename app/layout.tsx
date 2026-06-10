@@ -6,7 +6,7 @@ import { AmbientParticles } from "@/app/components/ambient-particles";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["500", "700"],
   variable: "--font-quicksand",
   display: "swap",
 });
