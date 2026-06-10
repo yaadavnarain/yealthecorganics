@@ -29,7 +29,7 @@ export function FounderSection() {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(245, 200, 66, 0.14) 0%, transparent 70%)",
+            "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(245, 200, 66, 0.14) 0%, rgba(245, 200, 66, 0.07) 35%, rgba(245, 200, 66, 0.025) 60%, transparent 80%)",
         }}
       />
 

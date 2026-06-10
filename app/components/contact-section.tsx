@@ -61,7 +61,7 @@ export function ContactSection() {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 30% 50%, rgba(245, 200, 66, 0.08) 0%, transparent 65%)",
+            "radial-gradient(ellipse 70% 60% at 30% 50%, rgba(245, 200, 66, 0.08) 0%, rgba(245, 200, 66, 0.04) 35%, rgba(245, 200, 66, 0.015) 60%, transparent 80%)",
         }}
       />
 

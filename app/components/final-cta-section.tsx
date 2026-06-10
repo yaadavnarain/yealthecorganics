@@ -16,7 +16,7 @@ export function FinalCtaSection() {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(245, 200, 66, 0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(245, 200, 66, 0.12) 0%, rgba(245, 200, 66, 0.06) 35%, rgba(245, 200, 66, 0.02) 60%, transparent 80%)",
         }}
       />
 

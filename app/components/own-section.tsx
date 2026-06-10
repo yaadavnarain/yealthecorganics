@@ -67,7 +67,7 @@ export function OwnSection() {
         className="pointer-events-none absolute inset-0"
         aria-hidden
         animate={{
-          background: `radial-gradient(ellipse 40% 50% at ${cursorPos.x * 100}% ${cursorPos.y * 100}%, rgba(245, 200, 66, 0.18) 0%, transparent 55%)`,
+          background: `radial-gradient(ellipse 40% 50% at ${cursorPos.x * 100}% ${cursorPos.y * 100}%, rgba(245, 200, 66, 0.18) 0%, rgba(245, 200, 66, 0.09) 30%, rgba(245, 200, 66, 0.03) 55%, transparent 78%)`,
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
       />

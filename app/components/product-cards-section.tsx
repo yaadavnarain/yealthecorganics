@@ -73,8 +73,8 @@ function ProductCard({ icon: Icon, title, description, accent }: Product) {
         style={{
           background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, ${
             accent === "gold"
-              ? "rgba(234,179,8,0.08)"
-              : "rgba(45,212,191,0.08)"
+              ? "rgba(234,179,8,0.08) 0%, rgba(234,179,8,0.04) 15%, rgba(234,179,8,0.015) 28%"
+              : "rgba(45,212,191,0.08) 0%, rgba(45,212,191,0.04) 15%, rgba(45,212,191,0.015) 28%"
           }, transparent 40%)`,
         }}
         aria-hidden

@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { fadeUp } from "@/lib/motion";
-import HeroVideo from "./hero-video";
+import FlywheelHeroAnimation from "./flywheel-hero-animation";
 import { AnimatedCounter } from "@/app/components/ui/animated-counter";
 
 export function Hero() {
@@ -14,7 +14,7 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const videoY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const animY = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const glowY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.7, 0.3]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.5]);
@@ -28,7 +28,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at top right, rgba(34,197,94,0.08) 0%, rgba(10,10,10,0) 50%), radial-gradient(ellipse at bottom left, rgba(234,179,8,0.06) 0%, rgba(10,10,10,0) 50%)",
+            "radial-gradient(ellipse at top right, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.04) 35%, rgba(34,197,94,0.015) 60%, rgba(34,197,94,0) 80%), radial-gradient(ellipse at bottom left, rgba(234,179,8,0.06) 0%, rgba(234,179,8,0.03) 35%, rgba(234,179,8,0.01) 60%, rgba(234,179,8,0) 80%)",
         }}
         aria-hidden
       />
@@ -93,12 +93,6 @@ export function Hero() {
               Secure my spot
               <ArrowRight className="h-4 w-4" aria-hidden />
             </a>
-            <a
-              href="#how-it-works"
-              className="inline-flex items-center justify-center rounded-yealth border border-yealth-offwhite/20 px-7 py-4 font-heading text-base text-yealth-offwhite/90 transition hover:border-yealth-offwhite/40 hover:bg-yealth-offwhite/5"
-            >
-              See how it works
-            </a>
           </motion.div>
 
           <motion.p
@@ -111,12 +105,10 @@ export function Hero() {
 
         <motion.div
           {...fadeUp(0.2)}
-          style={{ y: videoY }}
-          className="relative mx-auto w-full max-w-[420px] md:mx-0 md:max-w-none"
+          style={{ y: animY }}
+          className="relative mx-auto w-full max-w-[480px] self-center md:mx-0 md:max-w-none"
         >
-          <div className="relative aspect-[9/16] w-full overflow-hidden rounded-yealth bg-black shadow-2xl shadow-yealth-gold/10">
-            <HeroVideo />
-          </div>
+          <FlywheelHeroAnimation />
           <motion.div
             style={{ y: glowY, opacity: glowOpacity }}
             animate={{
