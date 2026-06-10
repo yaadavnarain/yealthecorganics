@@ -13,7 +13,7 @@ export function FinalCtaSection() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="pointer-events-none absolute -inset-[30%]"
+        className="pointer-events-none absolute -inset-x-[30%] -inset-y-[20%]"
         aria-hidden
       >
         <Glow variant="gold" className="inset-0" />

@@ -22,7 +22,7 @@ export function PainSection() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.55) 14%, rgba(10,10,10,0.28) 50%, rgba(10,10,10,0.55) 86%, rgba(10,10,10,1) 100%)",
+            "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.78) 84%, rgba(10,10,10,0.96) 92%, #0A0A0A 100%)",
         }}
         aria-hidden
       />

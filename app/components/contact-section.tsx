@@ -59,7 +59,7 @@ export function ContactSection() {
     >
       <Glow
         variant="gold"
-        className="-left-[35%] top-1/2 h-[160%] w-[110%] -translate-y-1/2"
+        className="-left-[35%] top-1/2 h-[140%] w-[110%] -translate-y-1/2"
       />
 
       <div className="section-pad relative z-10 mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-6 md:grid-cols-2 md:gap-16 md:px-8">

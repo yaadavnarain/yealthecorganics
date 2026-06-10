@@ -9,7 +9,7 @@ export function VisionSection() {
     <section className="relative overflow-hidden">
       <Glow
         variant="teal"
-        className="left-1/2 top-1/2 h-[180%] w-[100%] -translate-x-1/2 -translate-y-1/2"
+        className="left-1/2 top-1/2 h-[140%] w-[100%] -translate-x-1/2 -translate-y-1/2"
       />
       <div className="section-pad relative z-10 mx-auto max-w-[1200px] px-6 md:px-8">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">

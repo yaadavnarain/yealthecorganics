@@ -31,7 +31,7 @@ export function Hero() {
       />
       <Glow
         variant="gold"
-        className="-bottom-[40%] -left-[40%] h-[110%] w-[90%]"
+        className="-left-[40%] top-[5%] h-[110%] w-[90%]"
       />
 
       <motion.div

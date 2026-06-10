@@ -43,13 +43,13 @@ export function HowItWorksSection() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 14%, rgba(10,10,10,0.32) 50%, rgba(10,10,10,0.6) 86%, rgba(10,10,10,1) 100%)",
+            "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.78) 84%, rgba(10,10,10,0.96) 92%, #0A0A0A 100%)",
         }}
         aria-hidden
       />
       <Glow
         variant="teal"
-        className="left-1/2 top-1/2 h-[160%] w-[110%] -translate-x-1/2 -translate-y-1/2"
+        className="left-1/2 top-1/2 h-[140%] w-[110%] -translate-x-1/2 -translate-y-1/2"
       />
 
       <div className="section-pad relative z-10 mx-auto max-w-[1200px] px-6 md:px-8">

@@ -88,12 +88,12 @@ export function OwnSection() {
         aria-hidden
         style={{
           background:
-            "linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.4) 12%, rgba(10,10,10,0.08) 50%, rgba(10,10,10,0.4) 88%, rgba(10,10,10,1) 100%)",
+            "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.97) 10%, rgba(10,10,10,0.80) 18%, rgba(10,10,10,0.10) 50%, rgba(10,10,10,0.80) 82%, rgba(10,10,10,0.97) 90%, #0A0A0A 100%)",
         }}
       />
 
       {/* Content: subhead positioned at the bottom of the section */}
-      <div className="relative z-10 flex min-h-[58vh] flex-col items-center justify-end px-6 pb-20 md:min-h-[64vh] md:pb-24">
+      <div className="relative z-10 flex min-h-[64vh] flex-col items-center justify-end px-6 pb-20 md:min-h-[72vh] md:pb-24">
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
