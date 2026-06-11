@@ -504,12 +504,12 @@ export default function YealthFlywheel() {
           </g>
         </defs>
 
-        <path className="guide" d="M 172 230 C 320 90 580 100 657 308" />
-        <path className="guide" d="M 657 300 C 560 395 300 390 172 242" />
+        <path className="guide" d="M 150 255 C 230 165 620 165 700 255" />
+        <path className="guide" d="M 700 255 C 620 345 230 345 150 255" />
 
         {/* wallet (you) — rounded charcoal bifold with gold strap + clasp */}
-        <ellipse cx="130" cy="264" rx="52" ry="8" fill="url(#yfdShadow)" />
-        <g transform="translate(130,230)">
+        <ellipse cx="130" cy="289" rx="52" ry="8" fill="url(#yfdShadow)" />
+        <g transform="translate(130,255)">
           <g className="wallet-inner">
             {/* side depth: darker slab offset down-right (consistent light) */}
             <rect x="-35" y="-21" width="80" height="52" rx="11" fill="url(#yfdWalletBack)" />
@@ -534,8 +534,8 @@ export default function YealthFlywheel() {
         </g>
 
         {/* income stack */}
-        <ellipse cx="130" cy="316" rx="42" ry="6" fill="url(#yfdShadow)" opacity=".8" />
-        <g className="stack" transform="translate(130,312)">
+        <ellipse cx="130" cy="341" rx="42" ry="6" fill="url(#yfdShadow)" opacity=".8" />
+        <g className="stack" transform="translate(130,337)">
           <ellipse className="s1" cx="-18" cy="0" rx="14" ry="5.5" />
           <ellipse className="s2" cx="-18" cy="-8" rx="14" ry="5.5" />
           <ellipse className="s3" cx="18" cy="0" rx="14" ry="5.5" />
@@ -543,37 +543,37 @@ export default function YealthFlywheel() {
           <ellipse className="s5" cx="18" cy="-8" rx="14" ry="5.5" />
           <ellipse className="s6" cx="18" cy="-16" rx="14" ry="5.5" />
         </g>
-        <text className="caption" x="130" y="352">You</text>
+        <text className="caption" x="130" y="377">You</text>
 
         {/* greenhouses */}
-        <g transform="translate(560,320)"><Greenhouse cls="f1i" label="Farm 1" /></g>
-        <g transform="translate(665,320)"><Greenhouse cls="f2i" label="Farm 2" /></g>
-        <g transform="translate(455,320)"><Greenhouse cls="f3i" label="Farm 3" /></g>
+        <g transform="translate(455,294)"><Greenhouse cls="f1i" label="Farm 1" /></g>
+        <g transform="translate(560,294)"><Greenhouse cls="f2i" label="Farm 2" /></g>
+        <g transform="translate(665,294)"><Greenhouse cls="f3i" label="Farm 3" /></g>
 
         {/* outbound coins: scale up mid-flight, shadow shrinks in sync */}
-        <g className="coin-out co1" style={{ offsetPath: "path('M 172 230 C 300 110 480 120 552 308')" }}>
+        <g className="coin-out co1" style={{ offsetPath: "path('M 172 255 C 240 170 390 175 447 282')" }}>
           <ellipse className="csh csh1" cx="0" cy="18" rx="9" ry="2.6" fill="url(#yfdShadow)" />
           <g className="cf cf1"><use href="#yfdCoin" /></g>
         </g>
-        <g className="coin-out co2" style={{ offsetPath: "path('M 172 230 C 320 90 580 100 657 308')" }}>
+        <g className="coin-out co2" style={{ offsetPath: "path('M 172 255 C 250 160 480 160 552 282')" }}>
           <ellipse className="csh csh2" cx="0" cy="18" rx="9" ry="2.6" fill="url(#yfdShadow)" />
           <g className="cf cf2"><use href="#yfdCoin" /></g>
         </g>
-        <g className="coin-out co3" style={{ offsetPath: "path('M 172 230 C 270 130 390 140 447 308')" }}>
+        <g className="coin-out co3" style={{ offsetPath: "path('M 172 255 C 260 150 580 150 657 282')" }}>
           <ellipse className="csh csh3" cx="0" cy="18" rx="9" ry="2.6" fill="url(#yfdShadow)" />
           <g className="cf cf3"><use href="#yfdCoin" /></g>
         </g>
 
         {/* returns: lettuce leaves the farm and becomes money mid-flight */}
-        <g className="ret ret1" style={{ offsetPath: "path('M 552 300 C 480 385 300 385 172 240')" }}>
+        <g className="ret ret1" style={{ offsetPath: "path('M 447 296 C 390 345 250 345 174 265')" }}>
           <use className="retleaf" href="#yfdLeaf" />
           <use className="retcoin" href="#yfdCoin" />
         </g>
-        <g className="ret ret2" style={{ offsetPath: "path('M 657 300 C 560 395 300 390 172 242')" }}>
+        <g className="ret ret2" style={{ offsetPath: "path('M 552 296 C 480 350 250 350 174 267')" }}>
           <use className="retleaf" href="#yfdLeaf" />
           <use className="retcoin" href="#yfdCoin" />
         </g>
-        <g className="ret ret3" style={{ offsetPath: "path('M 447 300 C 390 370 280 370 172 240')" }}>
+        <g className="ret ret3" style={{ offsetPath: "path('M 657 296 C 560 355 250 350 174 265')" }}>
           <use className="retleaf" href="#yfdLeaf" />
           <use className="retcoin" href="#yfdCoin" />
         </g>
