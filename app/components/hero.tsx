@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { fadeUp } from "@/lib/motion";
 import YealthFlywheel from "./YealthFlywheel";
-import { AnimatedCounter } from "@/app/components/ui/animated-counter";
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -42,49 +41,19 @@ export function Hero() {
           Generational Wealth. Build Your Legacy.
         </motion.p>
 
-        <motion.div
-          {...fadeUp(0.2)}
-          className="mt-8 grid w-full max-w-[640px] grid-cols-3 gap-6 border-y border-yealth-offwhite/10 py-5"
-        >
-          <div>
-            <div className="font-heading text-xl font-bold text-yealth-gold md:text-3xl">
-              <AnimatedCounter end={16} prefix="Rs " suffix="M+" />
-            </div>
-            <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-              raised so far
-            </div>
-          </div>
-          <div>
-            <div className="font-heading text-xl font-bold text-yealth-gold md:text-3xl">
-              <AnimatedCounter end={4000} suffix="+" />
-            </div>
-            <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-              people already in
-            </div>
-          </div>
-          <div>
-            <div className="font-heading text-xl font-bold text-yealth-gold md:text-3xl">
-              <AnimatedCounter end={150} suffix="+" />
-            </div>
-            <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-              {"Gen Z & Millennials"}
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div {...fadeUp(0.3)} className="w-full max-w-[800px]">
+        <motion.div {...fadeUp(0.2)} className="w-full max-w-[800px]">
           <YealthFlywheel />
         </motion.div>
 
         <motion.p
-          {...fadeUp(0.35)}
+          {...fadeUp(0.3)}
           className="mt-4 font-body text-lg text-yealth-offwhite md:text-xl"
         >
           Become an agribusiness owner from just{" "}
           <span className="font-bold text-yealth-gold">Rs 1,288/month</span>.
         </motion.p>
 
-        <motion.div {...fadeUp(0.4)} className="mt-7">
+        <motion.div {...fadeUp(0.35)} className="mt-7">
           <a
             href="#contact"
             className="gold-cta inline-flex items-center justify-center gap-2 rounded-yealth px-8 py-4 font-heading text-base"
@@ -95,7 +64,7 @@ export function Hero() {
         </motion.div>
 
         <motion.p
-          {...fadeUp(0.45)}
+          {...fadeUp(0.4)}
           className="mt-4 text-sm text-yealth-offwhite/50"
         >
           Free. No commitment. Takes 2 minutes.
