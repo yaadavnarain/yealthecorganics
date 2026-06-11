@@ -2,6 +2,7 @@ import YealthFlywheel from "@/app/components/YealthFlywheel";
 import YealthFlywheelDepth from "@/app/components/YealthFlywheelDepth";
 import YealthFlywheelIso from "@/app/components/YealthFlywheelIso";
 import YealthFlywheelCinema from "@/app/components/YealthFlywheelCinema";
+import YealthFlywheelD from "@/app/components/YealthFlywheelD";
 
 export const metadata = {
   title: "Animation Lab — Yealth",
@@ -31,6 +32,12 @@ const VARIANTS = [
     description:
       "Everything in A, plus a distant desaturated farm back row, eased (ease-in-out) flight curves, and a subtle breathing of the whole composition.",
     Component: YealthFlywheelCinema,
+  },
+  {
+    name: "Variant D — 3D greenhouse & wallet",
+    description:
+      "Fully redesigned artwork: gabled glasshouses with dimensional frames and aquaponics raft rows of lettuce inside, plus a rounded 3D charcoal wallet with gold strap and clasp.",
+    Component: YealthFlywheelD,
   },
 ];
 
