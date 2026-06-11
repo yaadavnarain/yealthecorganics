@@ -82,14 +82,6 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3 font-body text-base">
               <li>
                 <a
-                  href="mailto:support@yealth.mu"
-                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
-                >
-                  support@yealth.mu
-                </a>
-              </li>
-              <li>
-                <a
                   href="tel:+23054523432"
                   className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                 >

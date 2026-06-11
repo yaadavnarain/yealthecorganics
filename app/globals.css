@@ -93,16 +93,18 @@ html {
     outline-offset: 2px;
   }
 
-  .mint-outline-cta {
-    border: 1px solid #34d399;
-    color: #34d399;
-    background: transparent;
-    transition: background 0.2s ease, color 0.2s ease;
+  .teal-cta {
+    background: #34d399;
+    color: #0a0a0a;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .mint-outline-cta:hover {
-    background: rgba(52, 211, 153, 0.1);
+  .teal-cta:hover {
+    background-color: #f5c842;
+    color: #0a0a0a;
+    box-shadow: 0 8px 32px rgba(245, 200, 66, 0.35);
   }
-  .mint-outline-cta:focus-visible {
+  .teal-cta:focus-visible {
     outline: 2px solid #34d399;
     outline-offset: 2px;
   }

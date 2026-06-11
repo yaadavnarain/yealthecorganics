@@ -90,7 +90,7 @@ export function ThreePathsSection() {
               href={path.href}
               className={cn(
                 "mt-8 inline-flex w-fit items-center gap-2 rounded-yealth px-5 py-3 font-heading text-sm font-bold transition-transform group-hover:translate-x-1",
-                path.primary ? "gold-cta" : "mint-outline-cta"
+                path.primary ? "gold-cta" : "teal-cta"
               )}
             >
               {path.cta}

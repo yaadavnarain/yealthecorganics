@@ -1,167 +1,74 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { CheckCircle2, ShieldCheck, Clock, MessageCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
-import { FormField, FormTextarea } from "@/app/components/ui/form-field";
 import { Glow } from "@/app/components/ui/glow";
 
-const FORMSPREE_ID = "meedbngg";
-
-type Status = "idle" | "submitting" | "sent" | "error";
+const WHATSAPP_URL = "https://wa.me/23054523432";
 
 export function ContactSection() {
-  const [form, setForm] = useState({ name: "", phone: "", comment: "" });
-  const [status, setStatus] = useState<Status>("idle");
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus("submitting");
-
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: form.name,
-          phone: form.phone,
-          comment: form.comment,
-          _subject: `New Yealth webinar signup: ${form.name}`,
-        }),
-      });
-
-      if (!res.ok) {
-        setStatus("error");
-        return;
-      }
-
-      setStatus("sent");
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  const buttonLabel = {
-    idle: "Secure my spot",
-    submitting: "Sending…",
-    sent: "Submitted — Muktish will be in touch",
-    error: "Try again",
-  }[status];
-
   return (
-    <section
-      id="contact"
-      className="relative overflow-hidden bg-yealth-black"
-    >
+    <section id="contact" className="relative overflow-hidden bg-yealth-black">
       <Glow
         variant="gold"
         className="-left-[35%] top-1/2 h-[140%] w-[110%] -translate-y-1/2"
       />
 
-      <div className="section-pad relative z-10 mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-6 md:grid-cols-2 md:gap-16 md:px-8">
-        <motion.div {...fadeUp(0)} className="flex flex-col justify-center">
-          <h2 className="font-heading text-[28px] font-bold text-yealth-gold md:text-[40px]">
-            Ready to own a farm?
-          </h2>
-          <p className="mt-4 font-body text-base text-yealth-offwhite/85 md:text-lg">
-            Drop your details and we will send you the next webinar link. Muktish hosts it personally.
-          </p>
+      <div className="section-pad relative z-10 mx-auto flex max-w-[680px] flex-col items-center px-6 text-center md:px-8">
+        <motion.h2
+          {...fadeUp(0)}
+          className="font-heading text-[28px] font-bold text-yealth-gold md:text-[40px]"
+        >
+          Ready to own a farm?
+        </motion.h2>
 
-          <ul className="mt-8 flex flex-col gap-4">
-            <li className="flex items-start gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
-              <Clock className="mt-0.5 h-5 w-5 flex-shrink-0 text-yealth-mint" aria-hidden />
-              <span>Takes 2 minutes to fill in. Free, no commitment.</span>
-            </li>
-            <li className="flex items-start gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
-              <ShieldCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-yealth-mint" aria-hidden />
-              <span>Your details stay private. We never share, sell, or spam.</span>
-            </li>
-            <li className="flex items-start gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-yealth-mint" aria-hidden />
-              <span>No follow-up calls unless you ask for one.</span>
-            </li>
-          </ul>
+        <motion.p
+          {...fadeUp(0.1)}
+          className="mt-4 font-body text-base text-yealth-offwhite/85 md:text-lg"
+        >
+          Message Muktish on WhatsApp and he will send you the next webinar
+          link. He hosts it personally.
+        </motion.p>
 
-          <p className="mt-6 flex items-center gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
-            <MessageCircle className="h-5 w-5 flex-shrink-0 text-yealth-mint" aria-hidden />
-            <span>
-              Prefer to chat?{" "}
-              <a
-                href="https://wa.me/23054523432"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-yealth-gold underline decoration-yealth-gold/40 underline-offset-2 transition-colors hover:text-yealth-mint hover:decoration-yealth-mint"
-              >
-                Message Muktish on WhatsApp
-              </a>
-            </span>
-          </p>
+        <motion.div {...fadeUp(0.2)} className="mt-9">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gold-cta inline-flex items-center justify-center gap-2.5 rounded-yealth px-8 py-4 font-heading text-base md:px-10 md:py-5 md:text-lg"
+          >
+            <MessageCircle className="h-5 w-5" aria-hidden />
+            Message Muktish on WhatsApp
+          </a>
         </motion.div>
 
-        <motion.form
-          {...fadeUp(0.1)}
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4 rounded-yealth border border-yealth-offwhite/10 bg-yealth-black/40 p-6 backdrop-blur-sm md:p-8"
+        <motion.ul
+          {...fadeUp(0.3)}
+          className="mt-10 flex flex-col items-start gap-4"
         >
-          <FormField
-            type="text"
-            name="name"
-            placeholder="Your full name"
-            required
-            aria-label="Name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          />
-          <FormField
-            type="tel"
-            name="phone"
-            placeholder="+230 5XXX XXXX"
-            required
-            aria-label="Phone"
-            value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          />
-          <FormTextarea
-            name="comment"
-            placeholder="Anything you would like us to know? (optional)"
-            aria-label="Comment"
-            value={form.comment}
-            onChange={(e) => setForm({ ...form, comment: e.target.value })}
-          />
-          <button
-            type="submit"
-            disabled={status === "submitting" || status === "sent"}
-            className="gold-cta mt-2 h-14 w-full rounded-yealth font-heading text-base disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {buttonLabel}
-          </button>
-          {status === "error" && (
-            <p className="text-center font-body text-xs text-red-400 md:text-sm">
-              Something went wrong. Please try again, or message Muktish on WhatsApp.
-            </p>
-          )}
-          <p className="text-center font-body text-xs text-yealth-offwhite/50 md:text-sm">
-            By submitting, you agree to our{" "}
-            <a
-              href="/terms"
-              className="text-yealth-offwhite/70 underline decoration-yealth-offwhite/30 underline-offset-2 transition-colors hover:text-yealth-mint hover:decoration-yealth-mint/50"
-            >
-              Terms
-            </a>
-            {" "}and{" "}
-            <a
-              href="/privacy"
-              className="text-yealth-offwhite/70 underline decoration-yealth-offwhite/30 underline-offset-2 transition-colors hover:text-yealth-mint hover:decoration-yealth-mint/50"
-            >
-              Privacy Policy
-            </a>
-            .
-          </p>
-        </motion.form>
+          <li className="flex items-start gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
+            <Clock
+              className="mt-0.5 h-5 w-5 flex-shrink-0 text-yealth-mint"
+              aria-hidden
+            />
+            <span>Takes 2 minutes. Free, no commitment.</span>
+          </li>
+          <li className="flex items-start gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
+            <ShieldCheck
+              className="mt-0.5 h-5 w-5 flex-shrink-0 text-yealth-mint"
+              aria-hidden
+            />
+            <span>Your details stay private. We never share, sell, or spam.</span>
+          </li>
+          <li className="flex items-start gap-3 font-body text-sm text-yealth-offwhite/75 md:text-base">
+            <CheckCircle2
+              className="mt-0.5 h-5 w-5 flex-shrink-0 text-yealth-mint"
+              aria-hidden
+            />
+            <span>No follow-up calls unless you ask for one.</span>
+          </li>
+        </motion.ul>
       </div>
     </section>
   );

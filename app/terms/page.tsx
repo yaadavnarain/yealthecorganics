@@ -88,21 +88,14 @@ export default function TermsPage() {
 
         <h2 className="font-heading text-2xl mt-10 mb-3">Contact</h2>
         <p className="mb-8">
-          Email{" "}
+          Message us on{" "}
           <a
-            href="mailto:info@yealth.mu"
+            href="https://wa.me/23054523432"
             className="text-yealth-gold hover:underline"
           >
-            info@yealth.mu
+            WhatsApp
           </a>{" "}
-          or{" "}
-          <a
-            href="mailto:support@yealth.mu"
-            className="text-yealth-gold hover:underline"
-          >
-            support@yealth.mu
-          </a>
-          .
+          or call +230 5452 3432.
         </p>
       </div>
     </main>

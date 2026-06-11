@@ -67,12 +67,12 @@ export default function PrivacyPage() {
         <h2 className="font-heading text-2xl mt-10 mb-3">Your rights</h2>
         <p className="mb-8">
           Under the Mauritius Data Protection Act 2017, you may request access
-          to, correction of, or deletion of your personal data. Contact us at{" "}
+          to, correction of, or deletion of your personal data. Contact us on{" "}
           <a
-            href="mailto:info@yealth.mu"
+            href="https://wa.me/23054523432"
             className="text-yealth-gold hover:underline"
           >
-            info@yealth.mu
+            WhatsApp (+230 5452 3432)
           </a>
           .
         </p>
@@ -90,21 +90,14 @@ export default function PrivacyPage() {
 
         <h2 className="font-heading text-2xl mt-10 mb-3">Contact</h2>
         <p className="mb-8">
-          Questions? Email{" "}
+          Questions? Message us on{" "}
           <a
-            href="mailto:info@yealth.mu"
+            href="https://wa.me/23054523432"
             className="text-yealth-gold hover:underline"
           >
-            info@yealth.mu
+            WhatsApp
           </a>{" "}
-          or{" "}
-          <a
-            href="mailto:support@yealth.mu"
-            className="text-yealth-gold hover:underline"
-          >
-            support@yealth.mu
-          </a>
-          .
+          or call +230 5452 3432.
         </p>
       </div>
     </main>
