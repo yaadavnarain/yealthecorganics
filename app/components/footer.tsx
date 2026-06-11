@@ -88,6 +88,14 @@ export function Footer() {
                   +230 5452 3432
                 </a>
               </li>
+              <li>
+                <a
+                  href="mailto:info@yealth.mu"
+                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
+                >
+                  info@yealth.mu
+                </a>
+              </li>
               <li className="text-yealth-offwhite/70">Mauritius</li>
             </ul>
           </div>

@@ -65,8 +65,20 @@ export function AmbientParticles() {
 
     let animId: number;
 
+    // Particles must never render over the hero: clip the canvas to start
+    // at the hero's bottom edge (full canvas once the hero is scrolled past).
+    const heroEl = document.querySelector("[data-hero]");
+
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+
+      const clipTop = heroEl
+        ? Math.max(0, heroEl.getBoundingClientRect().bottom)
+        : 0;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, clipTop, width, Math.max(0, height - clipTop));
+      ctx.clip();
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -98,6 +110,7 @@ export function AmbientParticles() {
         ctx.fill();
       }
 
+      ctx.restore();
       animId = requestAnimationFrame(render);
     };
 

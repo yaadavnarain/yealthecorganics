@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { fadeUp } from "@/lib/motion";
 import YealthFlywheel from "./YealthFlywheel";
 import { AnimatedCounter } from "@/app/components/ui/animated-counter";
-import { Glow } from "@/app/components/ui/glow";
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -20,17 +19,9 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
+      data-hero
       className="relative flex min-h-[90vh] items-center overflow-hidden bg-yealth-black"
     >
-      <Glow
-        variant="teal"
-        className="-right-[40%] -top-[40%] h-[110%] w-[90%]"
-      />
-      <Glow
-        variant="gold"
-        className="-left-[40%] top-[5%] h-[110%] w-[90%]"
-      />
-
       <motion.div
         style={{ opacity: contentOpacity }}
         className="relative z-10 mx-auto flex w-full max-w-[960px] flex-col items-center px-6 pt-32 pb-16 text-center md:px-8 md:pt-36 md:pb-20"

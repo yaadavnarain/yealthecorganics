@@ -11,6 +11,28 @@ const NAV_LINKS = [
   { label: "FAQ", href: "#faq" },
 ];
 
+function MauritiusFlag({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 18 12"
+      width="18"
+      height="12"
+      className={className}
+      aria-hidden
+    >
+      <clipPath id="mu-flag-round">
+        <rect width="18" height="12" rx="2" />
+      </clipPath>
+      <g clipPath="url(#mu-flag-round)">
+        <rect width="18" height="3" y="0" fill="#EA2839" />
+        <rect width="18" height="3" y="3" fill="#1A206D" />
+        <rect width="18" height="3" y="6" fill="#FFD500" />
+        <rect width="18" height="3" y="9" fill="#00A551" />
+      </g>
+    </svg>
+  );
+}
+
 function Logo({ className }: { className?: string }) {
   return (
     <a
@@ -54,7 +76,7 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="font-body text-base text-yealth-offwhite/80 transition-colors hover:text-yealth-gold"
+              className="font-body text-base text-yealth-offwhite/80 transition-colors duration-200 ease-out hover:text-yealth-mint active:text-yealth-mint"
             >
               {link.label}
             </a>
@@ -62,7 +84,8 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center justify-end gap-4 md:flex">
-          <span className="rounded-yealth border border-white/10 bg-white/[0.04] px-4 py-2 font-body text-sm text-yealth-offwhite">
+          <span className="inline-flex items-center gap-2 rounded-yealth border border-white/10 bg-white/[0.04] px-4 py-2 font-body text-sm text-yealth-offwhite">
+            <MauritiusFlag />
             Mauritius
           </span>
           <a
@@ -114,7 +137,8 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <span className="w-fit rounded-yealth border border-white/10 px-4 py-2 font-body text-base text-yealth-offwhite">
+              <span className="inline-flex w-fit items-center gap-2 rounded-yealth border border-white/10 px-4 py-2 font-body text-base text-yealth-offwhite">
+                <MauritiusFlag />
                 Mauritius
               </span>
               <a
