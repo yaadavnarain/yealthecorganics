@@ -40,10 +40,10 @@ function Logo({ className }: { className?: string }) {
       <Image
         src="/images/yealth-logo.png"
         alt="yealth"
-        width={1432}
-        height={296}
+        width={155}
+        height={32}
         priority
-        className="h-[30px] w-auto md:h-[34px]"
+        className="h-7 w-auto md:h-8"
       />
     </a>
   );

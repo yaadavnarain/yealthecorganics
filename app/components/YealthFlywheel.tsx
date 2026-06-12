@@ -35,7 +35,6 @@
  */
 
 const css = `
-  .yfd-wrap{margin-top:8px}
   .yfd{width:100%;height:auto;display:block}
 
   .yfd .caption{
@@ -437,7 +436,9 @@ export default function YealthFlywheel() {
   return (
     <div className="yfd-wrap" style={{ width: "100%", margin: "0 auto" }}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
-      <svg className="yfd" viewBox="0 0 800 460" role="img"
+      {/* viewBox hugs the drawn content (y 150..438 after the axis rework) so
+          the rendered box has no empty bands; coordinates are unchanged */}
+      <svg className="yfd" viewBox="0 145 800 300" role="img"
         aria-label="You own a farm. Your farm grows lettuce. The harvest pays you. You own more farms and the cycle repeats. Income grows with every farm.">
         <defs>
           <radialGradient id="yfdCoinGrad" cx="35%" cy="30%" r="80%">

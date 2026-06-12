@@ -39,8 +39,8 @@ export function Footer() {
               <Image
                 src="/images/yealth-logo.png"
                 alt="yealth"
-                width={1432}
-                height={296}
+                width={175}
+                height={36}
                 className="h-9 w-auto"
               />
             </a>
