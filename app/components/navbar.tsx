@@ -7,9 +7,10 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "FAQ", href: "#faq" },
+  { label: "About", href: "/#about" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Calculator", href: "/calculator" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 function MauritiusFlag({ className }: { className?: string }) {
@@ -36,7 +37,7 @@ function MauritiusFlag({ className }: { className?: string }) {
 
 function Logo({ className }: { className?: string }) {
   return (
-    <a href="#top" className={cn("inline-flex items-center", className)}>
+    <a href="/" className={cn("inline-flex items-center", className)}>
       <Image
         src="/images/yealth-logo.png"
         alt="yealth"
@@ -91,7 +92,7 @@ export function Navbar() {
             Mauritius
           </span>
           <a
-            href="#contact"
+            href="/#contact"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-5 py-2.5 font-heading text-sm"
           >
             Secure my spot
@@ -144,7 +145,7 @@ export function Navbar() {
                 Mauritius
               </span>
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setMenuOpen(false)}
                 className="gold-cta inline-flex w-fit items-center gap-2 rounded-yealth px-6 py-3 font-heading text-base"
               >

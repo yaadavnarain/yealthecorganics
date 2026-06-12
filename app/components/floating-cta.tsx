@@ -37,7 +37,7 @@ export function FloatingCta() {
           className="fixed bottom-6 right-6 z-40 md:bottom-8 md:right-8"
         >
           <a
-            href="#contact"
+            href="/#contact"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-5 py-3 font-heading text-sm font-bold shadow-2xl shadow-yealth-gold/30 transition-transform hover:scale-105 md:px-6 md:py-3.5 md:text-base"
           >
             Secure my spot

@@ -6,6 +6,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: "https://yealth.mu",
     },
     {
+      url: "https://yealth.mu/calculator",
+    },
+    {
       url: "https://yealth.mu/terms",
     },
     {

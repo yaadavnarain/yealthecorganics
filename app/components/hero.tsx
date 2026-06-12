@@ -39,7 +39,7 @@ export function Hero() {
           className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
         >
           Financial Freedom for the Youth,{" "}
-          <span className="text-yealth-gold">Zero Efforts</span>.
+          <span className="text-yealth-gold">Zero Effort</span>.
         </motion.h1>
 
         <motion.p

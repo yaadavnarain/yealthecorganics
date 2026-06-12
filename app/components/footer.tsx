@@ -16,10 +16,11 @@ const SOCIALS = [
 ];
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Secure my spot", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Calculator", href: "/calculator" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Secure my spot", href: "/#contact" },
 ];
 
 const LEGAL_LINKS = [
@@ -35,7 +36,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-8 md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
-            <a href="#top" className="inline-flex items-center">
+            <a href="/" className="inline-flex items-center">
               <Image
                 src="/images/yealth-logo.png"
                 alt="yealth"
