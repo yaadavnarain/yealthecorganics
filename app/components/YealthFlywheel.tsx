@@ -435,7 +435,7 @@ function Greenhouse({ cls, label }: { cls: string; label: string }) {
 
 export default function YealthFlywheel() {
   return (
-    <div className="yfd-wrap" style={{ width: "100%", maxWidth: 760, margin: "0 auto" }}>
+    <div className="yfd-wrap" style={{ width: "100%", margin: "0 auto" }}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <svg className="yfd" viewBox="0 0 800 460" role="img"
         aria-label="You own a farm. Your farm grows lettuce. The harvest pays you. You own more farms and the cycle repeats. Income grows with every farm.">

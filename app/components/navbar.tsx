@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -35,14 +36,15 @@ function MauritiusFlag({ className }: { className?: string }) {
 
 function Logo({ className }: { className?: string }) {
   return (
-    <a
-      href="#top"
-      className={cn(
-        "font-heading text-xl font-bold tracking-tight text-yealth-gold",
-        className
-      )}
-    >
-      yealth
+    <a href="#top" className={cn("inline-flex items-center", className)}>
+      <Image
+        src="/images/yealth-logo.png"
+        alt="yealth"
+        width={1432}
+        height={296}
+        priority
+        className="h-[30px] w-auto md:h-[34px]"
+      />
     </a>
   );
 }

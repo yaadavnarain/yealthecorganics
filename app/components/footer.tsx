@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -34,11 +35,14 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-8 md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
-            <a
-              href="#top"
-              className="font-heading text-2xl font-bold text-yealth-gold"
-            >
-              yealth
+            <a href="#top" className="inline-flex items-center">
+              <Image
+                src="/images/yealth-logo.png"
+                alt="yealth"
+                width={1432}
+                height={296}
+                className="h-9 w-auto"
+              />
             </a>
             <p className="mt-4 max-w-[360px] font-body text-base leading-relaxed text-yealth-offwhite/70">
               Real farms. Real income. Built for Gen Z and millennials in Mauritius who refuse to wait for a future that never comes.
