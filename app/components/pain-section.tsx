@@ -17,11 +17,24 @@ export function PainSection() {
         }}
         aria-hidden
       />
+      {/* Mobile overlay — unchanged. On the taller mobile section the 0.78
+          mid-stops blend perfectly. */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 md:hidden"
         style={{
           background:
             "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.78) 84%, rgba(10,10,10,0.96) 92%, #0A0A0A 100%)",
+        }}
+        aria-hidden
+      />
+      {/* Desktop overlay — same 7-stop convention (solid #0A0A0A edges that
+          dissolve into neighbours), but lighter mid-stops so the cover image
+          reads across the full, shorter desktop section instead of a band. */}
+      <div
+        className="pointer-events-none absolute inset-0 hidden md:block"
+        style={{
+          background:
+            "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.94) 7%, rgba(10,10,10,0.45) 16%, rgba(10,10,10,0.32) 50%, rgba(10,10,10,0.45) 84%, rgba(10,10,10,0.94) 93%, #0A0A0A 100%)",
         }}
         aria-hidden
       />
