@@ -46,7 +46,7 @@ export function PainSection() {
             }}
           >
             They sold you a lie called{" "}
-            <span className="text-yealth-offwhite/60">
+            <span className="text-yealth-gold">
               &apos;work hard and you&apos;ll be fine.&apos;
             </span>
           </motion.h2>
