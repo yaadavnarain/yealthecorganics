@@ -12,9 +12,8 @@ export function PainSection() {
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/nature-pain-v2.png')",
-          opacity: 0.5,
-          mixBlendMode: "lighten",
+          backgroundImage: "url('/images/pain-skeleton.jpeg')",
+          opacity: 0.26,
         }}
         aria-hidden
       />
