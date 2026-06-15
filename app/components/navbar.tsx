@@ -37,18 +37,15 @@ function MauritiusFlag({ className }: { className?: string }) {
 
 function Logo({ className }: { className?: string }) {
   return (
-    <a href="/" className={cn("inline-flex items-center gap-2", className)}>
+    <a href="/" className={cn("inline-flex items-center", className)}>
       <Image
         src="/images/yealth-mark.png"
-        alt=""
+        alt="yealth"
         width={683}
         height={336}
         priority
-        className="h-[26px] w-auto"
+        className="h-8 w-auto"
       />
-      <span className="font-heading text-[22px] font-bold leading-none text-yealth-gold md:text-2xl">
-        yealth
-      </span>
     </a>
   );
 }

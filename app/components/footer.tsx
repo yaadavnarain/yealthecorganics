@@ -36,17 +36,14 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-8 md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
-            <a href="/" className="inline-flex items-center gap-2.5">
+            <a href="/" className="inline-flex items-center">
               <Image
                 src="/images/yealth-mark.png"
-                alt=""
+                alt="yealth"
                 width={683}
                 height={336}
-                className="h-[30px] w-auto"
+                className="h-9 w-auto"
               />
-              <span className="font-heading text-[26px] font-bold leading-none text-yealth-gold">
-                yealth
-              </span>
             </a>
             <p className="mt-4 max-w-[360px] font-body text-base leading-relaxed text-yealth-offwhite/70">
               Real farms. Real income. Built for Gen Z and millennials in Mauritius who refuse to wait for a future that never comes.
