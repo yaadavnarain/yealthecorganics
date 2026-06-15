@@ -34,16 +34,29 @@ export function HowItWorksSection() {
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/aquaponics-how-it-works.jpg')",
-          opacity: 0.38,
+          backgroundImage: "url('/images/how-it-works-towers.jpeg')",
+          opacity: 0.28,
         }}
         aria-hidden
       />
+      {/* Mobile overlay — standard 7-stop. The mobile section is tall (steps
+          stack), so the 0.78 mid-stops blend seamlessly. */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 md:hidden"
         style={{
           background:
             "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.78) 84%, rgba(10,10,10,0.96) 92%, #0A0A0A 100%)",
+        }}
+        aria-hidden
+      />
+      {/* Desktop overlay — same 7-stop convention (solid #0A0A0A edges that
+          dissolve into neighbours), lighter mid-stops so the cover image reads
+          across the full, shorter desktop section instead of a band. */}
+      <div
+        className="pointer-events-none absolute inset-0 hidden md:block"
+        style={{
+          background:
+            "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.94) 7%, rgba(10,10,10,0.45) 16%, rgba(10,10,10,0.32) 50%, rgba(10,10,10,0.45) 84%, rgba(10,10,10,0.94) 93%, #0A0A0A 100%)",
         }}
         aria-hidden
       />
