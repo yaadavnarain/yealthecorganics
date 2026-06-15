@@ -67,7 +67,7 @@ export function VideoStatsSection() {
       >
         <div className="text-center">
           <div className="font-heading text-2xl font-bold text-yealth-gold md:text-4xl">
-            <AnimatedCounter end={16} prefix="Rs " suffix="M+" />
+            <AnimatedCounter end={26} prefix="Rs " suffix="M+" />
           </div>
           <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
             raised so far
@@ -75,15 +75,15 @@ export function VideoStatsSection() {
         </div>
         <div className="text-center">
           <div className="font-heading text-2xl font-bold text-yealth-gold md:text-4xl">
-            <AnimatedCounter end={4000} suffix="+" />
+            <AnimatedCounter end={4500} suffix="+" />
           </div>
           <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-            people already in
+            youth already in
           </div>
         </div>
         <div className="text-center">
           <div className="font-heading text-2xl font-bold text-yealth-gold md:text-4xl">
-            <AnimatedCounter end={150} suffix="+" />
+            <AnimatedCounter end={225} suffix="+" />
           </div>
           <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
             Gen Z &amp; Millennials

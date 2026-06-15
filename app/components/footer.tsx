@@ -46,7 +46,7 @@ export function Footer() {
               />
             </a>
             <p className="mt-4 max-w-[360px] font-body text-base leading-relaxed text-yealth-offwhite/70">
-              Real farms. Real income. Built for Gen Z and millennials in Mauritius who refuse to wait for a future that never comes.
+              Real farms. Real income. Built for the Youth of Mauritius who refuse to wait for a future that never comes.
             </p>
             <div className="mt-6 flex items-center gap-3">
               {SOCIALS.map(({ label, icon: Icon, href }) => (

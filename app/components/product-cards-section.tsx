@@ -27,14 +27,14 @@ const PRODUCTS: Product[] = [
     icon: Salad,
     title: "Your Harvest",
     description:
-      "Fresh produce delivered straight to your door. Every week. Clean, pure food from the farms.",
+      "Ready-to-eat salads delivered straight to your door. Every week. Clean, pure food from the farms.",
     accent: "mint",
   },
   {
     icon: Coins,
     title: "Your Income",
     description:
-      "Monthly passive income deposited into your account. Your farm works so you do not have to.",
+      "Monthly passive income deposited into your account. Income grows as your farms grow.",
     accent: "gold",
   },
   {

@@ -1,7 +1,6 @@
 import { Navbar } from "@/app/components/navbar";
 import { Hero } from "@/app/components/hero";
 import { PainSection } from "@/app/components/pain-section";
-import { OwnSection } from "@/app/components/own-section";
 import { VideoStatsSection } from "@/app/components/video-stats-section";
 import { VisionSection } from "@/app/components/vision-section";
 import { ProductCardsSection } from "@/app/components/product-cards-section";
@@ -20,7 +19,6 @@ export default function Page() {
       <main>
         <Hero />
         <PainSection />
-        <OwnSection />
         <VideoStatsSection />
         <VisionSection />
         <ProductCardsSection />

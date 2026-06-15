@@ -36,7 +36,7 @@ export function FinalCtaSection() {
           {...fadeUp(0.1)}
           className="mt-6 font-heading text-[36px] font-bold leading-[1.05] text-yealth-offwhite md:text-[64px]"
         >
-          Your farm is{" "}
+          Your agribusiness is{" "}
           <span className="text-yealth-gold">waiting.</span>
         </motion.h2>
 
@@ -49,7 +49,9 @@ export function FinalCtaSection() {
 
         <motion.div {...fadeUp(0.3)} className="mt-10">
           <a
-            href="#contact"
+            href="https://tally.so/r/2EDOEV"
+            target="_blank"
+            rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-10 py-5 font-heading text-base md:text-lg"
           >
             Secure my spot

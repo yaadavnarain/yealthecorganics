@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,6 @@ interface Path {
   cta: string;
   href: string;
   primary: boolean;
-  badge?: string;
 }
 
 const PATHS: Path[] = [
@@ -22,26 +21,25 @@ const PATHS: Path[] = [
       "Start your farming business from Rs 1,288/mo. Build passive income and own real assets.",
     accent: "gold",
     cta: "Secure my spot",
-    href: "#contact",
+    href: "https://tally.so/r/2EDOEV",
     primary: true,
-    badge: "Most popular",
   },
   {
-    title: "Earn Now",
+    title: "Work & Earn",
     description:
-      "Refer friends and family to Yealth. Earn for every person who joins through you. No farming, no work — just share.",
+      "Part-time work available in construction, plantation and delivery.",
     accent: "mint",
-    cta: "Become a partner",
-    href: "#contact",
+    cta: "Register Now",
+    href: "https://muktish.com/freelance",
     primary: false,
   },
   {
     title: "Create & Earn",
     description:
-      "For creators with an audience. Make content about Yealth, drive signups, earn from every referral your content brings in.",
+      "Create content and get paid. All social media platforms. Faceless videos allowed.",
     accent: "mint",
-    cta: "Become a creator partner",
-    href: "#contact",
+    cta: "Register Now",
+    href: "https://muktish.com/content",
     primary: false,
   },
 ];
@@ -61,13 +59,6 @@ export function ThreePathsSection() {
                 : "border-yealth-offwhite/10 bg-yealth-black/40 hover:border-yealth-mint/40 hover:shadow-[0_0_30px_-10px_rgba(45,212,191,0.4)]"
             )}
           >
-            {path.badge && (
-              <div className="absolute right-4 top-4 flex items-center gap-1.5 whitespace-nowrap rounded-full border border-yealth-gold/40 bg-yealth-gold/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-yealth-gold">
-                <Sparkles className="h-3 w-3" aria-hidden />
-                {path.badge}
-              </div>
-            )}
-
             <h3
               className={cn(
                 "font-heading text-2xl font-bold md:text-3xl",
@@ -88,6 +79,8 @@ export function ThreePathsSection() {
 
             <a
               href={path.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className={cn(
                 "mt-8 inline-flex w-fit items-center gap-2 rounded-yealth px-5 py-3 font-heading text-sm font-bold transition-transform group-hover:translate-x-1",
                 path.primary ? "gold-cta" : "teal-cta"

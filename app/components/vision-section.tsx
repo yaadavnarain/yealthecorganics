@@ -17,8 +17,9 @@ export function VisionSection() {
           {...fadeUp(0)}
           className="font-heading text-[26px] font-bold text-yealth-offwhite md:text-[36px]"
         >
-          What if you could <span className="text-yealth-mint">own</span> a real
-          business for less than your monthly phone bill?
+          What if you could{" "}
+          <span className="text-yealth-gold">own a real business</span> for less
+          than your monthly phone bill?
         </motion.h2>
         <motion.div
           {...fadeUp(0.1)}
