@@ -92,7 +92,9 @@ export function Navbar() {
             Mauritius
           </span>
           <a
-            href="/#contact"
+            href="https://tally.so/r/2EDOEV"
+            target="_blank"
+            rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-5 py-2.5 font-heading text-sm"
           >
             Secure my spot
@@ -145,7 +147,9 @@ export function Navbar() {
                 Mauritius
               </span>
               <a
-                href="/#contact"
+                href="https://tally.so/r/2EDOEV"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
                 className="gold-cta inline-flex w-fit items-center gap-2 rounded-yealth px-6 py-3 font-heading text-base"
               >

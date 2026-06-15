@@ -20,7 +20,7 @@ const NAV_LINKS = [
   { label: "How It Works", href: "/#how-it-works" },
   { label: "Calculator", href: "/calculator" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Secure my spot", href: "/#contact" },
+  { label: "Secure my spot", href: "https://tally.so/r/2EDOEV", external: true },
 ];
 
 const LEGAL_LINKS = [
@@ -71,6 +71,9 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    {...("external" in link && link.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                     className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                   >
                     {link.label}
