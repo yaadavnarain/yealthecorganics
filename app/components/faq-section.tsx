@@ -14,7 +14,7 @@ const FAQ_ITEMS = [
     id: "is-this-real",
     question: "Is this real?",
     answer:
-      "Yes. Yealth is a registered Mauritian farming business already operating with over 4,000 people backing it and Rs 16M+ raised. Real farms, real produce, real income. The founder, Muktish, is publicly accountable — you will meet him on the live session before you decide anything.",
+      "Yes. Yealth is a registered Mauritian farming business already operating with over 4,500 youth backing it and Rs 26M+ raised. Real farms, real produce, real income. The founder, Muktish, is publicly accountable — you will meet him on the live session before you decide anything.",
   },
   {
     id: "secure-cost",
