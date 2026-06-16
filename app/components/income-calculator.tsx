@@ -94,8 +94,10 @@ export function IncomeCalculator() {
   );
 
   return (
-    <div className="mx-auto max-w-[480px] overflow-hidden rounded-2xl border border-yealth-offwhite/[0.08] bg-yealth-black">
-      <div className="px-5 py-6 md:px-6 md:py-8">
+    <div className="mx-auto max-w-[480px] overflow-hidden rounded-2xl border border-yealth-offwhite/[0.08] bg-yealth-black lg:max-w-5xl">
+      <div className="px-5 py-6 md:px-6 md:py-8 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 lg:px-10 lg:py-10">
+        {/* Inputs column — left at lg, inline stack below lg (contents = no layout box) */}
+        <div className="contents lg:block">
         {/* Header */}
         <div className="mb-10">
           <h1 className="mb-3 font-heading text-2xl font-bold leading-[1.2] tracking-[-0.5px] text-yealth-gold md:text-[28px]">
@@ -179,7 +181,10 @@ export function IncomeCalculator() {
             Move the slider to see different years.
           </div>
         </div>
+        </div>
 
+        {/* Results column — right at lg */}
+        <div className="contents lg:block">
         {/* Results */}
         <div className="mb-3 rounded-yealth border border-yealth-offwhite/[0.08] bg-[#1A1A1A] p-5">
           <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.8px] text-[#A0A0A0]">
@@ -337,7 +342,11 @@ export function IncomeCalculator() {
             </div>
           </div>
         )}
+        </div>
 
+        {/* Closing block — full width below the grid, centered at a comfortable
+            reading width on lg */}
+        <div className="contents lg:col-span-2 lg:mx-auto lg:block lg:max-w-2xl">
         {/* Footnotes */}
         <div className="my-8 border-t border-yealth-offwhite/[0.08] pt-6">
           <p className="mb-1.5 text-[11px] leading-[1.6] text-[#6B6B6B]">
@@ -397,6 +406,7 @@ export function IncomeCalculator() {
           <div className="mt-2 text-[11px] italic text-[#6B6B6B]">
             Takes 30 seconds. The breakdown arrives in your WhatsApp.
           </div>
+        </div>
         </div>
       </div>
     </div>
