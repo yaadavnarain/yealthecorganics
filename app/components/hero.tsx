@@ -36,9 +36,12 @@ export function Hero() {
       >
         <motion.h1
           {...heroFade(0)}
-          className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
+          className="w-full text-left font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
         >
-          Financial Freedom for the Youth.{" "}
+          Financial Freedom
+          <br />
+          For the Youth.
+          <br />
           <span className="text-yealth-gold">We Farm. You Own.</span>
         </motion.h1>
 
