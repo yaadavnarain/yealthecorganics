@@ -36,7 +36,7 @@ export function Hero() {
       >
         <motion.h1
           {...heroFade(0)}
-          className="w-full text-left font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
+          className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
         >
           Financial Freedom
           <br />
@@ -47,7 +47,7 @@ export function Hero() {
 
         <motion.p
           {...heroFade(0.1)}
-          className="max-w-[620px] self-start text-left font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
+          className="max-w-[620px] font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
         >
           Build toward financial stability. A real shot at retiring early, and
           maybe retiring your parents too. Build generational wealth and a legacy
