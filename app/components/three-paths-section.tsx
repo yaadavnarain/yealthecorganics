@@ -30,7 +30,7 @@ const PATHS: Path[] = [
       "Part-time work available in construction, plantation and delivery.",
     accent: "mint",
     cta: "Register Now",
-    href: "https://wa.me/23054523432",
+    href: "https://tally.so/r/687RBo",
     primary: false,
   },
   {
@@ -39,7 +39,7 @@ const PATHS: Path[] = [
       "Create content and get paid. All social media platforms. Faceless videos allowed.",
     accent: "mint",
     cta: "Register Now",
-    href: "https://wa.me/23054523432",
+    href: "https://tally.so/r/EkX2l2",
     primary: false,
   },
   {
@@ -48,7 +48,7 @@ const PATHS: Path[] = [
       "We provide training, capital and market access to full-time entrepreneurs.",
     accent: "mint",
     cta: "Register Now",
-    href: "https://wa.me/23054523432",
+    href: "https://tally.so/r/VL4a6N",
     primary: false,
   },
 ];

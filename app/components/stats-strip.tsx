@@ -13,31 +13,13 @@ export function StatsStrip() {
     <section className="border-y border-yealth-offwhite/10 bg-yealth-black">
       <motion.div
         {...fadeUp(0)}
-        className="mx-auto grid max-w-[1200px] grid-cols-3 gap-4 px-6 py-8 md:gap-8 md:px-8 md:py-10"
+        className="mx-auto flex max-w-[1200px] flex-col items-center px-6 py-8 text-center md:px-8 md:py-10"
       >
-        <div className="text-center">
-          <div className="font-heading text-2xl font-bold text-yealth-gold md:text-4xl">
-            <AnimatedCounter end={26} prefix="Rs " suffix="M+" />
-          </div>
-          <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-            raised so far
-          </div>
+        <div className="font-heading text-5xl font-bold leading-none text-yealth-gold sm:text-7xl lg:text-8xl">
+          <AnimatedCounter end={4500} suffix="+" />
         </div>
-        <div className="text-center">
-          <div className="font-heading text-2xl font-bold text-yealth-gold md:text-4xl">
-            <AnimatedCounter end={4500} suffix="+" />
-          </div>
-          <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-            youths believe in the project
-          </div>
-        </div>
-        <div className="text-center">
-          <div className="font-heading text-2xl font-bold text-yealth-gold md:text-4xl">
-            <AnimatedCounter end={225} suffix="+" />
-          </div>
-          <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-            Gen Z &amp; Millennials
-          </div>
+        <div className="mt-3 text-sm text-yealth-offwhite/60 md:text-base">
+          youths believe in the project
         </div>
       </motion.div>
     </section>

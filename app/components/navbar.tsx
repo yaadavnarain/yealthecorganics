@@ -61,6 +61,16 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock background scroll while the mobile menu is open; restore on close.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
+
   return (
     <header
       id="top"
@@ -118,7 +128,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-yealth-black/95 backdrop-blur-md md:hidden"
+            className="fixed inset-0 z-[60] min-h-[100svh] bg-yealth-black md:hidden"
           >
             <div className="flex items-center justify-between px-6 py-5">
               <Logo />
