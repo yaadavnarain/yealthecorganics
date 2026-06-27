@@ -9,16 +9,22 @@ const STEPS = [
     number: "01",
     title: "Secure your spot",
     description:
-      "Fill in a short form. Free. No commitment. Takes 2 minutes.",
+      "Fill in a short form. Free. No commitment. Takes 30 seconds.",
   },
   {
     number: "02",
-    title: "Attend a live session",
+    title: "Watch the explanation",
     description:
-      "Join a private webinar hosted by the founder. Get every detail. Ask every question.",
+      "You receive recorded video explanations. Watch them in your own time.",
   },
   {
     number: "03",
+    title: "Attend a live session",
+    description:
+      "Once you're done, join a private webinar hosted by the founder. Get every detail. Ask every question.",
+  },
+  {
+    number: "04",
     title: "Decide",
     description:
       "If it is for you, you are in. If not, no pressure. No follow-ups. No hard feelings.",
@@ -82,7 +88,7 @@ export function HowItWorksSection() {
             aria-hidden
           />
 
-          <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
+          <div className="relative grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 md:gap-10">
             {STEPS.map((step, i) => (
               <motion.article
                 key={step.number}

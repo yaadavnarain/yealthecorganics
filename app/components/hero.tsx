@@ -38,16 +38,17 @@ export function Hero() {
           {...heroFade(0)}
           className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
         >
-          Financial Freedom for the Youth,{" "}
-          <span className="text-yealth-gold">Zero Effort</span>.
+          Financial Freedom for the Youth.{" "}
+          <span className="text-yealth-gold">We Farm. You Own.</span>
         </motion.h1>
 
         <motion.p
           {...heroFade(0.1)}
           className="max-w-[620px] font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
         >
-          Become Financially Stable. Retire Early. Retire Your Parents. Build
-          Generational Wealth. Build Your Legacy.
+          Build toward financial stability. A real shot at retiring early, and
+          maybe retiring your parents too. Build generational wealth and a legacy
+          that lasts.
         </motion.p>
 
         <motion.div
@@ -61,7 +62,7 @@ export function Hero() {
           {...heroFade(0.3)}
           className="font-body text-lg text-yealth-offwhite md:text-xl"
         >
-          Become an agribusiness owner from just{" "}
+          Co-own a farm from just{" "}
           <span className="font-bold text-yealth-gold">Rs 1,288/month</span>.
         </motion.p>
 
@@ -81,7 +82,7 @@ export function Hero() {
           {...heroFade(0.4)}
           className="text-sm text-yealth-offwhite/50"
         >
-          Free. No commitment. Takes 2 minutes.
+          Free. No commitment. Takes 30 seconds.
         </motion.p>
       </motion.div>
     </section>

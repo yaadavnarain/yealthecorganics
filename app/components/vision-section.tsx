@@ -18,7 +18,7 @@ export function VisionSection() {
           className="font-heading text-[26px] font-bold text-yealth-offwhite md:text-[36px]"
         >
           What if you could{" "}
-          <span className="text-yealth-gold">own a real business</span> for less
+          <span className="text-yealth-gold">co-own a real farm</span> for less
           than your monthly phone bill?
         </motion.h2>
         <motion.div
@@ -26,12 +26,12 @@ export function VisionSection() {
           className="flex flex-col gap-6 font-body text-base text-yealth-offwhite/90"
         >
           <p>
-            Not a side hustle. Not a scheme. A real farming business that earns
-            for you every single month.
+            Not a side hustle. A farming venture you co-own and build for the
+            long term. Real farms, real produce, real ownership.
           </p>
           <p>
             And if you need money now, not later, there are ways to start earning
-            immediately while your farm grows.
+            while your farm grows.
           </p>
         </motion.div>
       </div>

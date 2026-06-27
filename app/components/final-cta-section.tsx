@@ -58,7 +58,7 @@ export function FinalCtaSection() {
             <ArrowRight className="h-5 w-5" aria-hidden />
           </a>
           <p className="mt-5 font-body text-sm text-yealth-offwhite/50">
-            Free. No commitment. Takes 2 minutes.
+            Free. No commitment. Takes 30 seconds.
           </p>
         </motion.div>
       </div>

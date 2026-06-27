@@ -18,7 +18,7 @@
  *  shrinks in sync.
  *
  * 32s master loop: 3 story cycles (24s) + an 8s closing hold so the final
- * phrase "Thank you for contributing to Food Security in Africa" stays on
+ * phrase "Thank you for helping build food security" stays on
  * screen ~7s to be read, then the whole animation resets and loops.
  *
  * Narration: own a farm → grows lettuce → harvest pays you → Repeat: More
@@ -439,7 +439,7 @@ export default function YealthFlywheel() {
       {/* viewBox hugs the drawn content (y 150..438 after the axis rework) so
           the rendered box has no empty bands; coordinates are unchanged */}
       <svg className="yfd" viewBox="0 145 800 300" role="img"
-        aria-label="You own a farm. Your farm grows lettuce. The harvest pays you. You own more farms and the cycle repeats. Income grows with every farm.">
+        aria-label="You own farms. Your farms grow veg. The veg is sold. You earn. More farms, earn more. Repeat. Thank you for helping build food security.">
         <defs>
           <radialGradient id="yfdCoinGrad" cx="35%" cy="30%" r="80%">
             <stop offset="0%" stopColor="#FFE9A0" />
@@ -580,18 +580,18 @@ export default function YealthFlywheel() {
         </g>
 
         {/* cycling labels */}
-        <text className="lbl lbl1" x="400" y="432">You <tspan className="g">own</tspan> a farm</text>
-        <text className="lbl lbl2" x="400" y="432">Your farm <tspan className="g">grows</tspan> lettuce</text>
-        <text className="lbl lbl3" x="400" y="432">The harvest <tspan className="g">pays you</tspan></text>
-        <text className="lbl lbl4" x="400" y="432">Repeat: More Farms, <tspan className="g">More Income</tspan></text>
-        <text className="lbl lbl5" x="400" y="432">You own <tspan className="g">more farms</tspan></text>
-        <text className="lbl lbl6" x="400" y="432"><tspan className="g">All</tspan> your farms grow lettuce</text>
-        <text className="lbl lbl7" x="400" y="432">All harvests <tspan className="g">pay you</tspan></text>
-        <text className="lbl lbl8" x="400" y="432">Repeat: More Farms, <tspan className="g">More Income</tspan></text>
-        <text className="lbl lbl9" x="400" y="432">You own <tspan className="g">more farms</tspan></text>
-        <text className="lbl lbl10" x="400" y="432"><tspan className="g">All</tspan> your farms grow lettuce</text>
-        <text className="lbl lbl11" x="400" y="432">All harvests <tspan className="g">pay you</tspan></text>
-        <text className="lbl lbl12" x="400" y="432">Thank you for contributing to <tspan className="g">Food Security in Africa</tspan></text>
+        <text className="lbl lbl1" x="400" y="432">You <tspan className="g">own</tspan> farms</text>
+        <text className="lbl lbl2" x="400" y="432">Your farms <tspan className="g">grow</tspan> veg</text>
+        <text className="lbl lbl3" x="400" y="432">The veg is <tspan className="g">sold</tspan></text>
+        <text className="lbl lbl4" x="400" y="432">You <tspan className="g">earn</tspan></text>
+        <text className="lbl lbl5" x="400" y="432"><tspan className="g">More farms</tspan>, earn more</text>
+        <text className="lbl lbl6" x="400" y="432">Your farms <tspan className="g">grow</tspan> veg</text>
+        <text className="lbl lbl7" x="400" y="432">The veg is <tspan className="g">sold</tspan></text>
+        <text className="lbl lbl8" x="400" y="432">You <tspan className="g">earn</tspan></text>
+        <text className="lbl lbl9" x="400" y="432"><tspan className="g">More farms</tspan>, earn more</text>
+        <text className="lbl lbl10" x="400" y="432">Your farms <tspan className="g">grow</tspan> veg</text>
+        <text className="lbl lbl11" x="400" y="432">The veg is <tspan className="g">sold</tspan></text>
+        <text className="lbl lbl12" x="400" y="432">Thank you for helping build <tspan className="g">food security</tspan></text>
         <text className="lbl lbl-static" x="400" y="432">Own farms. <tspan className="g">Get paid</tspan>. Repeat.</text>
       </svg>
     </div>

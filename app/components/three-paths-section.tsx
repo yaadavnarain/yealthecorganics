@@ -18,7 +18,7 @@ const PATHS: Path[] = [
   {
     title: "Own a Farm",
     description:
-      "Start your farming business from Rs 1,288/mo. Build passive income and own real assets.",
+      "Co-own a farm from just Rs 1,288/mo. Own real farmland with other young Mauritians and share in what it grows.",
     accent: "gold",
     cta: "Secure my spot",
     href: "https://tally.so/r/2EDOEV",
@@ -30,7 +30,7 @@ const PATHS: Path[] = [
       "Part-time work available in construction, plantation and delivery.",
     accent: "mint",
     cta: "Register Now",
-    href: "https://muktish.com/freelance",
+    href: "https://wa.me/23054523432",
     primary: false,
   },
   {
@@ -39,7 +39,16 @@ const PATHS: Path[] = [
       "Create content and get paid. All social media platforms. Faceless videos allowed.",
     accent: "mint",
     cta: "Register Now",
-    href: "https://muktish.com/content",
+    href: "https://wa.me/23054523432",
+    primary: false,
+  },
+  {
+    title: "Business Incubator",
+    description:
+      "We provide training, capital and market access to full-time entrepreneurs.",
+    accent: "mint",
+    cta: "Register Now",
+    href: "https://wa.me/23054523432",
     primary: false,
   },
 ];
@@ -47,7 +56,7 @@ const PATHS: Path[] = [
 export function ThreePathsSection() {
   return (
     <section className="section-pad mx-auto max-w-[1200px] px-6 md:px-8">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {PATHS.map((path, i) => (
           <motion.article
             key={path.title}

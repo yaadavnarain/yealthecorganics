@@ -46,7 +46,7 @@ export function Footer() {
               />
             </a>
             <p className="mt-4 max-w-[360px] font-body text-base leading-relaxed text-yealth-offwhite/70">
-              Real farms. Real income. Built for the Youth of Mauritius who refuse to wait for a future that never comes.
+              Real farms. Real ownership. Built for the youth of Mauritius who refuse to wait for a future that never comes.
             </p>
             <div className="mt-6 flex items-center gap-3">
               {SOCIALS.map(({ label, icon: Icon, href }) => (
@@ -111,7 +111,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-yealth-offwhite/10 pt-8 md:mt-16 md:flex-row md:items-center md:justify-between">
           <p className="font-body text-sm text-yealth-offwhite/50">
-            © {year} Muktish. Built with care in Mauritius.
+            © {year} yealth.
           </p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 font-body text-sm">
             {LEGAL_LINKS.map((link) => (

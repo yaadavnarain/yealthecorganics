@@ -20,7 +20,7 @@ const PRODUCTS: Product[] = [
     icon: Sprout,
     title: "Your Farm",
     description:
-      "You own it. We build it, operate it, and handle everything. You collect the income.",
+      "You co-own it with other young Mauritians. yealth does the farming. You have a say in how it is run, and you share in what it earns.",
     accent: "gold",
   },
   {
@@ -32,9 +32,9 @@ const PRODUCTS: Product[] = [
   },
   {
     icon: Coins,
-    title: "Your Income",
+    title: "Your Share",
     description:
-      "Monthly passive income deposited into your account. Income grows as your farms grow.",
+      "A share of what the farms earn, paid out to you. The more farms you co-own, the more you earn.",
     accent: "gold",
   },
   {
