@@ -34,25 +34,27 @@ export function Hero() {
         style={{ opacity: contentOpacity }}
         className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1100px] flex-col items-center justify-center gap-5 px-6 pt-[72px] pb-4 text-center md:gap-6 md:px-8 md:pt-[84px] md:pb-6"
       >
-        <motion.h1
-          {...heroFade(0)}
-          className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
-        >
-          Financial Freedom
-          <br />
-          For the Youth.
-          <br />
-          <span className="text-yealth-gold">We Farm. You Own.</span>
-        </motion.h1>
+        <div className="flex w-full max-w-[620px] flex-col gap-5 text-left md:gap-6">
+          <motion.h1
+            {...heroFade(0)}
+            className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
+          >
+            Financial Freedom
+            <br />
+            For the Youth.
+            <br />
+            <span className="text-yealth-gold">We Farm. You Own.</span>
+          </motion.h1>
 
-        <motion.p
-          {...heroFade(0.1)}
-          className="max-w-[620px] font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
-        >
-          Build toward financial stability. A real shot at retiring early, and
-          maybe retiring your parents too. Build generational wealth and a legacy
-          that lasts.
-        </motion.p>
+          <motion.p
+            {...heroFade(0.1)}
+            className="font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
+          >
+            Build toward financial stability. A real shot at retiring early, and
+            maybe retiring your parents too. Build generational wealth and a legacy
+            that lasts.
+          </motion.p>
+        </div>
 
         <motion.div
           {...heroFade(0.2)}
