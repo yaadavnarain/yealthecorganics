@@ -28,7 +28,7 @@ export function StatsStrip() {
             <AnimatedCounter end={4500} suffix="+" />
           </div>
           <div className="mt-1 text-xs text-yealth-offwhite/60 md:text-sm">
-            youth already in
+            youths believe in the project
           </div>
         </div>
         <div className="text-center">

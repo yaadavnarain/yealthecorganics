@@ -47,7 +47,7 @@ export function Hero() {
 
         <motion.p
           {...heroFade(0.1)}
-          className="max-w-[620px] font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
+          className="max-w-[620px] self-start text-left font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
         >
           Build toward financial stability. A real shot at retiring early, and
           maybe retiring your parents too. Build generational wealth and a legacy

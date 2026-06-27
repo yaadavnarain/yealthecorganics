@@ -115,7 +115,7 @@ export function FaqSection() {
         >
           {FAQ_ITEMS.map((item) => (
             <AccordionItem key={item.id} value={item.id}>
-              <AccordionTrigger>{item.question}</AccordionTrigger>
+              <AccordionTrigger className="text-left">{item.question}</AccordionTrigger>
               <AccordionContent>{item.answer}</AccordionContent>
             </AccordionItem>
           ))}

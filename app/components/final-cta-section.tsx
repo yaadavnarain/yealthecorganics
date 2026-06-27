@@ -44,7 +44,7 @@ export function FinalCtaSection() {
           {...fadeUp(0.2)}
           className="mt-6 font-body text-base text-yealth-offwhite/70 md:text-lg"
         >
-          Every month you wait is another month someone else takes the spot. Lock in yours now.
+          Securing your spot is free. Check out the explanatory videos, attend the live sessions, then make an informed decision. We&apos;ll support you every step of the way.
         </motion.p>
 
         <motion.div {...fadeUp(0.3)} className="mt-10">
