@@ -18,7 +18,8 @@ const SOCIALS = [
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
   { label: "How It Works", href: "/#how-it-works" },
-  { label: "Calculator", href: "/calculator" },
+  // TEMP-HIDE-CALCULATOR (figures being corrected)
+  // { label: "Calculator", href: "/calculator" },
   { label: "FAQ", href: "/#faq" },
   { label: "Secure my spot", href: "https://tally.so/r/2EDOEV", external: true },
 ];
