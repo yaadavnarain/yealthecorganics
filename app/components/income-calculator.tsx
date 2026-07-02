@@ -378,7 +378,7 @@ export function IncomeCalculator() {
             The earlier you start, the closer you get to financial freedom.
           </div>
           <a
-            href="https://tally.so/r/2EDOEV"
+            href="https://join.yealth.mu/securemyspot"
             target="_blank"
             rel="noopener noreferrer"
             className="gold-cta block w-full rounded-yealth p-4 text-center font-heading text-base"

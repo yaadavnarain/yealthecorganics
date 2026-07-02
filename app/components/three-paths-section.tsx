@@ -21,7 +21,7 @@ const PATHS: Path[] = [
       "Co-own a farm from just Rs 1,288/mo. Own real farmland with other young Mauritians and share in what it grows.",
     accent: "gold",
     cta: "Secure my spot",
-    href: "https://tally.so/r/2EDOEV",
+    href: "https://join.yealth.mu/securemyspot",
     primary: true,
   },
   {
@@ -29,8 +29,8 @@ const PATHS: Path[] = [
     description:
       "Part-time work available in construction, plantation and delivery.",
     accent: "mint",
-    cta: "Register Now",
-    href: "https://tally.so/r/687RBo",
+    cta: "Freelancer Program",
+    href: "https://join.yealth.mu/freelancerprogram",
     primary: false,
   },
   {
@@ -38,8 +38,8 @@ const PATHS: Path[] = [
     description:
       "Create content and get paid. All social media platforms. Faceless videos allowed.",
     accent: "mint",
-    cta: "Register Now",
-    href: "https://tally.so/r/EkX2l2",
+    cta: "Content Creator Program",
+    href: "https://join.yealth.mu/contentcreatorprogram",
     primary: false,
   },
   {
@@ -47,8 +47,8 @@ const PATHS: Path[] = [
     description:
       "We provide training, capital and market access to full-time entrepreneurs.",
     accent: "mint",
-    cta: "Register Now",
-    href: "https://tally.so/r/VL4a6N",
+    cta: "Business Incubator/Accelerator",
+    href: "https://join.yealth.mu/businessincubatoraccelerator",
     primary: false,
   },
 ];

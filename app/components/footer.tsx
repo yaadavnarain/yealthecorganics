@@ -21,7 +21,7 @@ const NAV_LINKS = [
   // TEMP-HIDE-CALCULATOR (figures being corrected)
   // { label: "Calculator", href: "/calculator" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Secure my spot", href: "https://tally.so/r/2EDOEV", external: true },
+  { label: "Secure my spot", href: "https://join.yealth.mu/securemyspot", external: true },
 ];
 
 const LEGAL_LINKS = [

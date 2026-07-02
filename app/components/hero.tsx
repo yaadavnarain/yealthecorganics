@@ -73,7 +73,7 @@ export function Hero() {
 
         <motion.div {...heroFade(0.35)}>
           <a
-            href="https://tally.so/r/2EDOEV"
+            href="https://join.yealth.mu/securemyspot"
             target="_blank"
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center justify-center gap-2 rounded-yealth px-8 py-4 font-heading text-base"

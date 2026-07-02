@@ -49,7 +49,7 @@ export function FinalCtaSection() {
 
         <motion.div {...fadeUp(0.3)} className="mt-10">
           <a
-            href="https://tally.so/r/2EDOEV"
+            href="https://join.yealth.mu/securemyspot"
             target="_blank"
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-10 py-5 font-heading text-base md:text-lg"

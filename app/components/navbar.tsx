@@ -103,7 +103,7 @@ export function Navbar() {
             Mauritius
           </span>
           <a
-            href="https://tally.so/r/2EDOEV"
+            href="https://join.yealth.mu/securemyspot"
             target="_blank"
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-5 py-2.5 font-heading text-sm"
@@ -158,7 +158,7 @@ export function Navbar() {
                 Mauritius
               </span>
               <a
-                href="https://tally.so/r/2EDOEV"
+                href="https://join.yealth.mu/securemyspot"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
