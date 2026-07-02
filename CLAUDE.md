@@ -24,7 +24,7 @@ Any push to `main` triggers Vercel auto-deploy in ~90 seconds.
 
 ## Brand — respect exactly
 
-- **Colors**: yealth-gold `#F5C842`, yealth-mint `#34D399`, yealth-black `#0A0A0A`, yealth-offwhite `#F7F7F7`
+- **Colors**: yealth-gold `#F5C842`, yealth-mint `#34D399`, yealth-black (Dark Charcoal) `#1D1C1F`, yealth-offwhite (White Gold) `#FFFFF4`
 - **Fonts**: Quicksand 700 (headings, class `font-heading`), Nunito 400 (body, class `font-body`)
 - **Tone**: confident, anti-corporate, Mauritian-rooted. Never marketing-speak. No "synergy" / "leverage" / "ecosystem".
 - **Tagline**: "Become a farm owner for Rs 1,288/mo. Monthly Passive Income. Own Assets. Retire Early. Generational Wealth."

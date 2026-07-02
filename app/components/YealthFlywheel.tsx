@@ -96,7 +96,7 @@ const css = `
 
   .yfd .lbl{
     font-family:'Quicksand',sans-serif;font-weight:600;font-size:21px;
-    fill:#F7F7F7;text-anchor:middle;opacity:0;transform-box:fill-box;
+    fill:#FFFFF4;text-anchor:middle;opacity:0;transform-box:fill-box;
   }
   .yfd .lbl .g{fill:#F5C842}
   .yfd .lbl1{animation:yfdLbl1 32s linear infinite}

@@ -22,7 +22,7 @@ export function FounderSection() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.78) 84%, rgba(10,10,10,0.96) 92%, #0A0A0A 100%)",
+            "linear-gradient(to bottom, #1D1C1F 0%, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.78) 84%, rgba(10,10,10,0.96) 92%, #1D1C1F 100%)",
         }}
         aria-hidden
       />

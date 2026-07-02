@@ -35,8 +35,8 @@ export default {
         ring: "hsl(var(--ring))",
         "yealth-gold": "#F5C842",
         "yealth-mint": "#34D399",
-        "yealth-black": "#0A0A0A",
-        "yealth-offwhite": "#F7F7F7",
+        "yealth-black": "#1D1C1F",
+        "yealth-offwhite": "#FFFFF4",
         "yealth-grey": "#A0A0A0",
       },
       borderRadius: {

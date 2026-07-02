@@ -5,100 +5,171 @@ export const metadata = {
   description: "How Yealth handles information collected through yealth.mu.",
 };
 
+type Block =
+  | { kind: "h"; text: string }
+  | { kind: "p"; text: string }
+  | { kind: "ul"; items: string[] };
+
+const BLOCKS: Block[] = [
+  { kind: "h", text: "1. Who we are" },
+  {
+    kind: "p",
+    text: `This Privacy Policy explains how yealth ("we", "us", "our") collects and uses personal data through the website yealth.mu. yealth is the data controller responsible for your personal data, which means we decide what data is collected and how it is used. We handle personal data in line with the Data Protection Act 2017 of Mauritius.`,
+  },
+  { kind: "h", text: "2. What we collect" },
+  {
+    kind: "p",
+    text: `When you reserve your spot through our waitlist form, we collect the information you give us. This is:`,
+  },
+  {
+    kind: "ul",
+    items: [
+      `your title (for example Mr, Mrs, or Ms), and your first and last name;`,
+      `your email address;`,
+      `your WhatsApp or phone number;`,
+      `your age range;`,
+      `the plan you are interested in, which is only an indication and not a commitment; and`,
+      `how you heard about us.`,
+    ],
+  },
+  {
+    kind: "p",
+    text: `We do not ask for, and do not want, sensitive financial details such as bank card or account numbers through this website. We may also collect limited technical information automatically, such as your device type, browser, and general use of the site, through basic cookies and analytics.`,
+  },
+  { kind: "h", text: "3. How we use your data" },
+  { kind: "p", text: `We use your personal data to:` },
+  {
+    kind: "ul",
+    items: [
+      `add you to our waitlist and contact you about information sessions, webinars, and updates;`,
+      `respond to your questions and requests;`,
+      `operate, secure, and improve the website; and`,
+      `meet our legal obligations.`,
+    ],
+  },
+  {
+    kind: "p",
+    text: `We rely on your consent, and on our legitimate interest in running and improving our service, as the basis for this processing. Where we rely on consent, you can withdraw it at any time.`,
+  },
+  { kind: "h", text: "4. Service providers and where your data is held" },
+  {
+    kind: "p",
+    text: `We use two trusted third-party providers to run this website and collect your responses. Our waitlist form is provided by Tally, which processes your form responses on our behalf on servers located outside Mauritius. This means your personal data may be transferred to and stored in another country. Where this happens, we take steps to ensure your data receives an adequate level of protection, as required by the Data Protection Act 2017. Our website is hosted by cloud.mu, which is based in Mauritius.`,
+  },
+  { kind: "h", text: "5. Sharing" },
+  {
+    kind: "p",
+    text: `We do not sell your personal data. We share it only with the service providers described above, and where we are required to do so by law or by a competent authority.`,
+  },
+  { kind: "h", text: "6. How long we keep it" },
+  {
+    kind: "p",
+    text: `We keep your personal data only for as long as we need it for the purposes described in this policy, or for as long as the law requires. When it is no longer needed, we delete it or make it anonymous.`,
+  },
+  { kind: "h", text: "7. Your rights" },
+  {
+    kind: "p",
+    text: `Under the Data Protection Act 2017, you have the right to ask us to:`,
+  },
+  {
+    kind: "ul",
+    items: [
+      `confirm whether we hold personal data about you and give you access to it;`,
+      `correct data that is inaccurate or incomplete;`,
+      `delete your data or stop using it, in certain circumstances; and`,
+      `stop sending you marketing messages.`,
+    ],
+  },
+  {
+    kind: "p",
+    text: `To exercise any of these rights, contact us using the details below. You also have the right to lodge a complaint with the Data Protection Office of Mauritius if you are not satisfied with how we handle your personal data.`,
+  },
+  { kind: "h", text: "8. Cookies" },
+  {
+    kind: "p",
+    text: `We use a small number of cookies and similar technologies to help the website work and to understand how it is used. You can control or delete cookies through your browser settings. Where the law requires it, we will ask for your consent before using non-essential analytics cookies.`,
+  },
+  { kind: "h", text: "9. Security" },
+  {
+    kind: "p",
+    text: `We take reasonable technical and organisational measures to protect your personal data. However, no method of transmission or storage is completely secure, and we cannot guarantee absolute security.`,
+  },
+  { kind: "h", text: "10. Changes" },
+  {
+    kind: "p",
+    text: `We may update this Privacy Policy from time to time. The current version is always the one published here, and the "last updated" date shows when it last changed.`,
+  },
+];
+
+const linkClass =
+  "text-yealth-gold underline underline-offset-2 transition-colors hover:text-yealth-mint";
+
 export default function PrivacyPage() {
   return (
     <main className="min-h-screen bg-yealth-black text-yealth-offwhite font-body">
-      <div className="mx-auto max-w-[800px] py-24 px-6 leading-relaxed">
+      <div className="mx-auto max-w-[800px] px-6 py-24 leading-relaxed">
         <Link
           href="/"
-          className="text-yealth-gold font-body hover:underline"
+          className="font-body text-yealth-gold transition-colors hover:text-yealth-mint"
         >
           ← Back to home
         </Link>
 
-        <h1 className="font-heading text-yealth-gold text-4xl mt-8 mb-2">
+        <h1 className="mt-8 mb-2 font-heading text-4xl text-yealth-gold">
           Privacy Policy
         </h1>
-        <p className="text-sm text-white/50 mb-12">Last updated: 1 June 2026</p>
-
-        <p className="mb-8">
-          This Privacy Policy explains how Yealth (&quot;we&quot;, &quot;us&quot;), a
-          company registered in the Republic of Mauritius, handles information
-          collected through yealth.mu.
+        <p className="mb-12 text-sm text-yealth-offwhite/50">
+          Last updated 2 July 2026
         </p>
 
-        <h2 className="font-heading text-2xl mt-10 mb-3">
-          Information we collect
+        {BLOCKS.map((block, i) => {
+          if (block.kind === "h") {
+            return (
+              <h2
+                key={i}
+                className="mt-10 mb-3 font-heading text-xl font-bold text-yealth-offwhite md:text-2xl"
+              >
+                {block.text}
+              </h2>
+            );
+          }
+          if (block.kind === "ul") {
+            return (
+              <ul
+                key={i}
+                className="mb-6 list-disc space-y-2 pl-6 text-yealth-offwhite/85"
+              >
+                {block.items.map((item, j) => (
+                  <li key={j}>{item}</li>
+                ))}
+              </ul>
+            );
+          }
+          return (
+            <p key={i} className="mb-6 text-yealth-offwhite/85">
+              {block.text}
+            </p>
+          );
+        })}
+
+        <h2 className="mt-10 mb-3 font-heading text-xl font-bold text-yealth-offwhite md:text-2xl">
+          11. Contact
         </h2>
-        <p className="mb-8">
-          When you submit our contact form, we collect the name, phone number,
-          and any optional message you provide. Our hosting and form providers
-          may also collect basic technical data such as your IP address and
-          browser type.
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">
-          How we use your information
-        </h2>
-        <p className="mb-8">
-          We use your details only to contact you about Yealth&apos;s webinars and
-          opportunity, and to respond to your enquiry. We do not sell, rent, or
-          trade your personal information.
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">
-          Who we share it with
-        </h2>
-        <p className="mb-8">
-          Your form submissions are processed by Formspree (form delivery) and
-          our site is hosted by Vercel. These providers process data on our
-          behalf. We otherwise do not share your information except where
-          required by law.
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">
-          Data retention and security
-        </h2>
-        <p className="mb-8">
-          We keep your information only as long as needed for the purposes above
-          and apply reasonable measures to protect it.
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">Your rights</h2>
-        <p className="mb-8">
-          Under the Mauritius Data Protection Act 2017, you may request access
-          to, correction of, or deletion of your personal data. Contact us on{" "}
-          <a
-            href="https://wa.me/23054523432"
-            className="text-yealth-gold hover:underline"
-          >
-            WhatsApp (+230 5452 3432)
-          </a>
-          .
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">Cookies</h2>
-        <p className="mb-8">
-          We may use basic cookies and analytics to understand site usage. You
-          can control cookies through your browser settings.
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">Changes</h2>
-        <p className="mb-8">
-          We may update this policy and will revise the date above when we do.
-        </p>
-
-        <h2 className="font-heading text-2xl mt-10 mb-3">Contact</h2>
-        <p className="mb-8">
-          Questions? Message us on{" "}
-          <a
-            href="https://wa.me/23054523432"
-            className="text-yealth-gold hover:underline"
-          >
-            WhatsApp
-          </a>{" "}
-          or call +230 5452 3432.
-        </p>
+        <div className="mb-6 space-y-1 text-yealth-offwhite/85">
+          <p>yealth</p>
+          <p>
+            WhatsApp / phone:{" "}
+            <a href="tel:+23054523432" className={linkClass}>
+              +230 5452 3432
+            </a>
+          </p>
+          <p>
+            Email:{" "}
+            <a href="mailto:info@yealth.mu" className={linkClass}>
+              info@yealth.mu
+            </a>
+          </p>
+        </div>
       </div>
     </main>
   );
