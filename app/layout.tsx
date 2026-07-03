@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Quicksand, Nunito } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { FloatingCta } from "@/app/components/floating-cta";
 import { AmbientParticles } from "@/app/components/ambient-particles";
+import CookieConsent from "@/components/CookieConsent";
+import ClarityAnalytics from "@/components/ClarityAnalytics";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -53,6 +57,10 @@ export default function RootLayout({
         <AmbientParticles />
         {children}
         <FloatingCta />
+        <Analytics />
+        <SpeedInsights />
+        <CookieConsent />
+        <ClarityAnalytics />
       </body>
     </html>
   );
