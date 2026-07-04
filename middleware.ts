@@ -10,7 +10,8 @@ function challenge(): NextResponse {
   return new NextResponse("Authentication required.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="Yealth PV Calculator", charset="UTF-8"',
+      "WWW-Authenticate":
+        'Basic realm="Yealth Solar Calculator", charset="UTF-8"',
       "X-Robots-Tag": NOINDEX,
     },
   });
@@ -24,7 +25,7 @@ function safeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-const PROTECTED = new Set(["/pvcalculator", "/tools/pvcalculator.html"]);
+const PROTECTED = new Set(["/pvcalculatoroffgrid", "/tools/pvcalculator.html"]);
 
 export function middleware(req: NextRequest) {
   // Defensive: anything the matcher lets through that isn't a protected path
@@ -69,5 +70,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/pvcalculator", "/tools/pvcalculator.html"],
+  matcher: ["/pvcalculatoroffgrid", "/tools/pvcalculator.html"],
 };

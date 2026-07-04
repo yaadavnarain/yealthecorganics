@@ -28,7 +28,7 @@ const nextConfig = {
       // Serve the password-gated off-grid solar tool at a clean URL.
       // Auth is enforced in middleware.ts before this rewrite resolves.
       {
-        source: "/pvcalculator",
+        source: "/pvcalculatoroffgrid",
         destination: "/tools/pvcalculator.html",
       },
     ];

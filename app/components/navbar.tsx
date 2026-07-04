@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { label: "How It Works", href: "/#how-it-works" },
   // TEMP-HIDE-CALCULATOR (figures being corrected)
   // { label: "Calculator", href: "/calculator" },
+  { label: "Solar Calculator", href: "/pvcalculatoroffgrid" },
   { label: "FAQ", href: "/#faq" },
 ];
 
