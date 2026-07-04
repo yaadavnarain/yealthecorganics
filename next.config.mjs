@@ -23,6 +23,16 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      // Serve the password-gated off-grid solar tool at a clean URL.
+      // Auth is enforced in middleware.ts before this rewrite resolves.
+      {
+        source: "/pvcalculator",
+        destination: "/tools/pvcalculator.html",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
