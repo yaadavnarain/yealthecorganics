@@ -1,8 +1,8 @@
-# Yealth Website — Project Context for Claude Code
+# yealth Website — Project Context for Claude Code
 
 ## What this is
 
-Marketing website for **Yealth** (yealth.mu) — a Mauritian farm-investment business. Founder and CEO: Muktish. The site's primary goal is converting visitors into webinar signups via the contact form, so every change should serve that funnel.
+Marketing website for **yealth** (yealth.mu) — a Mauritian farm-investment business. Founder and CEO: Muktish. The site's primary goal is converting visitors into webinar signups via the contact form, so every change should serve that funnel.
 
 ## Live URLs
 

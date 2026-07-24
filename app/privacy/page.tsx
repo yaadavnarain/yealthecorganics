@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy — Yealth",
-  description: "How Yealth handles information collected through yealth.mu.",
+  title: "Privacy Policy — yealth",
+  description: "How yealth handles information collected through yealth.mu.",
 };
 
 type Block =

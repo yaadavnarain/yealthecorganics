@@ -1,6 +1,6 @@
-# Yealth — Become a Farm Owner in Mauritius
+# yealth — Become a Farm Owner in Mauritius
 
-Dark, cinematic marketing site for **Yealth** (yealth.mu), a Mauritian
+Dark, cinematic marketing site for **yealth** (yealth.mu), a Mauritian
 farm-investment business. The site's primary goal is converting visitors into
 webinar signups via the contact form.
 

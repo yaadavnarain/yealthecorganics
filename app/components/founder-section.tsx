@@ -38,7 +38,7 @@ export function FounderSection() {
         >
           <Image
             src="/images/founder-muktish.jpeg"
-            alt="Muktish, Founder and CEO of Yealth"
+            alt="Muktish, Founder and CEO of yealth"
             width={200}
             height={200}
             className="h-full w-full object-cover"

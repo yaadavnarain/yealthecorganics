@@ -23,23 +23,23 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Yealth — Co-own a Farm in Mauritius",
+  title: "yealth — Co-own a Farm in Mauritius",
   description:
     "Co-own a real farm in Mauritius with other young Mauritians from just Rs 1,288/month. Share in what it earns and build toward financial freedom. Join the next live session.",
   metadataBase: new URL("https://yealth.mu"),
   openGraph: {
-    title: "Yealth — Co-own a Farm in Mauritius",
+    title: "yealth — Co-own a Farm in Mauritius",
     description:
       "Co-own a real farm in Mauritius with other young Mauritians from just Rs 1,288/month. Share in what it earns and build toward financial freedom. Join the next live session.",
     url: "https://yealth.mu",
-    siteName: "Yealth",
+    siteName: "yealth",
     type: "website",
     locale: "en",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yealth — Co-own a Farm in Mauritius",
+    title: "yealth — Co-own a Farm in Mauritius",
     description:
       "Co-own a real farm in Mauritius with other young Mauritians from just Rs 1,288/month. Share in what it earns and build toward financial freedom. Join the next live session.",
     images: ["/og-image.png"],

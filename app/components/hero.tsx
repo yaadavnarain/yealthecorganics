@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import YealthFlywheel from "./YealthFlywheel";
+import HeroFlywheel from "./HeroFlywheel";
 
 // The hero is on screen at load, so entrances fire on mount (animate) rather
 // than whileInView — fadeUp's -80px viewport margin never triggers for
@@ -60,7 +60,7 @@ export function Hero() {
           {...heroFade(0.2)}
           className="w-[94vw] max-w-none md:w-full md:max-w-[900px]"
         >
-          <YealthFlywheel />
+          <HeroFlywheel />
         </motion.div>
 
         <motion.p

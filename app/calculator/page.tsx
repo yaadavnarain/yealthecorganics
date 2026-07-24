@@ -4,7 +4,7 @@ import { IncomeCalculator } from "@/app/components/income-calculator";
 import { Glow } from "@/app/components/ui/glow";
 
 export const metadata = {
-  title: "Income Calculator — Yealth",
+  title: "Income Calculator — yealth",
   description:
     "See your projected monthly farm income, total cash earned, and the extra home loan it unlocks — by plan and by year, up to 40 years out.",
 };

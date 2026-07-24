@@ -1,5 +1,5 @@
 /**
- * YealthFlywheel — looping hero animation for yealth.mu.
+ * HeroFlywheel — looping hero animation for yealth.mu.
  *
  * "3D greenhouse & wallet" artwork (promoted from animation-lab Variant D):
  *
@@ -432,7 +432,7 @@ function Greenhouse({ cls, label }: { cls: string; label: string }) {
   );
 }
 
-export default function YealthFlywheel() {
+export default function HeroFlywheel() {
   return (
     <div className="yfd-wrap" style={{ width: "100%", margin: "0 auto" }}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
