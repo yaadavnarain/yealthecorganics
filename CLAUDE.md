@@ -92,7 +92,8 @@ This pattern is already implemented across all three sections. Do not reintroduc
 3. Commit + push:
 
 ```bash
-git add -A
+# Stage files individually by name. Never use `git add -A`.
+git add path/to/first-file.tsx path/to/second-file.tsx
 git commit -m "your message"
 git push origin main
 ```
