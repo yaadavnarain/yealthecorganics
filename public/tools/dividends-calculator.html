@@ -78,6 +78,11 @@
 
   @media(max-width:380px){.opts,.two{grid-template-columns:1fr}.big .n{font-size:30px}}
 
+  .backlink{display:inline-block;font-family:var(--body);font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s}
+  .backlink:hover{color:var(--gold)}
+  .backlink-top{margin-bottom:14px}
+  .backlink-bottom{margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+
   .gate{min-height:100vh;background:var(--bg);display:flex;padding:32px 18px 64px}
   .gate-box{max-width:520px;width:100%;margin:auto}
   .gate-box h2{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.2;margin:0 0 18px;color:var(--gold)}
@@ -108,6 +113,8 @@
 </div>
 
 <div class="wrap" id="app" style="display:none">
+
+  <a class="backlink backlink-top" href="/">Back to yealth.mu</a>
 
   <h1>Dividends Calculator</h1>
   <p class="sub">See what you could earn, and the house it could help you buy.</p>
@@ -207,6 +214,8 @@
     <p>These are projections, not promises. Nothing here is guaranteed and no return is promised.</p>
     <p>A dividend is decided once a year by the society, out of audited surplus, after it pays its own costs.</p>
   </div>
+
+  <a class="backlink backlink-bottom" href="/">Back to yealth.mu</a>
 
 </div>
 
