@@ -9,8 +9,7 @@ import { cn } from "@/lib/utils";
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
   { label: "How It Works", href: "/#how-it-works" },
-  // TEMP-HIDE-CALCULATOR (figures being corrected)
-  // { label: "Calculator", href: "/calculator" },
+  { label: "Calculator", href: "/calculator" },
   // TEMP-HIDE-SOLAR-CALC — nav link removed; page still live at /pvcalculatoroffgrid
   // { label: "Solar Calculator", href: "/pvcalculatoroffgrid" },
   { label: "FAQ", href: "/#faq" },

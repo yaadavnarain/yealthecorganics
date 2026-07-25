@@ -13,16 +13,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      // TEMP-HIDE-CALCULATOR (figures being corrected) — remove this block to restore the Calculator
-      {
-        source: "/calculator",
-        destination: "/",
-        permanent: false, // 307 temporary — do NOT make permanent
-      },
-    ];
-  },
   async rewrites() {
     return [
       // Serve the password-gated off-grid solar tool at a clean URL.
@@ -30,6 +20,11 @@ const nextConfig = {
       {
         source: "/pvcalculatoroffgrid",
         destination: "/tools/pvcalculator.html",
+      },
+      // Public dividends calculator, served as a static file at a clean URL.
+      {
+        source: "/calculator",
+        destination: "/tools/dividends-calculator.html",
       },
     ];
   },

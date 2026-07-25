@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: "https://yealth.mu",
     },
-    // TEMP-HIDE-CALCULATOR (figures being corrected)
+    // /calculator is live but served noindex, so it is deliberately not listed here.
     // {
     //   url: "https://yealth.mu/calculator",
     // },

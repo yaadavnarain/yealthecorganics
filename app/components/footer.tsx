@@ -18,8 +18,7 @@ const SOCIALS = [
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
   { label: "How It Works", href: "/#how-it-works" },
-  // TEMP-HIDE-CALCULATOR (figures being corrected)
-  // { label: "Calculator", href: "/calculator" },
+  { label: "Calculator", href: "/calculator" },
   { label: "FAQ", href: "/#faq" },
   { label: "Secure my spot", href: "https://join.yealth.mu/securemyspot", external: true },
 ];

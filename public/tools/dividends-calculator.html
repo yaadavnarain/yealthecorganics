@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dividends Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0A0A0A; --card:#17171A; --card2:#1F1F23; --line:#2A2A2E;
+    --text:#F7F7F7; --muted:#A0A0A0; --dim:#6B6B6B;
+    --gold:#F5C842; --gold-dim:rgba(245,200,66,.12); --gold-line:rgba(245,200,66,.30);
+    --mint:#34D399; --mint-dim:rgba(52,211,153,.10);
+    --r:8px;
+    --display:'Quicksand',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --body:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:600px;margin:0 auto;padding:24px 18px 60px}
+
+  h1{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.2;margin:0 0 8px}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 24px}
+
+  .step{margin-bottom:30px}
+  .step-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .step-n{width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--bg);font-family:var(--display);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-t{font-family:var(--display);font-weight:700;font-size:19px}
+  .step-s{color:var(--dim);font-size:14px;margin:0 0 14px 34px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+  .field{margin-bottom:22px}
+  .field:last-child{margin-bottom:0}
+  .flabel{font-family:var(--display);font-weight:700;font-size:14px;margin-bottom:9px}
+
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .opt{background:var(--card2);border:1px solid var(--line);border-radius:var(--r);padding:13px 6px;text-align:center;cursor:pointer;transition:.15s}
+  .opt:hover{border-color:var(--gold-line)}
+  .opt.on{border-color:var(--gold);background:var(--gold-dim)}
+  .opt .t{font-family:var(--display);font-weight:700;font-size:15px}
+  .opt .a{font-size:11px;color:var(--muted);margin-top:2px}
+  .opt.on .a{color:var(--text)}
+
+  .stop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+  .sval{font-family:var(--display);font-weight:700;font-size:18px;color:var(--mint)}
+  .sval .age{color:var(--dim);font-weight:500;font-size:14px}
+  input[type=range]{width:100%;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer;margin:0}
+  input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--mint) 0%,var(--mint) var(--fill,35%),var(--card2) var(--fill,35%),var(--card2) 100%)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;height:20px;width:20px;border-radius:50%;background:var(--mint);margin-top:-8px;box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+  input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:var(--card2)}
+  input[type=range]::-moz-range-thumb{height:20px;width:20px;border:none;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+
+  .inp{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--text);padding:13px 14px;border-radius:var(--r);font-family:var(--body);font-size:16px}
+  .inp:focus{outline:none;border-color:var(--gold)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  .big{background:linear-gradient(135deg,var(--gold-dim) 0%,rgba(245,200,66,.04) 100%);border:1px solid var(--gold);border-radius:var(--r);padding:22px 18px;text-align:center;margin-bottom:10px}
+  .big .l{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+  .big .n{font-family:var(--display);font-weight:700;font-size:36px;line-height:1.1;color:var(--gold);letter-spacing:-.5px}
+  .big .s{font-size:13px;color:var(--muted);margin-top:8px}
+
+  .row{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+  .row .l{font-size:14px;color:var(--muted)}
+  .row .n{font-family:var(--display);font-weight:700;font-size:17px;white-space:nowrap}
+  .row.hi{border-color:var(--mint);background:var(--mint-dim)}
+  .row.hi .n{color:var(--mint)}
+  .row.hi .l{color:var(--text)}
+
+
+  .note{font-size:12px;color:var(--dim);line-height:1.55;margin:10px 0 0}
+
+  .disc{margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
+  .disc h3{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin:0 0 10px}
+  .disc p{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 8px}
+
+  @media(max-width:380px){.opts,.two{grid-template-columns:1fr}.big .n{font-size:30px}}
+
+  .gate{min-height:100vh;background:var(--bg);display:flex;padding:32px 18px 64px}
+  .gate-box{max-width:520px;width:100%;margin:auto}
+  .gate-box h2{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.2;margin:0 0 18px;color:var(--gold)}
+  .gate-box p{font-size:15px;line-height:1.65;color:var(--text);margin:0 0 16px}
+  .gate-box p.soft{color:var(--muted);font-size:14px}
+  .gate-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:32px;padding-bottom:8px}
+  .gbtn{padding:15px;border-radius:var(--r);font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;border:1px solid transparent;transition:.15s;text-align:center}
+  .gbtn-yes{background:var(--gold);color:var(--bg)}
+  .gbtn-yes:hover{background:var(--mint)}
+  .gbtn-no{background:transparent;color:var(--muted);border-color:var(--line)}
+  .gbtn-no:hover{color:var(--text);border-color:var(--muted)}
+  @media(max-width:380px){.gate-btns{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <h2>Before you start</h2>
+    <p>What you are about to see are projections, not promises.</p>
+    <p>They show what could happen if the farms perform as planned. They are not a forecast of what will happen, and nothing here is guaranteed. No dividend is fixed and no return is promised.</p>
+    <p class="soft">Loan and house figures are indicative only. Different banks have different policies and their own lending criteria.</p>
+    <div class="gate-btns">
+      <button class="gbtn gbtn-yes" id="agreeBtn">I agree</button>
+      <button class="gbtn gbtn-no" id="disagreeBtn">I disagree</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+
+  <h1>Dividends Calculator</h1>
+  <p class="sub">See what you could earn, and the house it could help you buy.</p>
+
+  <!-- 1 -->
+  <div class="step">
+    <div class="step-head"><div class="step-n">1</div><div class="step-t">What you pay</div></div>
+    <p class="step-s">This amount never changes. It comes out of your pocket every month.</p>
+    <div class="card">
+      <div class="field">
+        <div class="flabel">Choose your monthly amount</div>
+        <div class="opts" id="amtOpts">
+          <div class="opt on" data-u="1"><div class="t">Rs 1,290</div></div>
+          <div class="opt" data-u="2"><div class="t">Rs 2,580</div></div>
+          <div class="opt" data-u="3"><div class="t">Rs 3,870</div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="stop">
+          <span class="flabel" style="margin:0">For how many years?</span>
+          <span class="sval" id="yrVal">Year 15</span>
+        </div>
+        <input type="range" id="yr" min="1" max="40" value="15">
+      </div>
+      <div class="field two">
+        <div>
+          <div class="flabel">Your age today</div>
+          <input class="inp" type="number" id="age" value="18" min="18" max="70">
+        </div>
+        <div>
+          <div class="flabel">Your salary today</div>
+          <input class="inp" type="number" id="sal" value="20000" min="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="step">
+    <div class="step-head"><div class="step-n">2</div><div class="step-t">What you get back</div></div>
+    <p class="step-s">Every year the farm pays you a dividend.</p>
+    <div class="big">
+      <div class="l">Your dividend that year</div>
+      <div class="n" id="divOut">Rs 0</div>
+      <div class="s">Paid once a year, after the farm pays its own costs.</div>
+    </div>
+    <div class="row"><span class="l">Farms your agribusiness owns</span><span class="n" id="farmOut">0</span></div>
+    <div class="row"><span class="l">Total dividends received</span><span class="n" id="cumOut">Rs 0</span></div>
+    <div class="row"><span class="l">Paid from your pocket</span><span class="n" id="paidOut">Rs 0</span></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="step">
+    <div class="step-head"><div class="step-n">3</div><div class="step-t">Your salary by then</div></div>
+    <p class="step-s">Salaries usually creep up a little each year.</p>
+    <div class="row"><span class="l">Salary today</span><span class="n" id="salNow">Rs 0</span></div>
+    <div class="row hi"><span class="l" id="salLbl">Salary in 15 years</span><span class="n" id="salThen">Rs 0</span></div>
+    <p class="note">We grow your salary by 2% a year. We assume you stay in the same job, get no promotion, and change nothing. All figures are in today's prices.</p>
+    <div class="card" style="margin-top:12px">
+      <div class="flabel">Use this instead</div>
+      <p class="note" id="expLead" style="margin:0 0 10px">I think my salary can be more than Rs 0 after 15 years</p>
+      <input class="inp" type="number" id="salExp" placeholder="Enter your expected salary" min="0">
+      <p class="note" id="expNote" style="display:none"></p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="step">
+    <div class="step-head"><div class="step-n">4</div><div class="step-t">What you could borrow</div></div>
+    <p class="step-s">A bank lends based on what you earn. Your dividend counts as income too.</p>
+    <div class="row"><span class="l">Salary only</span><span class="n" id="loanA">Rs 0</span></div>
+    <div class="row"><span class="l">Salary plus dividend</span><span class="n" id="loanB">Rs 0</span></div>
+    <div class="row hi"><span class="l">Extra, thanks to your farm</span><span class="n" id="loanX">Rs 0</span></div>
+    <p class="note">Based on SBM house loan terms: 5.80% a year, 35 year term, 40% of income toward repayment. Whether a bank counts dividend income, and on what terms, is that bank's decision.</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="step">
+    <div class="step-head"><div class="step-n">5</div><div class="step-t">The house you could buy</div></div>
+    <p class="step-s">If you saved your dividends instead of spending them, that becomes your deposit. A deposit does not raise the loan. It raises the house you can afford.</p>
+    <div class="row"><span class="l">Dividends you did not spend</span><span class="n" id="potOut">Rs 0</span></div>
+    <div class="card" style="margin:10px 0">
+      <div class="flabel">Extra deposit from your own pocket</div>
+      <input class="inp" type="number" id="extra" value="0" min="0">
+    </div>
+    <div class="row"><span class="l">Your total deposit</span><span class="n" id="depOut">Rs 0</span></div>
+    <div class="row"><span class="l">Your loan</span><span class="n" id="loanC">Rs 0</span></div>
+    <div class="big" style="margin-top:10px">
+      <div class="l">House value you could afford</div>
+      <div class="n" id="houseOut">Rs 0</div>
+      <div class="s">Your loan plus your deposit.</div>
+    </div>
+  </div>
+
+  <div class="disc">
+    <h3>Please read</h3>
+    <p>These are projections, not promises. Nothing here is guaranteed and no return is promised.</p>
+    <p>A dividend is decided once a year by the society, out of audited surplus, after it pays its own costs.</p>
+  </div>
+
+</div>
+
+<script>
+  var RATE = 1296;        // Rs per block per year at 5,040 heads
+  var UNIT = 3870;        // Rs per block
+  var SPU  = 387;         // shares per block
+  var CPY  = 4;           // cycles per year
+  var MAXL = 3;           // bye-law cap, blocks per cycle
+  var MULT = 71.84;       // SBM 5.80%, 35 years, 40% DSTI
+  var GROWTH = 0.02;      // salary growth per year
+
+  var base = 1, years = 15;
+
+  var yrEl = document.getElementById('yr');
+  var ageEl = document.getElementById('age');
+  var salEl = document.getElementById('sal');
+  var extraEl = document.getElementById('extra');
+  var salExpEl = document.getElementById('salExp');
+
+  function fmt(n){ return 'Rs ' + Math.round(n).toLocaleString('en-US'); }
+  function num(n){ return Math.round(n).toLocaleString('en-US'); }
+
+  // A block bought in one year starts paying from the next year.
+  // Your monthly amount stays flat. Dividends fund any upgrade, up to 3 blocks
+  // per cycle. Anything left over accumulates as savings.
+  function run(){
+    var earning=0, pending=0, pot=0, paid=0, div=0, total=0, cum=0, level=base;
+    for (var y=1; y<=years; y++){
+      earning += pending; pending = 0;
+      div = earning * RATE;
+      cum += div;
+      while (level < MAXL && div >= (level + 1 - base) * CPY * UNIT){
+        level++;
+      }
+      var blocks = CPY * level;
+      var cost   = blocks * UNIT;
+      var pocket = CPY * base * UNIT;
+      paid += pocket;
+      pot  += div - (cost - pocket);
+      pending = blocks;
+      total  += blocks;
+    }
+    return {div:div, cum:cum, blocks:total, shares:total*SPU, paid:paid, pot:pot, level:level};
+  }
+
+  function update(){
+    var r = run();
+
+    // Banks read annual income as a monthly repayment capacity.
+    // This division is used only for the loan figure and is not displayed.
+    var capacity = r.div / 12;
+
+    var age = parseInt(ageEl.value,10) || 0;
+    var salNow = parseFloat(salEl.value) || 0;
+    var salThen = salNow * Math.pow(1+GROWTH, years);
+
+    // If a person gives their own expected salary, that replaces the 2% projection.
+    var exp = parseFloat(salExpEl.value);
+    var salUsed = (exp && exp > 0) ? exp : salThen;
+
+    var loanA = salUsed * MULT;
+    var loanB = (salUsed + capacity) * MULT;
+    var extra = parseFloat(extraEl.value) || 0;
+    var deposit = r.pot + extra;
+
+    document.getElementById('divOut').textContent = fmt(r.div);
+    document.getElementById('farmOut').textContent = num(CPY * years);
+    document.getElementById('cumOut').textContent = fmt(r.cum);
+    document.getElementById('paidOut').textContent = fmt(r.paid);
+
+    document.getElementById('salNow').textContent  = fmt(salNow);
+    document.getElementById('salLbl').textContent  = 'Salary in ' + years + (years===1?' year':' years');
+    document.getElementById('salThen').textContent = fmt(salThen);
+
+    document.getElementById('expLead').textContent =
+      'I think my salary can be more than ' + fmt(salThen) + ' after ' + years + (years===1?' year':' years');
+    salExpEl.placeholder = 'Enter your expected salary';
+    var expNote = document.getElementById('expNote');
+    if (exp && exp > 0){
+      expNote.textContent = 'We will use ' + fmt(exp) + ' for everything below.';
+      expNote.style.display = 'block';
+    } else {
+      expNote.style.display = 'none';
+    }
+
+    document.getElementById('loanA').textContent = fmt(loanA);
+    document.getElementById('loanB').textContent = fmt(loanB);
+    document.getElementById('loanX').textContent = fmt(loanB - loanA);
+
+    document.getElementById('potOut').textContent   = fmt(r.pot);
+    document.getElementById('depOut').textContent   = fmt(deposit);
+    document.getElementById('loanC').textContent    = fmt(loanB);
+    document.getElementById('houseOut').textContent = fmt(loanB + deposit);
+
+
+    document.getElementById('yrVal').innerHTML = 'Year ' + years +
+      (age >= 18 ? ' <span class="age">at ' + (age + years) + '</span>' : '');
+    yrEl.style.setProperty('--fill', (((years-1)/39)*100) + '%');
+  }
+
+  document.getElementById('amtOpts').addEventListener('click', function(e){
+    var el = e.target.closest('.opt'); if(!el) return;
+    this.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('on'); });
+    el.classList.add('on');
+    base = parseInt(el.getAttribute('data-u'),10);
+    update();
+  });
+  yrEl.addEventListener('input', function(){ years = parseInt(this.value,10); update(); });
+  [ageEl, salEl, extraEl, salExpEl].forEach(function(el){ el.addEventListener('input', update); });
+
+  document.getElementById('agreeBtn').addEventListener('click', function(){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  });
+  document.getElementById('disagreeBtn').addEventListener('click', function(){
+    window.location.href = 'https://yealth.mu';
+  });
+
+  update();
+</script>
+</body>
+</html>
