@@ -1,6 +1,6 @@
 import { Navbar } from "@/app/components/navbar";
 import { Hero } from "@/app/components/hero";
-import { StatsStrip } from "@/app/components/stats-strip";
+import { BrandEquation } from "@/app/components/yealth-equation";
 import { PainSection } from "@/app/components/pain-section";
 import { VisionSection } from "@/app/components/vision-section";
 import { ProductCardsSection } from "@/app/components/product-cards-section";
@@ -17,7 +17,7 @@ export default function Page() {
       <Navbar />
       <main>
         <Hero />
-        <StatsStrip />
+        <BrandEquation />
         <PainSection />
         <VisionSection />
         <ProductCardsSection />
