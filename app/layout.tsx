@@ -35,14 +35,15 @@ export const metadata: Metadata = {
     siteName: "yealth",
     type: "website",
     locale: "en",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    // og:image comes from app/opengraph-image.tsx, which generates it at build
+    // time. Listing it here as well would let the two disagree.
   },
   twitter: {
     card: "summary_large_image",
     title: "yealth. Financial Freedom for the Youth.",
     description:
       "A membership for young Mauritians that gives you access to business ownership and new ways to earn. Apply now.",
-    images: ["/og-image.png"],
+    // twitter:image comes from app/twitter-image.tsx.
   },
 };
 

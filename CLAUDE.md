@@ -43,7 +43,9 @@ Navbar → Hero → BrandEquation → PainSection → SolutionSection → Outcom
 - `app/components/HeroFlywheel.tsx` — the looping farm animation inside the hero. Pure SVG + CSS keyframes, no JS at runtime
 - `app/components/yealth-equation.tsx` — exports `BrandEquation`, the animated "health + wealth + youth = yealth" strip directly under the hero
 - `app/components/faq-section.tsx` — the FAQ is a **homepage section**, not its own route. 17 questions in a `FAQ_ITEMS` array rendered through the Radix accordion, anchored at `#faq`
-- `app/components/ui/` — reusable primitives (accordion, form-field, glow, product-card, social-icons, stat-card)
+- `app/components/ui/` — reusable primitives (accordion, glow, social-icons)
+- `app/opengraph-image.tsx` — the 1200×630 social card, generated at build time with `next/og`. `app/twitter-image.tsx` re-exports it so the two cards can never drift. Neither `og:image` nor `twitter:image` is listed in `metadata`; the file conventions emit both
+- `proxy.ts` — HTTP Basic Auth gate for the off-grid solar calculator, matched to `/pvcalculatoroffgrid` and `/tools/pvcalculator.html` only. This is the Next 16 replacement for the deprecated `middleware.ts` convention: same signature, same `config.matcher`, but the function is exported as `proxy` and it always runs on the Node.js runtime, so it must not export `runtime`
 - `lib/motion.ts` — `fadeUp` helper used across every section
 - `public/images/` — all image assets
 - `scripts/check-brand.mjs` — the brand-casing guard, wired as `prebuild`
@@ -67,15 +69,15 @@ This pattern is already implemented across all three sections. Do not reintroduc
 - `/terms` and `/privacy` pages exist and are linked from the footer
 - Footer contact details are real: WhatsApp +230 5452 3432, hotline 86662, info@yealth.mu
 - favicon, app icons, `sitemap.ts` and `robots.ts` in place
+- Social preview card generated at build time from `app/opengraph-image.tsx`
 - Membership-first content rewrite and the 17-question FAQ shipped
 - Deployed to Vercel via GitHub on `main` branch
 
 ## Pending pre-share blockers (priority order)
 
-1. **Missing OG image**. `app/layout.tsx` points `og:image` and `twitter:image` at `/og-image.png`, but `public/og-image.png` does not exist. Social shares currently render with no image. Needs a 1200×630 PNG dropped at that path, reflecting the membership positioning rather than the old co-ownership one.
-2. **Social URLs are still placeholders**. All five entries in `SOCIALS` in `footer.tsx` have `href: "#"`. Phone, hotline and email are real.
-3. **Mobile rendering**. Historically on iPhone Safari most content stayed at opacity 0, likely Framer Motion's `whileInView` not firing. The hero was reworked to fire entrances on mount (`animate`, not `whileInView`) for exactly this reason — see the comment at the top of `hero.tsx`. The rest of the page still uses `whileInView` via `fadeUp` and has not been re-verified on a real device.
-4. **Unimported dead code**: `app/components/income-calculator.tsx` (still carries the retired co-ownership pricing and the old CTA label, but ships nothing since nothing imports it), `ui/product-card.tsx`, `ui/stat-card.tsx`, `ui/form-field.tsx`. Safe to delete once confirmed.
+1. **Social URLs are still placeholders**. All five entries in `SOCIALS` in `footer.tsx` have `href: "#"`. Phone, hotline and email are real.
+2. **Mobile rendering**. Historically on iPhone Safari most content stayed at opacity 0, likely Framer Motion's `whileInView` not firing. The hero was reworked to fire entrances on mount (`animate`, not `whileInView`) for exactly this reason — see the comment at the top of `hero.tsx`. The rest of the page still uses `whileInView` via `fadeUp` and has not been re-verified on a real device.
+3. **`PV_CALC_USER` and `PV_CALC_PASSWORD` in Vercel are unverified.** They exist in `.env.local`, so the auth gate works locally. If they are absent in the Vercel project, `/pvcalculatoroffgrid` returns 503 rather than opening up, so it fails closed, but the page is then unreachable.
 
 ## Communication preferences
 

@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // HTTP Basic Auth gate for the off-grid solar calculator only. The matcher
-// restricts this middleware to exactly two paths, so the rest of the site is
+// restricts this proxy to exactly two paths, so the rest of the site is
 // never touched. Credentials come from env — no password in page source.
+//
+// Migrated from the deprecated middleware file convention in Next 16. The
+// contract is the same: a single function exported as `proxy` (or default),
+// with the matcher config unchanged. The one real difference is the runtime,
+// which is now always Node.js rather than Edge, so no `runtime` export is
+// permitted here.
 
 const NOINDEX = "noindex, nofollow";
 
@@ -27,7 +33,7 @@ function safeEqual(a: string, b: string): boolean {
 
 const PROTECTED = new Set(["/pvcalculatoroffgrid", "/tools/pvcalculator.html"]);
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // Defensive: anything the matcher lets through that isn't a protected path
   // passes untouched.
   if (!PROTECTED.has(req.nextUrl.pathname)) {
