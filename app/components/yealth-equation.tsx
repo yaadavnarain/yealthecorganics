@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 // The brand equation: health + wealth + youth = yealth. All lowercase, always.
 //
@@ -54,26 +54,25 @@ type Stage = (typeof S)[keyof typeof S];
 // included, as index 19. The last letter of "youth" finishes its fade at
 // 2230ms.
 //
-// The "=" enters at 1615ms, finishes its letter-matched fade at 2315ms, holds
-// fully-opaque mint until 2565ms, then crosses to offwhite by 2965ms. That
-// sequential shape is what makes its teal read identically to the "+" signs,
-// and it is why the "=" settles 735ms after the letters rather than one beat
-// after: a "+"-identical flourish takes 950ms from entry, which simply does not
-// fit inside the 700ms a one-beat finish would allow. The flourish won.
+// The "=" enters at 1615ms and OVERLAPS its own entrance rather than waiting it
+// out: its mint crossing runs 1855 -> 2195ms, finishing before both the last
+// letter (2230ms) and its own fade (2315ms). So the colour is fully resolved
+// while the entrance is still completing, and the last thing to move is the
+// "=" opacity — the same property every letter animates, which reads as the
+// tail of the entrance rather than a separate delayed beat.
 //
-// So the rest point is 2965ms. A 200ms breath follows with the complete
-// equation static on screen, then the reveal runs from 3165ms, every offset
-// below HIGHLIGHT preserved and simply shifted whole.
+// Rest point is therefore 2315ms. A 200ms breath follows, then the reveal runs
+// from 2515ms, every offset below HIGHLIGHT preserved and shifted whole.
 //
-// The last animation (the final restored letter's glow) ends at 6715ms.
+// The last animation (the final restored letter's glow) ends at 6065ms.
 const TIMELINE: Array<[Stage, number]> = [
   [S.LEFT, 0],
-  [S.HIGHLIGHT, 3165],
-  [S.TRAVEL, 3765],
-  [S.LANDED, 4565],
-  [S.SETTLE, 4765],
-  [S.RESTORE, 4915],
-  [S.DONE, 6915],
+  [S.HIGHLIGHT, 2515],
+  [S.TRAVEL, 3115],
+  [S.LANDED, 3915],
+  [S.SETTLE, 4115],
+  [S.RESTORE, 4265],
+  [S.DONE, 6265],
 ];
 
 /** How long a single letter takes to fade and rise into place, in seconds. */
@@ -83,20 +82,18 @@ const LETTER_STAGGER = 0.085;
 /** Gap between borrowed letters returning home, in seconds. */
 const RESTORE_STAGGER = 0.06;
 /**
- * The teal flourish, in seconds, shared by all three operators.
+ * The "=" teal flourish, in seconds. Unlike the "+", it deliberately OVERLAPS
+ * its own entrance: the crossing starts while the "=" is still fading in and
+ * finishes before the fade does, so nothing colour-related is still changing
+ * once the equation comes to rest.
  *
- * The shape is strictly sequential: an operator finishes arriving, THEN sits
- * fully opaque and fully mint for MINT_HOLD, THEN crosses to offwhite over
- * MINT_CROSS. Keeping those three phases from overlapping is the whole point —
- * an overlapping version reads as "arrives already discolouring" rather than as
- * a held teal beat.
- *
- * renderOperator hardcodes these for the "+" signs (delay 0.3 + 0.25 = 0.55,
- * duration 0.4) and is deliberately frozen, so the values are mirrored here by
- * hand for the "=". If you ever change renderOperator, change these to match.
+ * A "+"-identical sequential flourish (arrive, hold, then cross) takes 950ms
+ * from entry, which cannot fit inside the entrance and therefore always left a
+ * delayed beat at the end. Overlapping is what removes it. The "+" signs keep
+ * the sequential shape — renderOperator is untouched.
  */
-const MINT_HOLD = 0.25;
-const MINT_CROSS = 0.4;
+const EQUALS_MINT_HOLD = 0.24;
+const EQUALS_MINT_CROSS = 0.34;
 /**
  * Per-glyph offsets that turn the landing burst into a left-to-right sweep
  * across "yealth" — sun catching one letterform after another.
@@ -140,8 +137,25 @@ const GLOW_REST =
 const GLOW_BURST =
   "0 0 2px rgba(255, 250, 230, 0.95), 0 0 14px rgba(245, 200, 66, 0.8), 0 0 34px rgba(255, 170, 60, 0.5)";
 
+/**
+ * The band the section must reach before the sequence may begin, as an
+ * IntersectionObserver rootMargin: 25% down from the top of the viewport to 60%
+ * down. Percentages rather than pixels deliberately — "is this in front of the
+ * visitor" is a question about fractions of the screen, and a fixed pixel margin
+ * does not transfer (-220px is a third of a small phone but a seventh of a tall
+ * desktop, which would fire at 85% of the screen there and reintroduce the bug
+ * this replaced).
+ */
+const START_BAND = "-25% 0px -40% 0px";
+
 const EASE_OUT: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
 const EASE_TRAVEL: [number, number, number, number] = [0.22, 1, 0.36, 1];
+/**
+ * Even and symmetric, for the "=" colour crossing only. EASE_OUT reaches 90% at
+ * 54% of its duration and then creeps to completion, which is what read as
+ * lingering; this resolves cleanly instead. Both "+" keep EASE_OUT.
+ */
+const EASE_CROSS: [number, number, number, number] = [0.45, 0, 0.55, 1];
 
 type Source = "health" | "wealth" | "youth";
 
@@ -215,40 +229,131 @@ const RESULT = ["y", "e", "a", "l", "t", "h"];
 
 export function BrandEquation() {
   const ref = useRef<HTMLDivElement>(null);
-  const everEntered = useRef(false);
-  const inView = useInView(ref, { once: false, amount: 0.4 });
   const prefersReduced = useReducedMotion();
   const reduce = prefersReduced === true;
   const [stage, setStage] = useState<Stage>(S.IDLE);
+  // The single piece of trigger state: 0 means blank and idle, any positive
+  // value identifies the current run. It also keys the visual tree and scopes
+  // every layoutId, so dropping to 0 remounts the subtree blank in one frame.
   const [run, setRun] = useState(0);
+  const stageRef = useRef<Stage>(S.IDLE);
+
+  // Write through a ref so an unchanged stage costs no render at all. The loop
+  // below ticks every frame; without this it would re-render ~60x/second.
+  const commit = useCallback((next: Stage) => {
+    if (next === stageRef.current) return;
+    stageRef.current = next;
+    setStage(next);
+  }, []);
+
+  // Two observation bands, because the boundary that should START the run is not
+  // the boundary that should BLANK it. Using one for both is what forced the
+  // choice between firing too early and blanking a strip that is still visible:
+  // the old single band fired when the section's top edge was 80% down the
+  // screen — 205px into a 7069px page, with the hero still filling four fifths
+  // of the viewport — so the 2.3s entrance was over before the reader arrived.
+  //
+  // START_BAND spans 25%-60% of the viewport, so the run begins only once the
+  // strip is genuinely framed: its top edge 60% down when scrolling in from
+  // below, or its bottom edge 25% down when scrolling back up. The band is
+  // deliberately a wide 35% of the viewport — the section stays inside it for
+  // 320-640px of scroll travel, which no real flick (peaking ~6000px/s, about
+  // 100px per frame) can skip between frames.
+  //
+  // `alive` is the true viewport, and it is the ONLY thing that blanks the
+  // section. So a visible strip can never sit blank, and `armed` — set only by
+  // going fully off-screen — means a moved band edge cannot restart a run. That
+  // is what makes this immune to a mobile URL bar resizing the viewport
+  // mid-scroll: percentage margins shift the band by a few tens of pixels, but
+  // with the latch closed a re-entry does nothing.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let armed = true;
+    let n = 0;
+
+    const start = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || !armed) return;
+        armed = false;
+        n += 1;
+        setRun(n);
+      },
+      { rootMargin: START_BAND, threshold: 0 },
+    );
+
+    const alive = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) return;
+        armed = true;
+        setRun(0);
+      },
+      { rootMargin: "0px", threshold: 0 },
+    );
+
+    start.observe(el);
+    alive.observe(el);
+    return () => {
+      start.disconnect();
+      alive.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // Reduced motion: land on the finished state once, and never replay.
     // DONE rather than RESTORE, so nothing is ever promoted to its own layer —
     // `at()` is a >= check, so every RESTORE-gated visual still applies.
     if (reduce) {
-      setStage(S.DONE);
+      commit(S.DONE);
       return;
     }
 
-    if (!inView) {
-      if (!everEntered.current) return; // nothing to reset on first mount
-      setStage(S.IDLE);
-      setRun((r) => r + 1);
+    // run === 0 is blank and idle: either never entered the start band, or the
+    // section has gone fully off-screen. Nothing pending, no partial state.
+    if (run === 0) {
+      commit(S.IDLE);
       return;
     }
 
-    everEntered.current = true;
-    setStage(S.IDLE);
-    setRun((r) => r + 1);
+    commit(S.IDLE);
 
-    const timers = TIMELINE.map(([next, ms]) =>
-      window.setTimeout(() => setStage(next), ms),
-    );
-    // React runs this before every re-run and on unmount, so chains can never
-    // stack and no timeout can fire into an unmounted component.
-    return () => timers.forEach((t) => window.clearTimeout(t));
-  }, [inView, reduce]);
+    // The stage is a PURE FUNCTION OF ELAPSED TIME, recomputed every frame,
+    // rather than a chain of one-shot timers.
+    //
+    // That is what makes a frozen half-finished equation structurally
+    // impossible. With a timer chain, clearing it left `stage` orphaned at
+    // whatever value it had reached with nothing scheduled to advance it — the
+    // exact reported bug (stuck at LEFT: letters opaque, no gold, no travel).
+    // Here every exit from this effect leaves an actively defined state: out of
+    // view is IDLE with nothing pending, in view is a running loop that derives
+    // the stage from `elapsed`, and a re-run for ANY reason cancels the loop and
+    // immediately starts a fresh one from IDLE. There is no representable state
+    // in which the sequence is part-way through and nothing is driving it.
+    let base = performance.now();
+    let firstFrame = true;
+    let raf = 0;
+    const tick = () => {
+      const now = performance.now();
+      if (firstFrame) {
+        firstFrame = false;
+        // requestAnimationFrame does not run while the page is not rendering
+        // (backgrounded tab), and can be delayed by a long main-thread block.
+        // Either way the first frame can arrive long after the run began, which
+        // would snap the sequence straight to a late stage — or to DONE, so it
+        // would appear already finished with no animation at all. Rebase so it
+        // always plays from its first letter.
+        if (now - base > 250) base = now;
+      }
+      const elapsed = now - base;
+      let next: Stage = S.IDLE;
+      for (const [s, ms] of TIMELINE) if (elapsed >= ms) next = s;
+      commit(next);
+      if (next !== S.DONE) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [run, reduce, commit]);
 
   const dur = (seconds: number) => (reduce ? 0 : seconds);
   const at = (target: Stage) => stage >= target;
@@ -475,9 +580,10 @@ export function BrandEquation() {
     // 0.55 would start the mint-to-offwhite crossing before the sign had even
     // finished arriving — a 40ms mint flash instead of the intended hold.
     //
-    // The 0.55 delay is 0.3 (this entrance) + MINT_HOLD, and 0.4 is MINT_CROSS.
-    // Those constants mirror these values so renderEquals can reproduce the
-    // identical hold and crossing; change them together or the two diverge.
+    // The 0.55 delay is this 0.3s entrance plus a 0.25s fully-opaque mint hold,
+    // so the "+" phases are strictly sequential. The "=" deliberately does NOT
+    // reproduce that — see renderEquals for why overlapping is what removes its
+    // trailing beat — so these values are local to the "+" and stay frozen.
     return (
       <motion.span
         className="inline-block"
@@ -514,16 +620,14 @@ export function BrandEquation() {
   // easing, and no scale pop. Both "+" keep renderOperator untouched, since
   // they sit mid-stream with characters still arriving to mask the faster snap.
   //
-  // Its teal flourish then runs strictly AFTER that entrance rather than
-  // overlapping it. An earlier version compressed the flourish to land with the
-  // fade, which kept the "=" finishing one beat behind the letters but meant it
-  // was never once fully opaque and fully mint and static — the phases all ran
-  // at the same time and it read as muddied and trailing rather than held.
-  //
-  // The two goals are arithmetically incompatible: a "+"-identical flourish is
-  // 0.3 + MINT_HOLD + MINT_CROSS = 950ms from entry, and finishing within one
-  // 85ms beat of the last letter allows only 700ms. Matching the "+" won, so
-  // the "=" now settles 735ms after the letters instead of 85ms.
+  // Its teal flourish OVERLAPS that entrance rather than following it. A
+  // "+"-identical sequential flourish (arrive, hold fully-opaque mint, then
+  // cross) takes 950ms from entry, which cannot fit inside the entrance — it
+  // always left the "=" finishing well after the letters, reading as a delayed
+  // beat at the end. Overlapping is what removes it: the crossing resolves at
+  // 2195ms, before the last letter (2230ms) and before this glyph's own fade
+  // (2315ms), so the only thing still moving at the end is opacity — the same
+  // property every letter animates.
   function renderEquals(entryDelay: number) {
     const entered = at(S.LEFT);
     return (
@@ -547,14 +651,15 @@ export function BrandEquation() {
             delay: dur(entryDelay),
             ease: EASE_OUT,
           },
-          // Strictly after the fade, exactly like a "+": wait out the full
-          // LETTER_FADE entrance, hold fully-opaque mint for MINT_HOLD, then
-          // cross over MINT_CROSS with the same easing. Same hold, same
-          // crossing, same feel — no phase overlaps another.
+          // Overlaps the fade on purpose. Crossing runs 1855 -> 2195ms, so it
+          // is fully resolved before the last letter lands at 2230 and before
+          // this glyph's own fade ends at 2315 — nothing colour-related trails
+          // past the point the equation comes to rest. EASE_CROSS resolves
+          // evenly instead of creeping the way EASE_OUT does.
           color: {
-            duration: dur(MINT_CROSS),
-            delay: dur(entryDelay + LETTER_FADE + MINT_HOLD),
-            ease: EASE_OUT,
+            duration: dur(EQUALS_MINT_CROSS),
+            delay: dur(entryDelay + EQUALS_MINT_HOLD),
+            ease: EASE_CROSS,
           },
         }}
       >
