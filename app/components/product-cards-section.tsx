@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Sprout, Salad, Coins, Zap, type LucideIcon } from "lucide-react";
+import {
+  Salad,
+  Briefcase,
+  Video,
+  Handshake,
+  Rocket,
+  Compass,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -11,42 +20,60 @@ type Accent = "gold" | "mint";
 interface Product {
   icon: LucideIcon;
   title: string;
-  description: string;
+  /** Omitted on the "coming soon" card, which is title-only and muted. */
+  description?: string;
   accent: Accent;
+  muted?: boolean;
 }
 
 const PRODUCTS: Product[] = [
   {
-    icon: Sprout,
-    title: "Your Farm",
-    description:
-      "You co-own it with other young Mauritians. yealth does the farming. You have a say in how it is run, and you share in what it earns.",
-    accent: "gold",
-  },
-  {
     icon: Salad,
-    title: "Your Harvest",
+    title: "Weekly Salads",
     description:
-      "Ready-to-eat salads delivered straight to your door. Every week. Clean, pure food from the farms.",
-    accent: "mint",
-  },
-  {
-    icon: Coins,
-    title: "Your Share",
-    description:
-      "A share of what the farms earn, paid out to you. The more farms you co-own, the more you earn.",
+      "Fresh ready-to-eat salads delivered to your door every week.",
     accent: "gold",
   },
   {
-    icon: Zap,
-    title: "Your Hustle",
-    description:
-      "Need income right now? Earn while your farm grows. Flexible shifts and creative work, on your terms.",
+    icon: Briefcase,
+    title: "Freelancer Program",
+    description: "Paid work outside the 9 to 5.",
     accent: "mint",
+  },
+  {
+    icon: Video,
+    title: "Content Creator Program",
+    description: "Get paid to create, faceless content allowed.",
+    accent: "gold",
+  },
+  {
+    icon: Handshake,
+    title: "Partnership Program",
+    description: "Get your product or service in front of our audience.",
+    accent: "mint",
+  },
+  {
+    icon: Rocket,
+    title: "Business Incubator",
+    description:
+      "Funding, training and market access to build your own business.",
+    accent: "gold",
+  },
+  {
+    icon: Compass,
+    title: "Career Guidance",
+    description: "Know which careers are growing, and which one is yours.",
+    accent: "mint",
+  },
+  {
+    icon: Sparkles,
+    title: "More programs coming soon",
+    accent: "gold",
+    muted: true,
   },
 ];
 
-function ProductCard({ icon: Icon, title, description, accent }: Product) {
+function ProductCard({ icon: Icon, title, description, accent, muted }: Product) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -63,6 +90,7 @@ function ProductCard({ icon: Icon, title, description, accent }: Product) {
       className={cn(
         "group relative h-full overflow-hidden rounded-yealth border bg-yealth-black/40 p-6 backdrop-blur-sm transition-all duration-300 md:p-7",
         "border-yealth-offwhite/10 hover:-translate-y-1",
+        muted && "opacity-60",
         accent === "gold"
           ? "hover:border-yealth-gold/40 hover:shadow-[0_0_30px_-10px_rgba(234,179,8,0.4)]"
           : "hover:border-yealth-mint/40 hover:shadow-[0_0_30px_-10px_rgba(45,212,191,0.4)]"
@@ -110,9 +138,11 @@ function ProductCard({ icon: Icon, title, description, accent }: Product) {
         {title}
       </h3>
 
-      <p className="relative mt-3 font-body text-sm leading-relaxed text-yealth-offwhite/70 md:text-base">
-        {description}
-      </p>
+      {description ? (
+        <p className="relative mt-3 font-body text-sm leading-relaxed text-yealth-offwhite/70 md:text-base">
+          {description}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -120,6 +150,12 @@ function ProductCard({ icon: Icon, title, description, accent }: Product) {
 export function ProductCardsSection() {
   return (
     <section className="section-pad mx-auto max-w-[1200px] px-6 md:px-8">
+      <motion.h2
+        {...fadeUp(0)}
+        className="mb-10 font-heading text-[26px] font-bold text-yealth-offwhite md:mb-14 md:text-[36px]"
+      >
+        What your <span className="text-yealth-gold">membership</span> gives you
+      </motion.h2>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {PRODUCTS.map((product, i) => (
           <motion.div

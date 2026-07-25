@@ -78,7 +78,7 @@ export function FounderSection() {
             className="font-body text-base text-yealth-offwhite/70"
             style={{ textShadow: "0 2px 20px rgba(0,0,0,0.9)" }}
           >
-            Founder &amp; CEO
+            Founder and CEO
           </span>
         </motion.p>
       </div>

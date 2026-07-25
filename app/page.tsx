@@ -2,10 +2,11 @@ import { Navbar } from "@/app/components/navbar";
 import { Hero } from "@/app/components/hero";
 import { BrandEquation } from "@/app/components/yealth-equation";
 import { PainSection } from "@/app/components/pain-section";
-import { VisionSection } from "@/app/components/vision-section";
+import { SolutionSection } from "@/app/components/solution-section";
+import { OutcomesSection } from "@/app/components/outcomes-section";
 import { ProductCardsSection } from "@/app/components/product-cards-section";
+import { AgribusinessOwnerSection } from "@/app/components/agribusiness-owner-section";
 import { HowItWorksSection } from "@/app/components/how-it-works-section";
-import { ThreePathsSection } from "@/app/components/three-paths-section";
 import { FounderSection } from "@/app/components/founder-section";
 import { FaqSection } from "@/app/components/faq-section";
 import { FinalCtaSection } from "@/app/components/final-cta-section";
@@ -19,10 +20,11 @@ export default function Page() {
         <Hero />
         <BrandEquation />
         <PainSection />
-        <VisionSection />
+        <SolutionSection />
+        <OutcomesSection />
         <ProductCardsSection />
+        <AgribusinessOwnerSection />
         <HowItWorksSection />
-        <ThreePathsSection />
         <FounderSection />
         <FaqSection />
         <FinalCtaSection />

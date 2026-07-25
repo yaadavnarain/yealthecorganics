@@ -439,7 +439,7 @@ export default function HeroFlywheel() {
       {/* viewBox hugs the drawn content (y 150..438 after the axis rework) so
           the rendered box has no empty bands; coordinates are unchanged */}
       <svg className="yfd" viewBox="0 145 800 300" role="img"
-        aria-label="You own farms. Your farms grow veg. The veg is sold. You earn. More farms, earn more. Repeat. Thank you for helping build food security.">
+        aria-label="You are now an agribusiness owner. Your farms grow veg. The veg is sold. Dividends paid. More farms, more dividends. Repeat. Thank you for helping build food security.">
         <defs>
           <radialGradient id="yfdCoinGrad" cx="35%" cy="30%" r="80%">
             <stop offset="0%" stopColor="#FFE9A0" />
@@ -580,15 +580,15 @@ export default function HeroFlywheel() {
         </g>
 
         {/* cycling labels */}
-        <text className="lbl lbl1" x="400" y="432">You <tspan className="g">own</tspan> farms</text>
+        <text className="lbl lbl1" x="400" y="432">You are now an <tspan className="g">agribusiness owner</tspan>.</text>
         <text className="lbl lbl2" x="400" y="432">Your farms <tspan className="g">grow</tspan> veg</text>
         <text className="lbl lbl3" x="400" y="432">The veg is <tspan className="g">sold</tspan></text>
-        <text className="lbl lbl4" x="400" y="432">You <tspan className="g">earn</tspan></text>
-        <text className="lbl lbl5" x="400" y="432"><tspan className="g">More farms</tspan>, earn more</text>
+        <text className="lbl lbl4" x="400" y="432"><tspan className="g">Dividends</tspan> paid.</text>
+        <text className="lbl lbl5" x="400" y="432"><tspan className="g">More farms</tspan>, more dividends.</text>
         <text className="lbl lbl6" x="400" y="432">Your farms <tspan className="g">grow</tspan> veg</text>
         <text className="lbl lbl7" x="400" y="432">The veg is <tspan className="g">sold</tspan></text>
-        <text className="lbl lbl8" x="400" y="432">You <tspan className="g">earn</tspan></text>
-        <text className="lbl lbl9" x="400" y="432"><tspan className="g">More farms</tspan>, earn more</text>
+        <text className="lbl lbl8" x="400" y="432"><tspan className="g">Dividends</tspan> paid.</text>
+        <text className="lbl lbl9" x="400" y="432"><tspan className="g">More farms</tspan>, more dividends.</text>
         <text className="lbl lbl10" x="400" y="432">Your farms <tspan className="g">grow</tspan> veg</text>
         <text className="lbl lbl11" x="400" y="432">The veg is <tspan className="g">sold</tspan></text>
         <text className="lbl lbl12" x="400" y="432">Thank you for helping build <tspan className="g">food security</tspan></text>

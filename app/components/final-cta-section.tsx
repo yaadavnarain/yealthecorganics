@@ -25,26 +25,18 @@ export function FinalCtaSection() {
       />
 
       <div className="section-pad relative z-10 mx-auto max-w-[800px] px-6 text-center md:px-8">
-        <motion.p
-          {...fadeUp(0)}
-          className="font-heading text-sm font-medium uppercase tracking-[0.2em] text-yealth-mint md:text-base"
-        >
-          The next step is yours
-        </motion.p>
-
         <motion.h2
           {...fadeUp(0.1)}
-          className="mt-6 font-heading text-[36px] font-bold leading-[1.05] text-yealth-offwhite md:text-[64px]"
+          className="font-heading text-[36px] font-bold leading-[1.05] text-yealth-offwhite md:text-[64px]"
         >
-          Your agribusiness is{" "}
-          <span className="text-yealth-gold">waiting.</span>
+          The next step is <span className="text-yealth-gold">yours.</span>
         </motion.h2>
 
         <motion.p
           {...fadeUp(0.2)}
           className="mt-6 font-body text-base text-yealth-offwhite/70 md:text-lg"
         >
-          Securing your spot is free. Check out the explanatory videos, attend the live sessions, then make an informed decision. We&apos;ll support you every step of the way.
+          Applying is free. Watch the explanations, attend the live session, then make an informed decision. We support you every step of the way.
         </motion.p>
 
         <motion.div {...fadeUp(0.3)} className="mt-10">
@@ -54,11 +46,11 @@ export function FinalCtaSection() {
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-10 py-5 font-heading text-base md:text-lg"
           >
-            Secure my spot
+            Apply Now
             <ArrowRight className="h-5 w-5" aria-hidden />
           </a>
           <p className="mt-5 font-body text-sm text-yealth-offwhite/50">
-            Free. No commitment. Takes 30 seconds.
+            Free to apply. Takes 30 seconds.
           </p>
         </motion.div>
       </div>

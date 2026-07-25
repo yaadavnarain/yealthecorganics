@@ -20,7 +20,7 @@ const NAV_LINKS = [
   { label: "How It Works", href: "/#how-it-works" },
   { label: "Calculator", href: "/calculator" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Secure my spot", href: "https://join.yealth.mu/securemyspot", external: true },
+  { label: "Apply Now", href: "https://join.yealth.mu/securemyspot", external: true },
 ];
 
 const LEGAL_LINKS = [
@@ -46,7 +46,7 @@ export function Footer() {
               />
             </a>
             <p className="mt-4 max-w-[360px] font-body text-base leading-relaxed text-yealth-offwhite/70">
-              Real farms. Real ownership. Built for the youth of Mauritius who refuse to wait for a future that never comes.
+              Real programs. Real ownership. Built for the youth of Mauritius who refuse to wait for a future that never comes.
             </p>
             <div className="mt-6 flex items-center gap-3">
               {SOCIALS.map(({ label, icon: Icon, href }) => (
@@ -90,10 +90,20 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3 font-body text-base">
               <li>
                 <a
-                  href="tel:+23054523432"
+                  href="https://wa.me/23054523432"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                 >
-                  +230 5452 3432
+                  WhatsApp: +230 5452 3432
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:86662"
+                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
+                >
+                  Hotline: 86662
                 </a>
               </li>
               <li>

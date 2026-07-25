@@ -109,7 +109,7 @@ export function Navbar() {
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-5 py-2.5 font-heading text-sm"
           >
-            Secure my spot
+            Apply Now
             <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
         </div>
@@ -165,7 +165,7 @@ export function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="gold-cta inline-flex w-fit items-center gap-2 rounded-yealth px-6 py-3 font-heading text-base"
               >
-                Secure my spot
+                Apply Now
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>

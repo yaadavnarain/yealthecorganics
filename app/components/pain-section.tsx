@@ -70,12 +70,22 @@ export function PainSection() {
               textShadow: "0 2px 20px rgba(0,0,0,0.7)",
             }}
           >
-            <p>
-              You wake up. You work. You pay bills. And somehow there&apos;s still nothing left.
-            </p>
-            <p>
-              You did what they told you. Study hard. Get a job. Be responsible. But the salary doesn&apos;t stretch, the prices keep climbing, and the future still feels like someone else&apos;s privilege.
-            </p>
+            <ul className="flex flex-col gap-4">
+              {[
+                "Your salary barely lasts half the month.",
+                "Owning something of your own feels years away.",
+                "You feel stuck, with no way to move forward.",
+                "You are ready to grow, but no one shows you how.",
+              ].map((line) => (
+                <li key={line} className="flex items-start gap-3">
+                  <span
+                    className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-yealth-gold"
+                    aria-hidden
+                  />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         </div>
 

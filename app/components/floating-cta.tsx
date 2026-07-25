@@ -42,7 +42,7 @@ export function FloatingCta() {
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center gap-2 rounded-yealth px-5 py-3 font-heading text-sm font-bold shadow-2xl shadow-yealth-gold/30 transition-transform hover:scale-105 md:px-6 md:py-3.5 md:text-base"
           >
-            Secure my spot
+            Apply Now
             <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
         </motion.div>

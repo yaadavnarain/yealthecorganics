@@ -39,20 +39,15 @@ export function Hero() {
             {...heroFade(0)}
             className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-offwhite md:text-[52px] xl:text-[60px]"
           >
-            Financial Freedom
-            <br />
-            For the Youth.
-            <br />
-            <span className="text-yealth-gold">We Farm. You Own.</span>
+            Financial Freedom for the Youth
           </motion.h1>
 
           <motion.p
             {...heroFade(0.1)}
             className="font-body text-base font-semibold text-yealth-offwhite/90 md:text-lg"
           >
-            Build toward financial stability. A real shot at retiring early, and
-            maybe retiring your parents too. Build generational wealth and a legacy
-            that lasts.
+            Join the membership that gives you access to business ownership and
+            new ways to earn.
           </motion.p>
         </div>
 
@@ -63,14 +58,6 @@ export function Hero() {
           <HeroFlywheel />
         </motion.div>
 
-        <motion.p
-          {...heroFade(0.3)}
-          className="font-body text-lg text-yealth-offwhite md:text-xl"
-        >
-          Co-own a farm from just{" "}
-          <span className="font-bold text-yealth-gold">Rs 1,288/month</span>.
-        </motion.p>
-
         <motion.div {...heroFade(0.35)}>
           <a
             href="https://join.yealth.mu/securemyspot"
@@ -78,7 +65,7 @@ export function Hero() {
             rel="noopener noreferrer"
             className="gold-cta inline-flex items-center justify-center gap-2 rounded-yealth px-8 py-4 font-heading text-base"
           >
-            Secure my spot
+            Apply Now
             <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
         </motion.div>
@@ -87,7 +74,7 @@ export function Hero() {
           {...heroFade(0.4)}
           className="text-sm text-yealth-offwhite/50"
         >
-          Free. No commitment. Takes 30 seconds.
+          Free to apply. Takes 30 seconds.
         </motion.p>
       </motion.div>
     </section>

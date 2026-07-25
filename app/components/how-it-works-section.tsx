@@ -7,27 +7,27 @@ import { Glow } from "@/app/components/ui/glow";
 const STEPS = [
   {
     number: "01",
-    title: "Secure your spot",
+    title: "Apply",
     description:
-      "Fill in a short form. Free. No commitment. Takes 30 seconds.",
+      "Fill in a short form. Free. Takes 30 seconds. We review every application.",
   },
   {
     number: "02",
-    title: "Watch the explanation",
+    title: "Watch the explanations",
     description:
-      "You receive recorded video explanations. Watch them in your own time.",
+      "You receive recorded videos. Watch them in your own time, as many times as you want.",
   },
   {
     number: "03",
     title: "Attend a live session",
     description:
-      "Once you're done, join a private webinar hosted by the founder. Get every detail. Ask every question.",
+      "Join a private session hosted by the founder. Get every detail. Ask every question.",
   },
   {
     number: "04",
     title: "Decide",
     description:
-      "If it is for you, you are in. If not, no pressure. No follow-ups. No hard feelings.",
+      "If it is for you, you become a member. If not, no pressure. No follow-ups. No hard feelings.",
   },
 ];
 
