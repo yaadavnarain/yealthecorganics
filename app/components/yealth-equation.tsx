@@ -669,7 +669,7 @@ export function BrandEquation() {
   }
 
   return (
-    <section className="border-y border-yealth-offwhite/10 bg-yealth-black">
+    <section className="bg-yealth-black">
       <div
         ref={ref}
         className="mx-auto max-w-[1200px] px-6 py-8 text-center md:px-8 md:py-10"

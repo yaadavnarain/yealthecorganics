@@ -39,15 +39,6 @@ export function PainSection() {
         aria-hidden
       />
 
-      <motion.div
-        initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={{ scaleX: 1, opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="pointer-events-none absolute inset-x-0 top-0 h-px origin-center bg-gradient-to-r from-transparent via-yealth-gold/30 to-transparent"
-        aria-hidden
-      />
-
       <div className="section-pad relative z-10 mx-auto max-w-[1200px] px-6 md:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
           <motion.h2

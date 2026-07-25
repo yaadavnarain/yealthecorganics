@@ -438,7 +438,7 @@ export default function HeroFlywheel() {
       <style dangerouslySetInnerHTML={{ __html: css }} />
       {/* viewBox hugs the drawn content (y 150..438 after the axis rework) so
           the rendered box has no empty bands; coordinates are unchanged */}
-      <svg className="yfd" viewBox="0 145 800 300" role="img"
+      <svg className="yfd" viewBox="62 145 677 300" role="img"
         aria-label="You are now an agribusiness owner. Your farms grow veg. The veg is sold. Dividends paid. More farms, more dividends. Repeat. Thank you for helping build food security.">
         <defs>
           <radialGradient id="yfdCoinGrad" cx="35%" cy="30%" r="80%">

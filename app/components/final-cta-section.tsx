@@ -19,11 +19,6 @@ export function FinalCtaSection() {
         <Glow variant="gold" className="inset-0" />
       </motion.div>
 
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-yealth-gold/40 to-transparent"
-        aria-hidden
-      />
-
       <div className="section-pad relative z-10 mx-auto max-w-[800px] px-6 text-center md:px-8">
         <motion.h2
           {...fadeUp(0.1)}
