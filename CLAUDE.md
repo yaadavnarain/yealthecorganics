@@ -2,7 +2,7 @@
 
 ## What this is
 
-Marketing website for **yealth** (yealth.mu) — a Mauritian farm-investment business. Founder and CEO: Muktish. The site's primary goal is converting visitors into webinar signups via the contact form, so every change should serve that funnel.
+Marketing website for **yealth** (yealth.mu) — a Mauritian membership and agribusiness company. Founder and CEO: Muktish. The site's primary goal is converting visitors into membership applications, so every change should serve that funnel. There is no on-site form: every CTA is an outbound link to `https://join.yealth.mu/securemyspot` and every CTA label reads exactly `Apply Now`.
 
 ## Live URLs
 
@@ -20,56 +20,62 @@ Any push to `main` triggers Vercel auto-deploy in ~90 seconds.
 - `motion/react` (Framer Motion via the new package name — never import from `framer-motion`)
 - Radix UI primitives
 - lucide-react for icons
-- Formspree for contact form submissions (free tier, 50/mo)
 
 ## Brand — respect exactly
 
 - **Colors**: yealth-gold `#F5C842`, yealth-mint `#34D399`, yealth-black (Dark Charcoal) `#1D1C1F`, yealth-offwhite (White Gold) `#FFFFF4`
 - **Fonts**: Quicksand 700 (headings, class `font-heading`), Nunito 400 (body, class `font-body`)
 - **Tone**: confident, anti-corporate, Mauritian-rooted. Never marketing-speak. No "synergy" / "leverage" / "ecosystem".
-- **Tagline**: "Become a farm owner for Rs 1,288/mo. Monthly Passive Income. Own Assets. Retire Early. Generational Wealth."
+- **Positioning line**: "Financial Freedom for the Youth." No price appears anywhere on the homepage.
+- **Casing**: "yealth" is always lowercase, in every position — headings, titles, meta tags, alt text, og tags, file names, identifiers and comments. `scripts/check-brand.mjs` runs as a `prebuild` guard and **fails `npm run build`** on any other casing, so a PascalCase identifier built from the brand word will break the build. This is why the brand-equation component exports `BrandEquation` from `app/components/yealth-equation.tsx`.
 
 ## Homepage section order (`app/page.tsx`)
 
-Hero → Pain → OWN → VideoStats → Vision → ProductCards → HowItWorks → ThreePaths → Founder → FAQ → Contact → FinalCTA
+Navbar → Hero → BrandEquation → PainSection → SolutionSection → OutcomesSection → ProductCardsSection → AgribusinessOwnerSection → HowItWorksSection → FounderSection → FaqSection → FinalCtaSection → Footer
+
+`ProductCardsSection` keeps its original filename and export name but now renders the **Benefits** grid ("What your membership gives you", seven cards). Do not rename it — a rename is unnecessary churn, and the brand guard rejects any identifier carrying a cased brand token.
 
 ## Key files
 
 - `app/layout.tsx` — root layout, includes AmbientParticles + FloatingCta
 - `app/page.tsx` — homepage section composition
 - `app/components/` — every homepage section as its own .tsx file
-- `app/components/ui/` — reusable primitives (form-field, accordion, social-icons)
+- `app/components/HeroFlywheel.tsx` — the looping farm animation inside the hero. Pure SVG + CSS keyframes, no JS at runtime
+- `app/components/yealth-equation.tsx` — exports `BrandEquation`, the animated "health + wealth + youth = yealth" strip directly under the hero
+- `app/components/faq-section.tsx` — the FAQ is a **homepage section**, not its own route. 17 questions in a `FAQ_ITEMS` array rendered through the Radix accordion, anchored at `#faq`
+- `app/components/ui/` — reusable primitives (accordion, form-field, glow, product-card, social-icons, stat-card)
 - `lib/motion.ts` — `fadeUp` helper used across every section
-- `public/images/` — all image assets (including the GPT-generated `nature-*-v2.png` set)
-- `public/videos/coin-trees-hero.mp4` — hero video (15s)
+- `public/images/` — all image assets
+- `scripts/check-brand.mjs` — the brand-casing guard, wired as `prebuild`
 
 ## Visual system convention — section blending
 
-For sections with image backgrounds (Pain, OWN, HowItWorks, Founder), the seamless-edge pattern is:
+For sections with image backgrounds (Pain, HowItWorks, Founder), the seamless-edge pattern is:
 
 - No `maskImage` on the image div — causes flat black bands at section boundaries
 - Instead, a 5-stop linear gradient overlay: solid `yealth-black` at 0% → ~0.5 opacity at 14% → ~0.3 opacity at 50% → ~0.5 opacity at 86% → solid `yealth-black` at 100%
 - Image opacity 0.42–0.50 with `mixBlendMode: "lighten"` for warm integration
 
-This pattern is already implemented across all four sections. Do not reintroduce mask-based fading.
+This pattern is already implemented across all three sections. Do not reintroduce mask-based fading.
 
 ## Already done
 
-- All 8 animation layers (fade-ins, counters, hero parallax, floating CTA, magnetic cards, smooth scroll, ambient particles, reduced-motion gating)
+- All animation layers (fade-ins, hero parallax, floating CTA, magnetic cards, smooth scroll, ambient particles, reduced-motion gating)
 - AmbientParticles canvas (45 desktop / 20 mobile)
-- OWN section with cursor-tracked 3D tilt
-- All sections wired with the seamless gradient blending described above
+- HeroFlywheel farm animation and the BrandEquation strip
+- All image-backed sections wired with the seamless gradient blending described above
+- `/terms` and `/privacy` pages exist and are linked from the footer
+- Footer contact details are real: WhatsApp +230 5452 3432, hotline 86662, info@yealth.mu
+- favicon, app icons, `sitemap.ts` and `robots.ts` in place
+- Membership-first content rewrite and the 17-question FAQ shipped
 - Deployed to Vercel via GitHub on `main` branch
 
 ## Pending pre-share blockers (priority order)
 
-1. **Contact form → Formspree wiring**. `app/components/contact-section.tsx` currently only sets local state — submissions vanish. Need to POST to `https://formspree.io/f/<FORM_ID>` as JSON with name/phone/comment plus a `_subject` field. Form ID goes in a `FORMSPREE_ID` constant near the top of the file.
-2. **`/terms` and `/privacy` pages**. Footer and contact form link to these but they 404. Either draft both at `app/terms/page.tsx` and `app/privacy/page.tsx`, or strip the links.
-3. **Replace placeholders**: phone (`+230 5XXX XXXX`), email (`support@muktish.com`), social URLs (currently `#`) in `contact-section.tsx`, `footer.tsx`, and `social-icons.tsx`.
-4. **Mobile rendering broken**. On iPhone Safari most content stays at opacity 0 — likely Framer Motion's `whileInView` not firing or reduced-motion preference being triggered. Needs investigation before sharing with phone-first audiences (which in Mauritius is most of them).
-5. **SEO basics**: favicon at `public/favicon.ico`, OG image at `public/og-image.png` (1200×630), expanded openGraph + twitter metadata in `app/layout.tsx`, sitemap.xml, robots.txt.
-6. **Cleanup pass**: delete `lib/images.ts` (no longer imported), v1 versions of nature images now replaced by v2, and `hero-ferns.jpg` / `hero-produce.jpg` / `video-farm.jpg` / `founder-placeholder.svg` if confirmed unused.
-7. **Muktish explainer video**: when recorded, drop MP4 at `public/videos/muktish-explainer.mp4` and change `VIDEO_URL` from `null` to that path in `video-stats-section.tsx`.
+1. **Missing OG image**. `app/layout.tsx` points `og:image` and `twitter:image` at `/og-image.png`, but `public/og-image.png` does not exist. Social shares currently render with no image. Needs a 1200×630 PNG dropped at that path, reflecting the membership positioning rather than the old co-ownership one.
+2. **Social URLs are still placeholders**. All five entries in `SOCIALS` in `footer.tsx` have `href: "#"`. Phone, hotline and email are real.
+3. **Mobile rendering**. Historically on iPhone Safari most content stayed at opacity 0, likely Framer Motion's `whileInView` not firing. The hero was reworked to fire entrances on mount (`animate`, not `whileInView`) for exactly this reason — see the comment at the top of `hero.tsx`. The rest of the page still uses `whileInView` via `fadeUp` and has not been re-verified on a real device.
+4. **Unimported dead code**: `app/components/income-calculator.tsx` (still carries the retired co-ownership pricing and the old CTA label, but ships nothing since nothing imports it), `ui/product-card.tsx`, `ui/stat-card.tsx`, `ui/form-field.tsx`. Safe to delete once confirmed.
 
 ## Communication preferences
 
