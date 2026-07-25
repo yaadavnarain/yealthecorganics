@@ -38,7 +38,7 @@ Hero → Pain → OWN → VideoStats → Vision → ProductCards → HowItWorks 
 - `app/layout.tsx` — root layout, includes AmbientParticles + FloatingCta
 - `app/page.tsx` — homepage section composition
 - `app/components/` — every homepage section as its own .tsx file
-- `app/components/ui/` — reusable primitives (form-field, accordion, animated-counter, social-icons)
+- `app/components/ui/` — reusable primitives (form-field, accordion, social-icons)
 - `lib/motion.ts` — `fadeUp` helper used across every section
 - `public/images/` — all image assets (including the GPT-generated `nature-*-v2.png` set)
 - `public/videos/coin-trees-hero.mp4` — hero video (15s)

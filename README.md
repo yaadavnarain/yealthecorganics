@@ -63,11 +63,10 @@ app/
     ├── navbar.tsx / footer.tsx
     ├── floating-cta.tsx              sticky scroll CTA
     ├── ambient-particles.tsx        canvas particle field
-    └── ui/                           accordion, animated-counter, form-field,
-                                      product-card, social-icons, stat-card
+    └── ui/                           accordion, form-field, product-card,
+                                      social-icons, stat-card
 lib/
 ├── motion.ts               fadeUp helper used across every section
-├── use-count-up.ts         counter animation hook
 └── utils.ts                cn() class helper
 public/
 ├── images/                 backgrounds, founder photo, video poster
