@@ -28,11 +28,11 @@ export function Hero() {
     <section
       ref={heroRef}
       data-hero
-      className="relative flex overflow-hidden bg-yealth-black"
+      className="relative flex min-h-[100svh] overflow-hidden bg-yealth-black"
     >
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex w-full max-w-[1100px] flex-col items-center gap-5 px-6 pt-[108px] pb-12 text-center md:gap-6 md:px-8 md:pb-8 md:pt-[132px] lg:pt-[108px] xl:pt-[120px]"
+        className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1100px] flex-col items-center gap-5 px-6 pt-[108px] pb-12 text-center md:gap-6 md:px-8 md:pb-10 md:pt-[132px] lg:pt-[108px] xl:pt-[120px]"
       >
         <div className="flex w-full max-w-[620px] flex-col gap-5 text-left md:gap-6">
           {/* The break is explicit, not natural: at 375, 390, 768 and 1024 the
@@ -57,9 +57,17 @@ export function Hero() {
           </motion.p>
         </div>
 
+        {/* grow shrink-0, not flex-1: flex-1 sets flex-basis 0 and would let this
+            wrapper compress below the animation on short viewports. grow starts
+            at content size and absorbs the surplus, so the leftover height lands
+            as air either side of the animation rather than as a band above the
+            fold. The xl width is bounded by whatever height is left over, so a
+            short wide laptop (1366x768) shrinks the animation instead of pushing
+            the CTA off screen. 2.2567 is the 677/300 frame ratio; 520px is the
+            fixed vertical furniture at xl (padding, headline, gaps, CTA). */}
         <motion.div
           {...heroFade(0.2)}
-          className="w-[100vw] max-w-none md:w-full md:max-w-[780px] xl:max-w-[920px]"
+          className="flex w-[100vw] max-w-none grow shrink-0 items-center justify-center md:w-full md:max-w-[780px] lg:max-w-[620px] xl:max-w-[min(1100px,calc((100svh_-_520px)*2.2567))]"
         >
           <HeroFlywheel />
         </motion.div>
