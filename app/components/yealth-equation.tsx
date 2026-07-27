@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { MarkDrawn } from "@/app/components/yealth-mark";
 
 // The brand equation: health + wealth + youth = yealth. All lowercase, always.
 //
@@ -156,6 +157,33 @@ const EASE_TRAVEL: [number, number, number, number] = [0.22, 1, 0.36, 1];
  * lingering; this resolves cleanly instead. Both "+" keep EASE_OUT.
  */
 const EASE_CROSS: [number, number, number, number] = [0.45, 0, 0.55, 1];
+
+// The logo mark, drawing itself behind the brand word.
+//
+// Opacities are deliberately low: the mark is light behind the word, never a
+// second thing competing with it for attention. It fades up as it draws,
+// answers the gold burst with a small lift, then relaxes to a resting
+// watermark that holds the word.
+const MARK_OPACITY_DRAWING = 0.5;
+const MARK_OPACITY_BURST = 0.62;
+const MARK_OPACITY_REST = 0.28;
+
+// Draw timings in seconds measured from the HIGHLIGHT stage (2515ms), chosen
+// so the main gesture strokes itself in across exactly the letters' travel
+// window (3115-3915ms) — the journey and the drawing are one gesture — and the
+// leaf blade finishes blooming on the burst.
+//
+// The longest of these ends at 4415ms, and the wrapper's own restore fade ends
+// at ~5165ms, both comfortably inside DONE at 6265ms. The mark therefore does
+// not extend the cycle.
+const DRAW_TIMINGS = {
+  mainDelay: 0.6,
+  mainDuration: 1.2,
+  swashDelay: 0.9,
+  swashDuration: 1.0,
+  bladeDelay: 1.4,
+  bladeDuration: 0.5,
+};
 
 type Source = "health" | "wealth" | "youth";
 
@@ -668,6 +696,52 @@ export function BrandEquation() {
     );
   }
 
+  // The mark behind the brand word. Absolutely positioned inside the result
+  // word's own relative box, so it adds zero layout width and the line is
+  // exactly the layout it was before. Sized in em, so it scales with the type
+  // at every breakpoint rather than needing its own responsive rules.
+  //
+  // No z-index: the mark precedes the letters in DOM order and both are
+  // positioned, so tree order alone already paints it behind them.
+  function renderDrawnMark() {
+    const drawing = at(S.HIGHLIGHT);
+    const bursting = stage === S.LANDED;
+    return (
+      <motion.span
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[46%] h-[2.66em] w-[5.4em]"
+        initial={false}
+        animate={{
+          opacity: reduce
+            ? MARK_OPACITY_REST
+            : !drawing
+              ? 0
+              : bursting
+                ? MARK_OPACITY_BURST
+                : restored
+                  ? MARK_OPACITY_REST
+                  : MARK_OPACITY_DRAWING,
+          // Centring lives in the transform rather than a translate class,
+          // because Motion owns this element's transform.
+          x: "-50%",
+          y: "-50%",
+          scale: drawing ? 1 : 0.965,
+        }}
+        transition={{
+          opacity: { duration: dur(bursting ? 0.2 : 0.9), ease: EASE_OUT },
+          scale: { duration: dur(1.6), ease: EASE_OUT },
+        }}
+      >
+        <MarkDrawn
+          drawn={reduce || drawing}
+          staticFull={reduce}
+          timings={DRAW_TIMINGS}
+          className="h-full w-full"
+        />
+      </motion.span>
+    );
+  }
+
   return (
     <section className="bg-yealth-black">
       <div
@@ -700,7 +774,8 @@ export function BrandEquation() {
 
           <span className="inline-flex items-baseline gap-x-[0.14em] sm:gap-x-3 md:gap-x-4">
             {renderEquals(EQUALS_INDEX * LETTER_STAGGER)}
-            <span className="inline-flex items-baseline">
+            <span className="relative inline-flex items-baseline">
+              {renderDrawnMark()}
               {RESULT.map((char, i) => (
                 <span key={`result-${i}`} className="relative inline-block">
                   <span className="invisible">{char}</span>
