@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { MarkDrawn } from "@/app/components/yealth-mark";
 
 // The brand equation: health + wealth + youth = yealth. All lowercase, always.
 //
@@ -158,32 +158,137 @@ const EASE_TRAVEL: [number, number, number, number] = [0.22, 1, 0.36, 1];
  */
 const EASE_CROSS: [number, number, number, number] = [0.45, 0, 0.55, 1];
 
-// The logo mark, drawing itself behind the brand word.
+// The logo mark that completes the lockup, to the RIGHT of the assembled brand
+// word — wordmark left, mark right, exactly as the real logo is composed. This
+// is the actual brand asset (public/images/yealth-mark.png, 683x336 and
+// genuinely transparent), never a redrawing of it.
 //
-// Opacities are deliberately low: the mark is light behind the word, never a
-// second thing competing with it for attention. It fades up as it draws,
-// answers the gold burst with a small lift, then relaxes to a resting
-// watermark that holds the word.
-const MARK_OPACITY_DRAWING = 0.5;
-const MARK_OPACITY_BURST = 0.62;
-const MARK_OPACITY_REST = 0.28;
+// Sized in em so it tracks the type, but with a breakpoint step rather than one
+// value, because the room available is not proportional to the font. From 768px
+// the strip uses a FIXED word gap while the type is near its 48px cap, which
+// leaves the least slack of any width — far less than mobile. So the mark is
+// modest through that band and grows to near true lockup proportion from 1024px,
+// where there is room to spare. Measured, not guessed.
+// Sizes live as literal Tailwind classes on the slot below, because the JIT
+// only emits classes it can see as text. For the record, height x width
+// (width is always height x 683/336, the asset's own ratio) plus the gap that
+// separates mark from word:
+//   base / md   0.42em x 0.854em, gap 0.06em
+//   lg and up   0.85em x 1.727em, gap 0.14em
+//
+// The base figure is deliberately restrained. Measured at the two tightest
+// widths, a 0.5em mark left only 2px of slack at 320px and 4px at 768px — it
+// fitted, but with no margin for a font metric landing differently. Shrinking
+// the MARK is the correct lever here; the type is never touched.
 
-// Draw timings in seconds measured from the HIGHLIGHT stage (2515ms), chosen
-// so the main gesture strokes itself in across exactly the letters' travel
-// window (3115-3915ms) — the journey and the drawing are one gesture — and the
-// leaf blade finishes blooming on the burst.
+// The mark is a raster, so its halo is a filter rather than a text-shadow. Both
+// states carry the same number of layers so the filter interpolates instead of
+// snapping, matching the convention the letter glows already use.
+const MARK_GLOW_NONE =
+  "drop-shadow(0 0 0px rgba(245, 200, 66, 0)) drop-shadow(0 0 0px rgba(255, 170, 60, 0))";
+const MARK_GLOW_REST =
+  "drop-shadow(0 0 5px rgba(245, 200, 66, 0.45)) drop-shadow(0 0 14px rgba(255, 170, 60, 0.2))";
+/**
+ * The flare the handover happens under.
+ *
+ * The footage ends on a ROUNDED loop and the asset is a FLAT lemniscate, so the
+ * swap is a real shape change. The letters' own burst lights the six glyphs of
+ * "yealth", which sit to the LEFT of this slot — adjacent, not on top of it — so
+ * it covers nothing here. This gives the slot its own flash to change shape
+ * under. Same three-token palette as the letter burst.
+ */
+const MARK_GLOW_BURST =
+  "drop-shadow(0 0 10px rgba(255, 250, 230, 0.95)) drop-shadow(0 0 30px rgba(245, 200, 66, 0.75))";
+
+// The sprout footage: 520x542, 2.583s at 24fps, no audio, on a PURE BLACK field
+// (every border pixel measures 0 on every channel). It is composited with
+// mix-blend-mode: screen, which makes that black vanish against the section and
+// keeps only the glow. There is no alpha channel and no other way to key it.
 //
-// The longest of these ends at 4415ms, and the wrapper's own restore fade ends
-// at ~5165ms, both comfortably inside DONE at 6265ms. The mark therefore does
-// not extend the cycle.
-const DRAW_TIMINGS = {
-  mainDelay: 0.6,
-  mainDuration: 1.2,
-  swashDelay: 0.9,
-  swashDuration: 1.0,
-  bladeDelay: 1.4,
-  bladeDuration: 0.5,
-};
+// SIZE THE FRAME FROM THE TALLEST MOMENT, NEVER THE LAST ONE. Measured across
+// all 62 frames: the sprout peaks at frame 22 at 372 of 542px — 68.6% of the
+// frame height — while the FINAL loop is only 219px, 40.4%. Sizing from the
+// final frame (as this first did) renders the peak 1.70x larger than intended
+// and drives it straight into the section edges, where the neighbouring
+// sections paint over it and it clips hard.
+//
+// The full envelope across the clip is 89.3% of the height and 89.0% of the
+// width, and it is centred: envelope centre 50.1%, final-loop centre 50.2%. So
+// a centred element is correct at every moment, and the handover shrink is a
+// pure scale about that centre which lands the loop exactly on the slot.
+const PEAK_OF_FRAME = 0.686;
+const FINAL_OF_FRAME = 0.404;
+/**
+ * Frame height, in em. The peak is 0.686 x 6.41 = 4.40em against a 1.1em line
+ * box, so the sprout tops out at 4.0x the line height — big enough to read as
+ * the event, and bounded so the overflow stays inside the dark seam.
+ *
+ * Above a 906px viewport the type clamp caps at 48px, so this stops growing and
+ * the clearance to the hero's Apply Now button cannot erode further.
+ */
+const VIDEO_FRAME_EM = 6.41;
+/**
+ * Shrink at the handover, landing the final loop on the mark's height.
+ *
+ * The final loop is 0.404 x 6.41em = 2.590em. The slot is 0.42em below `lg` and
+ * 0.85em from `lg` up, so one factor cannot serve both: 0.42 / 2.590 = 0.162
+ * and 0.85 / 2.590 = 0.328. The breakpoint is read once via matchMedia rather
+ * than guessed.
+ */
+const VIDEO_SHRINK_BASE = 0.162;
+const VIDEO_SHRINK_LG = 0.328;
+/** Where `lg:` starts, matching the Tailwind breakpoint the slot uses. */
+const LG_QUERY = "(min-width: 1024px)";
+/**
+ * Natural pace. The clip used to be driven at 1.85 so it could fit the window
+ * between HIGHLIGHT and LANDED, but that made it the only thing on the strip
+ * running fast — 1400ms of sprout against letters streaming for over twice
+ * that. It now plays at its own speed and STARTS EARLIER instead.
+ */
+const VIDEO_RATE = 1;
+/** Measured clip length. mp4 is 2583.3ms and webm 2584ms — a 1ms spread. */
+const CLIP_MS = 2583;
+/**
+ * When the clip begins, so its last frame is the burst.
+ *
+ * Derived from the TIMELINE rather than written down, so the two can never
+ * drift apart: whatever LANDED is, the clip is started exactly its own length
+ * before it. Currently 3915 - 2583 = 1332ms.
+ *
+ * That is mid-entrance — the stream is on character 15 of 20, part way through
+ * "youth", and the equals does not arrive until 1615ms. The sprout therefore
+ * appears 283ms before the equals does, and it does not grow in from nothing:
+ * frame one is already a formed sprout at 47.6% of the clip's height. The
+ * longer fade below is what stops that reading as a pop.
+ */
+const VIDEO_START_MS =
+  (TIMELINE.find(([s]) => s === S.LANDED)?.[1] ?? 3915) - CLIP_MS;
+/**
+ * How long the sprout takes to materialise. Longer than a normal entrance
+ * because the clip's first 375ms are almost static (its tip moves 127 -> 114),
+ * so the fade overlaps a near-still image: it arrives rather than appears, and
+ * is at full presence just as real growth starts.
+ */
+const VIDEO_FADE_IN = 0.45;
+/**
+ * The handover: how long the mark takes to travel into the lockup slot.
+ *
+ * This was 160ms, chosen as a flash to hide the change from rounded loop to
+ * flat mark. At natural pace that snap became the only fast thing left in the
+ * sequence and read as a cut. 300ms reads as a transition. The cost is honest:
+ * the shape change is on screen for roughly twice as long. What pays for it is
+ * the size of the travel — 211px down to 41px at 1440 — which keeps the eye on
+ * movement rather than outline.
+ */
+const HANDOVER = 0.3;
+/**
+ * The opacity swap, deliberately SHORTER than the travel. Finishing the
+ * cross-fade first means the shape has fully resolved while the mark is still
+ * moving, instead of both ending together and drawing attention to the change.
+ */
+const HANDOVER_CROSSFADE = 0.22;
+/** How long the flare takes to relax into the mark's resting halo. */
+const FLARE_DECAY = 0.8;
 
 type Source = "health" | "wealth" | "youth";
 
@@ -255,6 +360,24 @@ const WORDS: Array<{ key: Source; letters: string[]; startIndex: number }> = [
 // The result, always lowercase.
 const RESULT = ["y", "e", "a", "l", "t", "h"];
 
+/**
+ * Whether the `lg:` slot size is in force, so the handover can shrink onto the
+ * right target. Starts false and is set in an effect, which keeps the server
+ * and first client render identical; the value is only ever read at the
+ * handover, seconds after mount, so the initial false is never seen.
+ */
+function useLargeSlot() {
+  const [large, setLarge] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(LG_QUERY);
+    const sync = () => setLarge(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  return large;
+}
+
 export function BrandEquation() {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
@@ -265,6 +388,23 @@ export function BrandEquation() {
   // every layoutId, so dropping to 0 remounts the subtree blank in one frame.
   const [run, setRun] = useState(0);
   const stageRef = useRef<Stage>(S.IDLE);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  /**
+   * Which run the footage has already been started for.
+   *
+   * The timer below already gives once-per-run by construction — one timer is
+   * scheduled per run and cleanup clears it — so this is belt and braces, and
+   * it also absorbs React's development double-invoke of effects.
+   */
+  const startedRunRef = useRef(0);
+  /**
+   * Whether the sprout is on screen. It cannot be derived from `stage`: the
+   * clip starts at 1332ms and the stage machine has no boundary there, so
+   * gating visibility on a stage would leave it playing invisibly and then
+   * popping in already half-bent.
+   */
+  const [videoOn, setVideoOn] = useState(false);
+  const largeSlot = useLargeSlot();
 
   // Write through a ref so an unchanged stage costs no render at all. The loop
   // below ticks every frame; without this it would re-render ~60x/second.
@@ -382,6 +522,42 @@ export function BrandEquation() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [run, reduce, commit]);
+
+  // Start the footage the moment the letters go gold, and always from frame one.
+  //
+  // The strip is keyed by `run`, so every replay already remounts this subtree
+  // and hands us a brand-new <video> sitting at 0. Rewinding here as well costs
+  // nothing and makes the restart true even if that ever stops being the case.
+  //
+  // play() returns a promise that rejects when a browser refuses autoplay. That
+  // is swallowed on purpose: the mark still arrives at the burst on its own, so
+  // a refusal degrades to the PNG-only finale rather than throwing.
+  // Start the clip VIDEO_START_MS into the run, so its final frame is the
+  // burst. This is a timer rather than a stage gate because the moment it has
+  // to fire at — 1332ms — is not a stage boundary, and the TIMELINE is not
+  // ours to add one to.
+  //
+  // `stage` is deliberately NOT a dependency. When it was, the body re-ran at
+  // every stage from HIGHLIGHT onward and rewound the clip six times a cycle.
+  // Keyed on `run` alone, exactly one timer exists per run and the cleanup
+  // cancels it, so that whole class of bug is gone by construction.
+  //
+  // A rejected play() is swallowed: the mark still arrives at the burst on its
+  // own, so a browser refusing autoplay degrades to the PNG-only finale.
+  useEffect(() => {
+    setVideoOn(false);
+    if (reduce || run === 0) return;
+    const timer = window.setTimeout(() => {
+      const el = videoRef.current;
+      if (!el || startedRunRef.current === run) return;
+      startedRunRef.current = run;
+      el.playbackRate = VIDEO_RATE;
+      el.currentTime = 0;
+      setVideoOn(true);
+      void el.play().catch(() => {});
+    }, VIDEO_START_MS);
+    return () => window.clearTimeout(timer);
+  }, [reduce, run]);
 
   const dur = (seconds: number) => (reduce ? 0 : seconds);
   const at = (target: Stage) => stage >= target;
@@ -696,49 +872,139 @@ export function BrandEquation() {
     );
   }
 
-  // The mark behind the brand word. Absolutely positioned inside the result
-  // word's own relative box, so it adds zero layout width and the line is
-  // exactly the layout it was before. Sized in em, so it scales with the type
-  // at every breakpoint rather than needing its own responsive rules.
+  // The finale: the footage forms the mark, then hands over to the real asset.
   //
-  // No z-index: the mark precedes the letters in DOM order and both are
-  // positioned, so tree order alone already paints it behind them.
-  function renderDrawnMark() {
-    const drawing = at(S.HIGHLIGHT);
-    const bursting = stage === S.LANDED;
+  // The OUTER span is the width reservation — the same trick every travelling
+  // letter uses. It is in the layout from the very first frame at its final
+  // size, so nothing on the line ever moves. BOTH the footage and the image are
+  // absolutely positioned inside it and contribute no width of their own.
+  //
+  // `lg:` widens the slot and the image together, so the reservation can never
+  // disagree with what is drawn into it.
+  //
+  // Sequencing, all derived from the TIMELINE rather than chosen:
+  //   1332             footage starts at natural speed and fades up
+  //   2207             its growth phase peaks, as the letters finish streaming
+  //   HIGHLIGHT 2515   letters go gold; the stem is mid-bend
+  //   TRAVEL    3115   gold letters fly; the curl sweeps down
+  //   LANDED    3915   footage is on its FINAL frame — handover: footage out,
+  //                    asset in, slot flares, and the wrapper travels right and
+  //                    shrinks into the slot
+  //   SETTLE    4115   flare relaxes to the resting halo
+  function renderLockupMark() {
+    // Reduced motion never mounts the video at all — static line, real asset.
+    // Visibility follows the timer, not a stage, because the clip starts
+    // between stages.
+    const playing = !reduce && videoOn && !at(S.LANDED);
+    const handed = reduce || at(S.LANDED);
+    const flaring = stage === S.LANDED;
     return (
-      <motion.span
+      <span
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[46%] h-[2.66em] w-[5.4em]"
-        initial={false}
-        animate={{
-          opacity: reduce
-            ? MARK_OPACITY_REST
-            : !drawing
-              ? 0
-              : bursting
-                ? MARK_OPACITY_BURST
-                : restored
-                  ? MARK_OPACITY_REST
-                  : MARK_OPACITY_DRAWING,
-          // Centring lives in the transform rather than a translate class,
-          // because Motion owns this element's transform.
-          x: "-50%",
-          y: "-50%",
-          scale: drawing ? 1 : 0.965,
-        }}
-        transition={{
-          opacity: { duration: dur(bursting ? 0.2 : 0.9), ease: EASE_OUT },
-          scale: { duration: dur(1.6), ease: EASE_OUT },
-        }}
+        className="relative ml-[0.06em] inline-block h-[0.42em] w-[0.854em] lg:ml-[0.14em] lg:h-[0.85em] lg:w-[1.727em]"
       >
-        <MarkDrawn
-          drawn={reduce || drawing}
-          staticFull={reduce}
-          timings={DRAW_TIMINGS}
-          className="h-full w-full"
-        />
-      </motion.span>
+        {!reduce && (
+          // The footage, playing LARGE — this is the event, the lockup is the
+          // resolution. Centred on the slot and deliberately overflowing the
+          // section into the dark seam above and below it, which is why it
+          // carries z-20: both neighbouring sections wrap their content in
+          // z-10, and without this the overflow is painted over and clips.
+          //
+          // Bounded on purpose. At 1440 the peak reaches 39px past each edge
+          // and stops 21px short of the hero's Apply Now button and 81px short
+          // of the pain section's headline.
+          //
+          // The blend lives on THIS element, the same one Motion transforms,
+          // deliberately. Put it on a child and the transform here would create
+          // a stacking context, the child would blend against an empty backdrop
+          // instead of the section, and the black would become a visible box.
+          // For the same reason this wrapper must never carry `promote`.
+          <motion.span
+            // The two -mt values centre the sprout on the SECTION rather than on
+            // the slot. The slot is baseline-aligned and its height doubles at
+            // `lg`, so its centre sits below the line's centre at base and above
+            // it at lg — left uncorrected the overflow comes out lopsided and
+            // eats the clearance to the hero's button. Measured, then balanced.
+            className="pointer-events-none absolute left-1/2 top-1/2 z-20 -ml-[3.075em] -mt-[3.365em] block h-[6.41em] w-[6.15em] lg:-mt-[3.147em]"
+            style={{ mixBlendMode: "screen" }}
+            initial={false}
+            animate={{
+              opacity: playing ? 1 : 0,
+              // Settles rightward into the lockup as it hands over.
+              x: handed ? "0em" : "-0.9em",
+              // Shrinks onto the slot. The slot doubles at `lg` while the frame
+              // stays a constant em, so one factor cannot serve both widths —
+              // the breakpoint is read, not assumed.
+              scale: handed
+                ? largeSlot
+                  ? VIDEO_SHRINK_LG
+                  : VIDEO_SHRINK_BASE
+                : 1,
+            }}
+            transition={{
+              opacity: {
+                duration: dur(playing ? VIDEO_FADE_IN : HANDOVER_CROSSFADE),
+                ease: EASE_OUT,
+              },
+              x: { duration: dur(HANDOVER), ease: EASE_OUT },
+              scale: { duration: dur(HANDOVER), ease: EASE_OUT },
+            }}
+          >
+            <video
+              ref={videoRef}
+              muted
+              playsInline
+              preload="metadata"
+              aria-hidden
+              disablePictureInPicture
+              className="h-full w-full object-contain"
+              onError={() => {}}
+            >
+              <source src="/video/sprout.webm" type="video/webm" />
+              <source src="/video/sprout.mp4" type="video/mp4" />
+            </video>
+          </motion.span>
+        )}
+
+        <motion.span
+          className="absolute inset-0 block"
+          style={promote}
+          initial={false}
+          animate={{
+            opacity: handed ? 1 : 0,
+            y: "0em",
+            // Arrives a touch large and settles, so the flare has something to
+            // sit on rather than the asset simply switching on.
+            scale: flaring ? 1.06 : 1,
+            filter: flaring
+              ? MARK_GLOW_BURST
+              : handed
+                ? MARK_GLOW_REST
+                : MARK_GLOW_NONE,
+          }}
+          transition={{
+            // Matches the footage's own swap, so the two cross exactly.
+            opacity: { duration: dur(HANDOVER_CROSSFADE), ease: EASE_OUT },
+            scale: {
+              duration: dur(flaring ? HANDOVER_CROSSFADE : FLARE_DECAY),
+              ease: EASE_OUT,
+            },
+            filter: {
+              duration: dur(flaring ? HANDOVER_CROSSFADE : FLARE_DECAY),
+              ease: EASE_OUT,
+            },
+          }}
+        >
+          <Image
+            src="/images/yealth-mark.png"
+            alt=""
+            width={683}
+            height={336}
+            aria-hidden
+            className="h-full w-full object-contain"
+          />
+        </motion.span>
+      </span>
     );
   }
 
@@ -754,12 +1020,12 @@ export function BrandEquation() {
         <div
           key={run}
           aria-hidden="true"
-          className="flex items-baseline justify-center gap-x-[0.14em] whitespace-nowrap font-heading text-[clamp(0.95rem,5.3vw,3rem)] font-bold leading-[1.1] text-yealth-offwhite sm:gap-x-3 md:gap-x-4"
+          className="flex items-baseline justify-center gap-x-[0.14em] whitespace-nowrap font-heading text-[clamp(0.95rem,5.3vw,3rem)] font-bold leading-[1.1] text-yealth-offwhite sm:gap-x-3"
         >
           {/* Left-hand side. Dims while the brand word lands, then brightens
               back up as the borrowed letters return in gold. */}
           <motion.span
-            className="inline-flex items-baseline justify-center gap-x-[0.14em] sm:gap-x-3 md:gap-x-4"
+            className="inline-flex items-baseline justify-center gap-x-[0.14em] sm:gap-x-3"
             initial={false}
             style={promote}
             animate={{ opacity: at(S.LANDED) && !restored ? 0.45 : 1 }}
@@ -772,10 +1038,9 @@ export function BrandEquation() {
             {renderWord(WORDS[2])}
           </motion.span>
 
-          <span className="inline-flex items-baseline gap-x-[0.14em] sm:gap-x-3 md:gap-x-4">
+          <span className="inline-flex items-baseline gap-x-[0.14em] sm:gap-x-3">
             {renderEquals(EQUALS_INDEX * LETTER_STAGGER)}
             <span className="relative inline-flex items-baseline">
-              {renderDrawnMark()}
               {RESULT.map((char, i) => (
                 <span key={`result-${i}`} className="relative inline-block">
                   <span className="invisible">{char}</span>
@@ -786,6 +1051,7 @@ export function BrandEquation() {
                     : null}
                 </span>
               ))}
+              {renderLockupMark()}
             </span>
           </span>
         </div>
