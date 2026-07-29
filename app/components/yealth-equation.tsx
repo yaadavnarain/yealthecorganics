@@ -960,8 +960,14 @@ export function BrandEquation() {
               className="h-full w-full object-contain"
               onError={() => {}}
             >
-              <source src="/video/sprout.webm" type="video/webm" />
+              {/* mp4 FIRST, deliberately. iPhones have no VP9 hardware
+                  decoder, so with the webm listed first Safari has to reject
+                  it before reaching this — and if it accepts it instead, it
+                  software-decodes VP9, which stutters. H.264 first means
+                  Safari takes the hardware path immediately. Chrome and
+                  Firefox still prefer the webm on their own. */}
               <source src="/video/sprout.mp4" type="video/mp4" />
+              <source src="/video/sprout.webm" type="video/webm" />
             </video>
           </motion.span>
         )}

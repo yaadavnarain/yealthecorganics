@@ -28,6 +28,30 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+ * Keep anchored headings clear of the fixed navbar.
+ *
+ * Without this the scroll lands the section's top edge at the very top of the
+ * viewport, and the navbar — which is fixed and 72-100px tall depending on
+ * width — covers whatever sits in that band. Measured heading clearance before
+ * this rule was 0px at 390, 20px at 768 and 40px at 1440: desktop only escaped
+ * by accident, because .section-pad below gives it 6rem of top padding against
+ * mobile's 3rem, putting the heading 120px below the section top instead of 72.
+ *
+ * The value is deliberately SMALLER from 768 up, for exactly that reason —
+ * desktop already has double the padding, so a single value would shove those
+ * headings needlessly far down the screen. Resulting clearance is 28px at 390,
+ * 28px at 768 (its navbar wraps to 100px, the worst case) and 48px at 1440.
+ */
+section[id] {
+  scroll-margin-top: 1.75rem;
+}
+@media (min-width: 768px) {
+  section[id] {
+    scroll-margin-top: 0.5rem;
+  }
+}
+
 @layer base {
   * {
     border-color: rgba(255, 255, 255, 0.08);

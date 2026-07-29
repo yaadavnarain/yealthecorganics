@@ -68,7 +68,7 @@ const FAQ_ITEMS = [
     id: "how-long",
     question: "How long does it take?",
     answer:
-      "We onboard as fast as we can support people properly. Apply today and you sit ahead of everyone who applies tomorrow.",
+      "We onboard as fast as we can to support people properly. Apply today and you sit ahead of everyone who applies tomorrow.",
   },
   {
     id: "questions-before-commit",

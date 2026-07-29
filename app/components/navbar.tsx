@@ -73,6 +73,38 @@ export function Navbar() {
     };
   }, [menuOpen]);
 
+  // Tapping a link in the mobile menu closes it AND fires the browser's own
+  // fragment navigation in the same tick — but the scroll lock above is only
+  // lifted by the effect cleanup, which runs after React re-renders. So the
+  // native scroll is attempted while the viewport is still locked, and lands
+  // wrong or not at all.
+  //
+  // Close first, then scroll on the second frame, once the overlay has
+  // unmounted and the lock is gone. `block: "start"` honours the
+  // scroll-margin-top set in globals.css, and `behavior` is deliberately left
+  // out so the CSS decides — which keeps prefers-reduced-motion's instant jump.
+  //
+  // Only the mobile menu uses this. The desktop links are a separate list and
+  // stay plain anchors, since nothing ever locks scrolling there.
+  const handleMenuNav = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    setMenuOpen(false);
+    const id = href.split("#")[1];
+    // No fragment (e.g. /calculator) — let it navigate normally.
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ block: "start" });
+        window.history.replaceState(null, "", href);
+      }),
+    );
+  };
+
   return (
     <header
       id="top"
@@ -148,7 +180,7 @@ export function Navbar() {
                 <a
                   key={link.label}
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => handleMenuNav(e, link.href)}
                   className="font-heading text-2xl font-bold text-yealth-offwhite"
                 >
                   {link.label}
