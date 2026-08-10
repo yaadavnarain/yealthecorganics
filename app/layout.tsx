@@ -17,7 +17,7 @@ const quicksand = Quicksand({
 
 const nunito = Nunito({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "600"],
   variable: "--font-nunito",
   display: "swap",
 });
