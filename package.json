@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "check-brand": "node scripts/check-brand.mjs",
+    "compliance": "node scripts/compliance-check.mjs",
     "prebuild": "node scripts/check-brand.mjs",
     "build": "next build",
     "start": "next start",

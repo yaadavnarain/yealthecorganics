@@ -36,7 +36,7 @@ const FAQ_ITEMS = [
   },
   {
     id: "recruiting",
-    question: "Is this one of those schemes where you have to recruit people?",
+    question: "Is this one of those schemes where you have to recruit people?", // compliance-ok
     answer:
       "No. You are not required to bring anyone in, and nothing you receive depends on recruiting. The programs are open to every member.",
   },

@@ -22,7 +22,7 @@ const BLOCKS: Block[] = [
     kind: "ul",
     items: [
       `an offer to sell, or a solicitation of an offer to buy, any security, share, unit, or financial product;`,
-      `a prospectus or an invitation to the public to acquire or subscribe for any interest; or`,
+      `a prospectus or an invitation to the public to acquire or subscribe for any interest; or`, // compliance-ok
       `financial, legal, tax, or accounting advice.`,
     ],
   },
