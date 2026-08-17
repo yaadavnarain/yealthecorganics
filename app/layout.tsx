@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { FloatingCta } from "@/app/components/floating-cta";
 import { AmbientParticles } from "@/app/components/ambient-particles";
+import AnnouncementBar from "@/components/AnnouncementBar";
 import CookieConsent from "@/components/CookieConsent";
 import ClarityAnalytics from "@/components/ClarityAnalytics";
 
@@ -55,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${quicksand.variable} ${nunito.variable}`}>
       <body className="font-body bg-yealth-black text-yealth-offwhite antialiased">
+        <AnnouncementBar />
         <AmbientParticles />
         {children}
         <FloatingCta />

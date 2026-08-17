@@ -110,7 +110,12 @@ export function Navbar() {
     <header
       id="top"
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
+        // top is driven by --announce-h, which AnnouncementBar publishes as its
+        // own measured height. The bar sits in normal flow at the top of the
+        // page; this header is fixed, so without the offset it would cover the
+        // bar as soon as the page scrolls. Falls back to 0px when the bar is
+        // absent or dismissed.
+        "fixed left-0 right-0 top-[var(--announce-h,0px)] z-50 transition-all duration-300",
         scrolled
           ? "border-b border-white/5 bg-yealth-black/80 backdrop-blur-xl"
           : "bg-transparent"
