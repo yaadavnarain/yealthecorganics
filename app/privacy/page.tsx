@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy — yealth",
+  title: "Privacy Policy | yealth",
   description: "How yealth handles information collected through yealth.mu.",
 };
 

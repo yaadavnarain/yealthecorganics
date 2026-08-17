@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Use — yealth",
+  title: "Terms of Use | yealth",
   description: "The terms governing your use of yealth.mu.",
 };
 
