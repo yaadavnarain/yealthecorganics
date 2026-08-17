@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: "How It Works", href: "/#how-it-works" },
   { label: "Pricing", href: "/pricing" },
   { label: "Calculator", href: "/calculator" },
-  // TEMP-HIDE-SOLAR-CALC — nav link removed; page still live at /pvcalculatoroffgrid
+  // TEMP-HIDE-SOLAR-CALC: nav link removed; page still live at /pvcalculatoroffgrid
   // { label: "Solar Calculator", href: "/pvcalculatoroffgrid" },
   { label: "FAQ", href: "/#faq" },
 ];
@@ -75,7 +75,7 @@ export function Navbar() {
   }, [menuOpen]);
 
   // Tapping a link in the mobile menu closes it AND fires the browser's own
-  // fragment navigation in the same tick — but the scroll lock above is only
+  // fragment navigation in the same tick, but the scroll lock above is only
   // lifted by the effect cleanup, which runs after React re-renders. So the
   // native scroll is attempted while the viewport is still locked, and lands
   // wrong or not at all.
@@ -83,7 +83,7 @@ export function Navbar() {
   // Close first, then scroll on the second frame, once the overlay has
   // unmounted and the lock is gone. `block: "start"` honours the
   // scroll-margin-top set in globals.css, and `behavior` is deliberately left
-  // out so the CSS decides — which keeps prefers-reduced-motion's instant jump.
+  // out so the CSS decides, which keeps prefers-reduced-motion's instant jump.
   //
   // Only the mobile menu uses this. The desktop links are a separate list and
   // stay plain anchors, since nothing ever locks scrolling there.
@@ -93,7 +93,7 @@ export function Navbar() {
   ) => {
     setMenuOpen(false);
     const id = href.split("#")[1];
-    // No fragment (e.g. /calculator) — let it navigate normally.
+    // No fragment (e.g. /calculator), let it navigate normally.
     if (!id) return;
     const target = document.getElementById(id);
     if (!target) return;
