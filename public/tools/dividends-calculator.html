@@ -14,6 +14,7 @@
     --text:#F7F7F7; --muted:#A0A0A0; --dim:#6B6B6B;
     --gold:#F5C842; --gold-dim:rgba(245,200,66,.12); --gold-line:rgba(245,200,66,.30);
     --mint:#34D399; --mint-dim:rgba(52,211,153,.10);
+    --red:#F87171; --red-dim:rgba(248,113,113,.10);
     --r:8px;
     --display:'Quicksand',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     --body:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -61,6 +62,19 @@
   .big .l{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
   .big .n{font-family:var(--display);font-weight:700;font-size:36px;line-height:1.1;color:var(--gold);letter-spacing:-.5px}
   .big .s{font-size:13px;color:var(--muted);margin-top:8px}
+  .big.mintbox{background:linear-gradient(135deg,var(--mint-dim) 0%,rgba(52,211,153,.03) 100%);border-color:var(--mint)}
+  .big.mintbox .l{color:var(--mint)}
+  .big.mintbox .n{color:var(--mint)}
+  .big .l em{font-style:normal;font-weight:700;letter-spacing:1.6px}
+  .big.redbox{background:linear-gradient(135deg,var(--red-dim) 0%,rgba(248,113,113,.03) 100%);border-color:var(--red)}
+  .big.redbox .l{color:var(--red)}
+  .big.redbox .n{color:var(--red)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .pair .big{margin-bottom:0;padding:20px 10px;min-height:158px;display:flex;flex-direction:column;justify-content:center}
+  .pair .big .l{font-size:11px;letter-spacing:.9px;margin-bottom:6px;line-height:1.35}
+  .pair .big .l em{letter-spacing:1.1px}
+  .pair .big .n{font-size:clamp(19px,6.4vw,28px)}
+  .pair .big .s{font-size:11px;line-height:1.4;margin-top:7px}
 
   .row{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
   .row .l{font-size:14px;color:var(--muted)}
@@ -77,11 +91,6 @@
   .disc p{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 8px}
 
   @media(max-width:380px){.opts,.two{grid-template-columns:1fr}.big .n{font-size:30px}}
-
-  .backlink{display:inline-block;font-family:var(--body);font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s}
-  .backlink:hover{color:var(--gold)}
-  .backlink-top{margin-bottom:14px}
-  .backlink-bottom{margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
 
   .gate{min-height:100vh;background:var(--bg);display:flex;padding:32px 18px 64px}
   .gate-box{max-width:520px;width:100%;margin:auto}
@@ -114,8 +123,6 @@
 
 <div class="wrap" id="app" style="display:none">
 
-  <a class="backlink backlink-top" href="/">Back to yealth.mu</a>
-
   <h1>Dividends Calculator</h1>
   <p class="sub">See what you could earn, and the house it could help you buy.</p>
 
@@ -139,16 +146,6 @@
         </div>
         <input type="range" id="yr" min="1" max="40" value="15">
       </div>
-      <div class="field two">
-        <div>
-          <div class="flabel">Your age today</div>
-          <input class="inp" type="number" id="age" value="18" min="18" max="70">
-        </div>
-        <div>
-          <div class="flabel">Your salary today</div>
-          <input class="inp" type="number" id="sal" value="20000" min="0">
-        </div>
-      </div>
     </div>
   </div>
 
@@ -161,6 +158,18 @@
       <div class="n" id="divOut">Rs 0</div>
       <div class="s">Paid once a year, after the farm pays its own costs.</div>
     </div>
+    <div class="pair">
+      <div class="big mintbox" id="monBox">
+        <div class="l">Monthly <em>EQUIVALENT</em></div>
+        <div class="n" id="monOut">Rs 0</div>
+        <div class="s">(paid annually)</div>
+      </div>
+      <div class="big mintbox">
+        <div class="l">You put in</div>
+        <div class="n" id="outOut">Rs 0</div>
+        <div class="s">every month</div>
+      </div>
+    </div>
     <div class="row"><span class="l">Farms your agribusiness owns</span><span class="n" id="farmOut">0</span></div>
     <div class="row"><span class="l">Total dividends received</span><span class="n" id="cumOut">Rs 0</span></div>
     <div class="row"><span class="l">Paid from your pocket</span><span class="n" id="paidOut">Rs 0</span></div>
@@ -170,7 +179,18 @@
   <div class="step">
     <div class="step-head"><div class="step-n">3</div><div class="step-t">Your salary by then</div></div>
     <p class="step-s">Salaries usually creep up a little each year.</p>
-    <div class="row"><span class="l">Salary today</span><span class="n" id="salNow">Rs 0</span></div>
+    <div class="card" style="margin-bottom:12px">
+      <div class="field two" style="margin:0">
+        <div>
+          <div class="flabel">Your age today</div>
+          <input class="inp" type="number" id="age" value="18" min="18" max="70">
+        </div>
+        <div>
+          <div class="flabel">Your salary today</div>
+          <input class="inp" type="number" id="sal" value="20000" min="0">
+        </div>
+      </div>
+    </div>
     <div class="row hi"><span class="l" id="salLbl">Salary in 15 years</span><span class="n" id="salThen">Rs 0</span></div>
     <p class="note">We grow your salary by 2% a year. We assume you stay in the same job, get no promotion, and change nothing. All figures are in today's prices.</p>
     <div class="card" style="margin-top:12px">
@@ -215,18 +235,17 @@
     <p>A dividend is decided once a year by the society, out of audited surplus, after it pays its own costs.</p>
   </div>
 
-  <a class="backlink backlink-bottom" href="/">Back to yealth.mu</a>
-
 </div>
 
 <script>
   var RATE = 1296;        // Rs per block per year at 5,040 heads
-  var UNIT = 4500;        // Rs per block (3 x Rs 1,500)
-  var SPU  = 450;         // shares of Rs 10 per block
+  var UNIT = 4500;        // Rs per block, three payments of Rs 1,500
+  var SPU  = 450;         // shares per block
   var CPY  = 4;           // cycles per year
   var MAXL = 3;           // bye-law cap, blocks per cycle
   var MULT = 71.84;       // SBM 5.80%, 35 years, 40% DSTI
   var GROWTH = 0.02;      // salary growth per year
+  var PBM  = RATE / 12;   // Rs 108, one block for one month of production
 
   var base = 1, years = 15;
 
@@ -239,34 +258,52 @@
   function fmt(n){ return 'Rs ' + Math.round(n).toLocaleString('en-US'); }
   function num(n){ return Math.round(n).toLocaleString('en-US'); }
 
-  // A block bought in one year starts paying from the next year.
+  // Cycles run quarterly. Cycle c takes its first payment in month 3c-2 and its
+  // farm starts producing in month 3c+4, so cycle 1 pays from month 7.
   // Your monthly amount stays flat. Dividends fund any upgrade, up to 3 blocks
   // per cycle. Anything left over accumulates as savings.
   function run(){
-    var earning=0, pending=0, pot=0, paid=0, div=0, total=0, cum=0, level=base;
-    for (var y=1; y<=years; y++){
-      earning += pending; pending = 0;
-      div = earning * RATE;
-      cum += div;
-      while (level < MAXL && div >= (level + 1 - base) * CPY * UNIT){
-        level++;
+    var level = base, blocks = [];
+    var pot = 0, paid = 0, cum = 0, div = 0, months = 0;
+
+    for (var y = 1; y <= years; y++){
+      var lo = 12*(y-1) + 1, hi = 12*y;
+
+      for (var k = 0; k < CPY; k++){
+        var c = (y-1)*CPY + k + 1;
+        blocks.push({ start: 3*c + 4, count: level });
       }
-      var blocks = CPY * level;
-      var cost   = blocks * UNIT;
+
+      div = 0;
+      var first = null;
+      for (var i = 0; i < blocks.length; i++){
+        var b = blocks[i];
+        if (b.start > hi) continue;
+        var m = hi - Math.max(b.start, lo) + 1;
+        if (m > 0) div += b.count * PBM * m;
+        if (first === null || b.start < first) first = b.start;
+      }
+      months = (first === null) ? 0 : (hi - Math.max(first, lo) + 1);
+
+      cum += div;
       var pocket = CPY * base * UNIT;
+      var cost   = CPY * level * UNIT;
       paid += pocket;
       pot  += div - (cost - pocket);
-      pending = blocks;
-      total  += blocks;
+
+      while (level < MAXL && div >= (level + 1 - base) * CPY * UNIT) level++;
     }
-    return {div:div, cum:cum, blocks:total, shares:total*SPU, paid:paid, pot:pot, level:level};
+    return {div:div, months:months, cum:cum, paid:paid, pot:pot};
   }
 
   function update(){
     var r = run();
 
-    // Banks read annual income as a monthly repayment capacity.
-    // This division is used only for the loan figure and is not displayed.
+    // Monthly equivalent for display: the dividend spread over the months it was
+    // actually earned. Year 1 earns from month 7, so it divides by 6, not 12.
+    var monthly = r.months ? r.div / r.months : 0;
+    // Repayment capacity for the loan is always annual divided by 12,
+    // which is how a bank assesses income.
     var capacity = r.div / 12;
 
     var age = parseInt(ageEl.value,10) || 0;
@@ -283,11 +320,19 @@
     var deposit = r.pot + extra;
 
     document.getElementById('divOut').textContent = fmt(r.div);
+    document.getElementById('monOut').textContent = fmt(monthly);
+
+    var outflow = base * (UNIT/3);
+    document.getElementById('outOut').textContent = fmt(outflow);
+    // Red while the farm is not yet covering the monthly amount going out.
+    var behind = monthly < outflow;
+    var monBox = document.getElementById('monBox');
+    monBox.classList.toggle('redbox', behind);
+    monBox.classList.toggle('mintbox', !behind);
     document.getElementById('farmOut').textContent = num(CPY * years);
     document.getElementById('cumOut').textContent = fmt(r.cum);
     document.getElementById('paidOut').textContent = fmt(r.paid);
 
-    document.getElementById('salNow').textContent  = fmt(salNow);
     document.getElementById('salLbl').textContent  = 'Salary in ' + years + (years===1?' year':' years');
     document.getElementById('salThen').textContent = fmt(salThen);
 
