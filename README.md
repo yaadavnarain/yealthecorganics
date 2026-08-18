@@ -1,4 +1,4 @@
-# yealth — Financial Freedom for the Youth
+# yealth: Financial Freedom for the Youth
 
 Dark, cinematic marketing site for **yealth** (yealth.mu), a Mauritian membership
 and agribusiness company. The site's primary goal is converting visitors into
@@ -14,7 +14,7 @@ Any push to `main` triggers a Vercel auto-deploy (~90s).
 
 - Next.js 16.2 (App Router) + React 19 + TypeScript
 - Tailwind CSS 3.4 with custom brand tokens
-- `motion/react` (Framer Motion — never import from `framer-motion`)
+- `motion/react` (Framer Motion: never import from `framer-motion`)
 - Radix UI primitives (`@radix-ui/react-accordion`)
 - `lucide-react` icons
 - Fonts: Quicksand 700 (headings, `font-heading`) + Nunito 400 (body, `font-body`)
@@ -31,7 +31,7 @@ Any push to `main` triggers a Vercel auto-deploy (~90s).
 
 ## Brand casing guard
 
-"yealth" is always lowercase, everywhere — headings, titles, meta tags, alt text,
+"yealth" is always lowercase, everywhere: headings, titles, meta tags, alt text,
 og tags, file names, identifiers and comments. `scripts/check-brand.mjs` runs as a
 `prebuild` step and **fails `npm run build`** on any other casing. A PascalCase
 identifier built from the brand word will break the build, which is why the brand
@@ -102,7 +102,7 @@ Benefits grid ("What your membership gives you", seven cards).
 
 Photographic assets live under `public/images/` (real imagery, not placeholders).
 Sections with image backgrounds (Pain, HowItWorks, Founder) use a 5-stop
-linear-gradient overlay for seamless edges rather than `maskImage` — see
+linear-gradient overlay for seamless edges rather than `maskImage`, see
 `CLAUDE.md` for the exact blending convention.
 
 The hero renders `HeroFlywheel`, a pure SVG + CSS-keyframe animation with no JS at
@@ -113,7 +113,7 @@ using `next/og`, at 1200x630, with Quicksand fetched from Google Fonts during th
 build and the font bundled with `@vercel/og` as the fallback if that fetch fails.
 `app/twitter-image.tsx` re-exports it. Nothing points at a static
 `public/og-image.png`, and `og:image` / `twitter:image` are not listed in
-`metadata` — the file conventions emit both, absolute against `metadataBase`.
+`metadata`: the file conventions emit both, absolute against `metadataBase`.
 
 ## Private routes
 

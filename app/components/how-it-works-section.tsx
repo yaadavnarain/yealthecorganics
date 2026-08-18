@@ -45,7 +45,7 @@ export function HowItWorksSection() {
         }}
         aria-hidden
       />
-      {/* Mobile overlay — standard 7-stop. The mobile section is tall (steps
+      {/* Mobile overlay: standard 7-stop. The mobile section is tall (steps
           stack), so the 0.78 mid-stops blend seamlessly. */}
       <div
         className="pointer-events-none absolute inset-0 md:hidden"
@@ -55,7 +55,7 @@ export function HowItWorksSection() {
         }}
         aria-hidden
       />
-      {/* Desktop overlay — same 7-stop convention (solid #1D1C1F edges that
+      {/* Desktop overlay: same 7-stop convention (solid #1D1C1F edges that
           dissolve into neighbours), lighter mid-stops so the cover image reads
           across the full, shorter desktop section instead of a band. */}
       <div

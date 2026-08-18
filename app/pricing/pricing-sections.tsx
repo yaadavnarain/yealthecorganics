@@ -434,7 +434,7 @@ function TierCard({
 
       {/* Keyed on `mode`, so switching plan remounts this block and replays its
           entrance: the price and the card body rise and fade in rather than
-          swapping instantly. Deliberately not AnimatePresence — mode="wait"
+          swapping instantly. Deliberately not AnimatePresence: mode="wait"
           holds the outgoing child until its exit resolves, and when that never
           resolved the incoming plan was never mounted at all, leaving the card
           frozen on the plan it first rendered with. */}

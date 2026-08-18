@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // HTTP Basic Auth gate for the off-grid solar calculator only. The matcher
 // restricts this proxy to exactly two paths, so the rest of the site is
-// never touched. Credentials come from env — no password in page source.
+// never touched. Credentials come from env: no password in page source.
 //
 // Migrated from the deprecated middleware file convention in Next 16. The
 // contract is the same: a single function exported as `proxy` (or default),

@@ -1,5 +1,5 @@
 /**
- * HeroFlywheel — looping hero animation for yealth.mu.
+ * HeroFlywheel: looping hero animation for yealth.mu.
  *
  * "3D greenhouse & wallet" artwork (promoted from animation-lab Variant D):
  *
@@ -388,9 +388,9 @@ function Greenhouse({ cls, label }: { cls: string; label: string }) {
       {/* ground shadow */}
       <ellipse cx="4" cy="4" rx="54" ry="7" fill="url(#yfdShadow)" />
 
-      {/* receding right side wall (away from light — darkest) */}
+      {/* receding right side wall (away from light, darkest) */}
       <path d="M 22 0 L 46 -7 L 46 -55 L 22 -48 Z" fill="url(#yfdGlassSide)" stroke="#1C2A23" strokeWidth="3" strokeLinejoin="round" />
-      {/* receding roof plane (facing the light — lightest glass) */}
+      {/* receding roof plane (facing the light, lightest glass) */}
       <path d="M -8 -72 L 16 -79 L 46 -55 L 22 -48 Z" fill="url(#yfdGlassRoof)" stroke="#1C2A23" strokeWidth="3" strokeLinejoin="round" />
 
       {/* front gable: dark interior backdrop */}
@@ -508,7 +508,7 @@ export default function HeroFlywheel() {
         <path className="guide" d="M 150 255 A 275 90 0 0 1 700 255" />
         <path className="guide" d="M 700 255 A 275 90 0 0 1 150 255" />
 
-        {/* wallet (you) — rounded charcoal bifold with gold strap + clasp */}
+        {/* wallet (you): rounded charcoal bifold with gold strap + clasp */}
         <ellipse cx="130" cy="289" rx="52" ry="8" fill="url(#yfdShadow)" />
         <g transform="translate(130,255)">
           <g className="wallet-inner">

@@ -6,7 +6,7 @@ import { useRef } from "react";
 import HeroFlywheel from "./HeroFlywheel";
 
 // The hero is on screen at load, so entrances fire on mount (animate) rather
-// than whileInView — fadeUp's -80px viewport margin never triggers for
+// than whileInView: fadeUp's -80px viewport margin never triggers for
 // elements sitting within 80px of the fold on short phone screens.
 const heroFade = (delay = 0) =>
   ({

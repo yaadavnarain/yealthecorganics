@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 // The brand equation: health + wealth + youth = yealth. All lowercase, always.
 //
-// Naming note — do NOT "fix" the export name. React requires PascalCase for
+// Naming note: do NOT "fix" the export name. React requires PascalCase for
 // JSX component identifiers, but scripts/check-brand.mjs (wired as a prebuild
 // step) fails the build on any casing of the brand other than all-lowercase.
 // A PascalCase identifier built from the brand word would therefore break
@@ -22,7 +22,7 @@ import { motion, useReducedMotion } from "motion/react";
 //
 // Once the brand word has settled, the RESTORE stage fades *fresh* gold copies
 // of the borrowed letters back into the source slots, so the equation reassembles
-// instead of being left gutted. Those copies carry no layoutId — giving them one
+// instead of being left gutted. Those copies carry no layoutId: giving them one
 // would make Motion treat them as the same shared element and fly the originals
 // back out of the final word.
 //
@@ -33,7 +33,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 const S = {
   IDLE: 0,
-  // The whole equation left of "yealth" — every letter, both "+" and the "=" —
+  // The whole equation left of "yealth", every letter, both "+" and the "=",
   // enters from this one stage. Per-character delays do the staggering, so there
   // are no per-element stages left to introduce gaps.
   LEFT: 1,
@@ -42,7 +42,7 @@ const S = {
   LANDED: 4,
   SETTLE: 5,
   RESTORE: 6,
-  // Terminal stage. Nothing animates here — its only job is to drop the
+  // Terminal stage. Nothing animates here: its only job is to drop the
   // compositing-layer promotion once everything is at rest.
   DONE: 7,
 } as const;
@@ -51,7 +51,7 @@ type Stage = (typeof S)[keyof typeof S];
 
 // Beat map, in ms from scroll-into-view.
 //
-// One continuous stream of 20 characters at LETTER_STAGGER apart — the "="
+// One continuous stream of 20 characters at LETTER_STAGGER apart, the "="
 // included, as index 19. The last letter of "youth" finishes its fade at
 // 2230ms.
 //
@@ -59,7 +59,7 @@ type Stage = (typeof S)[keyof typeof S];
 // out: its mint crossing runs 1855 -> 2195ms, finishing before both the last
 // letter (2230ms) and its own fade (2315ms). So the colour is fully resolved
 // while the entrance is still completing, and the last thing to move is the
-// "=" opacity — the same property every letter animates, which reads as the
+// "=" opacity, the same property every letter animates, which reads as the
 // tail of the entrance rather than a separate delayed beat.
 //
 // Rest point is therefore 2315ms. A 200ms breath follows, then the reveal runs
@@ -91,13 +91,13 @@ const RESTORE_STAGGER = 0.06;
  * A "+"-identical sequential flourish (arrive, hold, then cross) takes 950ms
  * from entry, which cannot fit inside the entrance and therefore always left a
  * delayed beat at the end. Overlapping is what removes it. The "+" signs keep
- * the sequential shape — renderOperator is untouched.
+ * the sequential shape. renderOperator is untouched.
  */
 const EQUALS_MINT_HOLD = 0.24;
 const EQUALS_MINT_CROSS = 0.34;
 /**
  * Per-glyph offsets that turn the landing burst into a left-to-right sweep
- * across "yealth" — sun catching one letterform after another.
+ * across "yealth", sun catching one letterform after another.
  *
  * The ignite stagger is deliberately small: it has to fit inside the 200ms
  * LANDED -> SETTLE window, because a glyph whose delay outlasted that window
@@ -116,16 +116,16 @@ const HOT_GOLD = "#FFEFC0";
 
 // Per-letter gold glow. Both layers sit at zero offset so this reads as light
 // coming off the letterform, not a drop shadow: a crisp inner glow hugging the
-// strokes plus a modest falloff. Radii stay small deliberately — the glow must
+// strokes plus a modest falloff. Radii stay small deliberately: the glow must
 // stay attached to the glyph rather than bleeding into the space around it, and
 // blur cost scales with radius, so tight radii are also much cheaper to paint.
 //
-// Every value carries the SAME number of shadow layers — Motion can only
+// Every value carries the SAME number of shadow layers: Motion can only
 // interpolate matching layer counts, and a mismatch would make it snap. All
 // three are therefore three layers, even where the third is invisible.
 //
 // GLOW_REST keeps its original two layers untouched and pads a zero-alpha,
-// zero-radius third, so the resting appearance is identical to before — the
+// zero-radius third, so the resting appearance is identical to before: the
 // third layer exists only to give GLOW_BURST something to interpolate against.
 //
 // GLOW_BURST is the sunlight: a near-white-gold hot core, a gold mid-bloom, and
@@ -141,7 +141,7 @@ const GLOW_BURST =
 /**
  * The band the section must reach before the sequence may begin, as an
  * IntersectionObserver rootMargin: 25% down from the top of the viewport to 60%
- * down. Percentages rather than pixels deliberately — "is this in front of the
+ * down. Percentages rather than pixels deliberately: "is this in front of the
  * visitor" is a question about fractions of the screen, and a fixed pixel margin
  * does not transfer (-220px is a third of a small phone but a seventh of a tall
  * desktop, which would fire at 85% of the screen there and reintroduce the bug
@@ -159,14 +159,14 @@ const EASE_TRAVEL: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const EASE_CROSS: [number, number, number, number] = [0.45, 0, 0.55, 1];
 
 // The logo mark that completes the lockup, to the RIGHT of the assembled brand
-// word — wordmark left, mark right, exactly as the real logo is composed. This
+// word: wordmark left, mark right, exactly as the real logo is composed. This
 // is the actual brand asset (public/images/yealth-mark.png, 683x336 and
 // genuinely transparent), never a redrawing of it.
 //
 // Sized in em so it tracks the type, but with a breakpoint step rather than one
 // value, because the room available is not proportional to the font. From 768px
 // the strip uses a FIXED word gap while the type is near its 48px cap, which
-// leaves the least slack of any width — far less than mobile. So the mark is
+// leaves the least slack of any width, far less than mobile. So the mark is
 // modest through that band and grows to near true lockup proportion from 1024px,
 // where there is room to spare. Measured, not guessed.
 // Sizes live as literal Tailwind classes on the slot below, because the JIT
@@ -177,7 +177,7 @@ const EASE_CROSS: [number, number, number, number] = [0.45, 0, 0.55, 1];
 //   lg and up   0.85em x 1.727em, gap 0.14em
 //
 // The base figure is deliberately restrained. Measured at the two tightest
-// widths, a 0.5em mark left only 2px of slack at 320px and 4px at 768px — it
+// widths, a 0.5em mark left only 2px of slack at 320px and 4px at 768px: it
 // fitted, but with no margin for a font metric landing differently. Shrinking
 // the MARK is the correct lever here; the type is never touched.
 
@@ -192,7 +192,7 @@ const MARK_GLOW_REST =
  * The flare the mark arrives under.
  *
  * The letters' own burst lights the six glyphs of "yealth", which sit to the
- * LEFT of this slot — adjacent, not on top of it — so it covers nothing here.
+ * LEFT of this slot, adjacent, not on top of it, so it covers nothing here.
  * This gives the slot its own flash, in unison with that burst: both fire at
  * LANDED. Same three-token palette as the letter burst.
  */
@@ -248,8 +248,8 @@ const TRAVELLERS: Traveller[] = [
   })),
 ];
 
-// Everything up to and including the "=" is ONE continuous stream of characters
-// — letters, both "+" signs and the "=" alike — each entering exactly
+// Everything up to and including the "=" is ONE continuous stream of characters,
+// letters, both "+" signs and the "=" alike, each entering exactly
 // LETTER_STAGGER after the previous one, with no extra pause at word boundaries
 // or before the "=". The indices below place each element in that global stream.
 // They are derived rather than hardcoded so they cannot drift if a word changes.
@@ -297,19 +297,19 @@ export function BrandEquation() {
   // the boundary that should BLANK it. Using one for both is what forced the
   // choice between firing too early and blanking a strip that is still visible:
   // the old single band fired when the section's top edge was 80% down the
-  // screen — 205px into a 7069px page, with the hero still filling four fifths
-  // of the viewport — so the 2.3s entrance was over before the reader arrived.
+  // screen, 205px into a 7069px page, with the hero still filling four fifths
+  // of the viewport, so the 2.3s entrance was over before the reader arrived.
   //
   // START_BAND spans 25%-60% of the viewport, so the run begins only once the
   // strip is genuinely framed: its top edge 60% down when scrolling in from
   // below, or its bottom edge 25% down when scrolling back up. The band is
-  // deliberately a wide 35% of the viewport — the section stays inside it for
+  // deliberately a wide 35% of the viewport: the section stays inside it for
   // 320-640px of scroll travel, which no real flick (peaking ~6000px/s, about
   // 100px per frame) can skip between frames.
   //
   // `alive` is the true viewport, and it is the ONLY thing that blanks the
-  // section. So a visible strip can never sit blank, and `armed` — set only by
-  // going fully off-screen — means a moved band edge cannot restart a run. That
+  // section. So a visible strip can never sit blank, and `armed`, set only by
+  // going fully off-screen, means a moved band edge cannot restart a run. That
   // is what makes this immune to a mobile URL bar resizing the viewport
   // mid-scroll: percentage margins shift the band by a few tens of pixels, but
   // with the latch closed a re-entry does nothing.
@@ -349,7 +349,7 @@ export function BrandEquation() {
 
   useEffect(() => {
     // Reduced motion: land on the finished state once, and never replay.
-    // DONE rather than RESTORE, so nothing is ever promoted to its own layer —
+    // DONE rather than RESTORE, so nothing is ever promoted to its own layer.
     // `at()` is a >= check, so every RESTORE-gated visual still applies.
     if (reduce) {
       commit(S.DONE);
@@ -370,7 +370,7 @@ export function BrandEquation() {
     //
     // That is what makes a frozen half-finished equation structurally
     // impossible. With a timer chain, clearing it left `stage` orphaned at
-    // whatever value it had reached with nothing scheduled to advance it — the
+    // whatever value it had reached with nothing scheduled to advance it, the
     // exact reported bug (stuck at LEFT: letters opaque, no gold, no travel).
     // Here every exit from this effect leaves an actively defined state: out of
     // view is IDLE with nothing pending, in view is a running loop that derives
@@ -387,7 +387,7 @@ export function BrandEquation() {
         // requestAnimationFrame does not run while the page is not rendering
         // (backgrounded tab), and can be delayed by a long main-thread block.
         // Either way the first frame can arrive long after the run began, which
-        // would snap the sequence straight to a late stage — or to DONE, so it
+        // would snap the sequence straight to a late stage, or to DONE, so it
         // would appear already finished with no animation at all. Rebase so it
         // always plays from its first letter.
         if (now - base > 250) base = now;
@@ -439,7 +439,7 @@ export function BrandEquation() {
     // rather than needing a new flag: renderGlyph runs in a source slot only
     // while !travelled, and in a destination slot only once travelled. By
     // LANDED the source slots render null (RESTORE has not fired yet), so the
-    // only live instances are the 11 at the destination — of which !t.ghost
+    // only live instances are the 11 at the destination, of which !t.ghost
     // selects the 6 that make up the word. The restored gold letters go
     // through renderRestored, which never sees GLOW_BURST.
     const bursting = stage === S.LANDED && !t.ghost;
@@ -618,19 +618,19 @@ export function BrandEquation() {
     // mint for a beat, then crosses to offwhite. Operators never glow; that
     // contrast is what makes the gold read.
     //
-    // The "=" used to come through here too but now has its own renderer —
+    // The "=" used to come through here too but now has its own renderer:
     // see renderEquals below for why. Nothing in this function changed with
     // that extraction; the "+" behaviour is exactly as it was.
     //
     // The colour delay must include entryDelay. The "+" signs share one stage
     // with every letter and are placed in the stream purely by delay, so a bare
     // 0.55 would start the mint-to-offwhite crossing before the sign had even
-    // finished arriving — a 40ms mint flash instead of the intended hold.
+    // finished arriving, a 40ms mint flash instead of the intended hold.
     //
     // The 0.55 delay is this 0.3s entrance plus a 0.25s fully-opaque mint hold,
     // so the "+" phases are strictly sequential. The "=" deliberately does NOT
-    // reproduce that — see renderEquals for why overlapping is what removes its
-    // trailing beat — so these values are local to the "+" and stay frozen.
+    // reproduce that, see renderEquals for why overlapping is what removes its
+    // trailing beat, so these values are local to the "+" and stay frozen.
     return (
       <motion.span
         className="inline-block"
@@ -661,7 +661,7 @@ export function BrandEquation() {
   // nothing arrives after it to absorb a mismatch.
   //
   // With the operator signature it faded in over 0.3s and finished arriving at
-  // 1915ms — 315ms BEFORE the "h" of "youth" that started 85ms ahead of it,
+  // 1915ms, 315ms BEFORE the "h" of "youth" that started 85ms ahead of it,
   // visually overtaking its own predecessor. So it takes the LETTERS' arrival
   // signature instead: the same LETTER_FADE, the same 10px rise, the same
   // easing, and no scale pop. Both "+" keep renderOperator untouched, since
@@ -669,11 +669,11 @@ export function BrandEquation() {
   //
   // Its teal flourish OVERLAPS that entrance rather than following it. A
   // "+"-identical sequential flourish (arrive, hold fully-opaque mint, then
-  // cross) takes 950ms from entry, which cannot fit inside the entrance — it
+  // cross) takes 950ms from entry, which cannot fit inside the entrance. It
   // always left the "=" finishing well after the letters, reading as a delayed
   // beat at the end. Overlapping is what removes it: the crossing resolves at
   // 2195ms, before the last letter (2230ms) and before this glyph's own fade
-  // (2315ms), so the only thing still moving at the end is opacity — the same
+  // (2315ms), so the only thing still moving at the end is opacity, the same
   // property every letter animates.
   function renderEquals(entryDelay: number) {
     const entered = at(S.LEFT);
@@ -700,7 +700,7 @@ export function BrandEquation() {
           },
           // Overlaps the fade on purpose. Crossing runs 1855 -> 2195ms, so it
           // is fully resolved before the last letter lands at 2230 and before
-          // this glyph's own fade ends at 2315 — nothing colour-related trails
+          // this glyph's own fade ends at 2315. Nothing colour-related trails
           // past the point the equation comes to rest. EASE_CROSS resolves
           // evenly instead of creeping the way EASE_OUT does.
           color: {
@@ -717,7 +717,7 @@ export function BrandEquation() {
 
   // The finale: the mark completes the lockup.
   //
-  // The OUTER span is the width reservation — the same trick every travelling
+  // The OUTER span is the width reservation, the same trick every travelling
   // letter uses. It is in the layout from the very first frame at its final
   // size, so nothing on the line ever moves. The image is absolutely positioned
   // inside it and contributes no width of its own.

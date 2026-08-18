@@ -17,7 +17,7 @@ export function PainSection() {
         }}
         aria-hidden
       />
-      {/* Mobile overlay — unchanged. On the taller mobile section the 0.78
+      {/* Mobile overlay: unchanged. On the taller mobile section the 0.78
           mid-stops blend perfectly. */}
       <div
         className="pointer-events-none absolute inset-0 md:hidden"
@@ -27,7 +27,7 @@ export function PainSection() {
         }}
         aria-hidden
       />
-      {/* Desktop overlay — same 7-stop convention (solid #1D1C1F edges that
+      {/* Desktop overlay: same 7-stop convention (solid #1D1C1F edges that
           dissolve into neighbours), but lighter mid-stops so the cover image
           reads across the full, shorter desktop section instead of a band. */}
       <div
