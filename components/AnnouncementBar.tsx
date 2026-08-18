@@ -3,22 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
-const DISMISS_KEY = "yealth_announce_fundraise_v1";
-
 export default function AnnouncementBar() {
-  // Starts false on purpose. localStorage is not readable on the server, so
-  // reading it during render would make the server and client markup disagree.
-  // The effect below turns the bar on after mount instead.
+  // Starts false on purpose, so the server and client markup agree on the first
+  // render. The effect below turns the bar on after mount instead.
   const [visible, setVisible] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
 
+  // Dismissal lasts for this page view only. Nothing is persisted, so every
+  // page load shows the bar again.
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(DISMISS_KEY)) setVisible(true);
-    } catch {
-      // Storage blocked, for example private mode. Show the bar anyway.
-      setVisible(true);
-    }
+    setVisible(true);
   }, []);
 
   // The navbar is position fixed at top 0, so it would sit on top of this bar.
@@ -57,11 +51,6 @@ export default function AnnouncementBar() {
     // reach the link. These two calls are a guard, not the mechanism.
     e.preventDefault();
     e.stopPropagation();
-    try {
-      localStorage.setItem(DISMISS_KEY, "1");
-    } catch {
-      // Storage blocked. The bar still hides for this page view.
-    }
     setVisible(false);
   };
 
