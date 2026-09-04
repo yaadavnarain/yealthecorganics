@@ -5,7 +5,7 @@ and agribusiness company. The site's primary goal is converting visitors into
 membership applications. There is no on-site form: every CTA is an outbound link
 to `https://join.yealth.mu/securemyspot`, labelled `Apply Now`.
 
-- **Production:** https://yealthecorganics.vercel.app
+- **Production:** https://yealth.mu
 - **Repo:** https://github.com/yaadavnarain/yealthecorganics
 
 Any push to `main` triggers a Vercel auto-deploy (~90s).

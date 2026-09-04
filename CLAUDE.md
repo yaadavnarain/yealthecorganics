@@ -6,7 +6,7 @@ Marketing website for **yealth** (yealth.mu), a Mauritian membership and agribus
 
 ## Live URLs
 
-- Production: https://yealthecorganics.vercel.app
+- Production: https://yealth.mu
 - GitHub repo: https://github.com/yaadavnarain/yealthecorganics
 - Vercel: project `yealthecorganics` in workspace `yaadavnarain-6510` (Hobby tier)
 
