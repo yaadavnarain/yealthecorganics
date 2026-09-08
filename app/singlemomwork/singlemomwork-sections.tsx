@@ -1537,7 +1537,14 @@ export function SingleMomWorkSections() {
       <div className={WRAP}>
         {/* Empty state. Ported for fidelity: no filter combination reaches zero,
             the minimum over all 31 being 6, so nothing clickable shows this. */}
-        <div className="py-12" hidden={visibleCount > 0}>
+        {/* The `hidden` class does the hiding; the attribute keeps it out of the
+            accessibility tree. This one works on the attribute alone today,
+            because py-12 carries no display utility, but relying on the UA rule
+            is exactly what broke the rows, so it is made explicit here too. */}
+        <div
+          className={cn("py-12", visibleCount > 0 && "hidden")}
+          hidden={visibleCount > 0}
+        >
           <h3 className="font-heading text-[22px] font-bold text-yealth-offwhite">
             Nothing matches all of those
           </h3>
@@ -1558,7 +1565,12 @@ export function SingleMomWorkSections() {
             (w) => w.group === group.key && isVisible(w)
           );
           return (
-            <section key={group.id} id={group.id} hidden={!groupHasVisible}>
+            <section
+              key={group.id}
+              id={group.id}
+              className={cn(!groupHasVisible && "hidden")}
+              hidden={!groupHasVisible}
+            >
               <motion.div {...scrollFade(0)} className="pt-12">
                 <h2 className="font-heading text-[26px] font-bold leading-[1.2] text-yealth-offwhite md:text-4xl">
                   {group.heading}
@@ -1577,7 +1589,7 @@ export function SingleMomWorkSections() {
                   <motion.div
                     key={sub.heading + subIndex}
                     {...scrollFade(0.08 + subIndex * 0.06)}
-                    className="mt-8"
+                    className={cn("mt-8", !subHasVisible && "hidden")}
                     hidden={!subHasVisible}
                   >
                     <h3
@@ -1789,7 +1801,23 @@ function WayRow({ way, hidden }: { way: NumberedWay; hidden: boolean }) {
       // Tighter on mobile: gap 12 not 16, padding 12 not 16. The narrower gap
       // and number column hand 8px back to the chip row, which is what lets the
       // common two-chip case sit on one line instead of two.
-      className={cn("flex items-start gap-3 border-b py-3 md:gap-4 md:py-4", HAIRLINE)}
+      //
+      // The `hidden` CLASS is what actually hides this row, not the attribute.
+      // The attribute only hides via the browser's UA [hidden]{display:none}
+      // rule, and `flex` below is an author style, so it wins and the row kept
+      // rendering: measured on production as 38 rows on screen against a
+      // counter of 13, with hidden rows computing display:flex at 140px tall.
+      // The standalone source had its own author-level `ul.items li[hidden]`
+      // rule, which did not survive the port. cn() is twMerge, which treats
+      // flex and hidden as one display group and keeps the last, so this
+      // resolves to display:none deterministically.
+      // The attribute stays regardless, to keep hidden rows out of the
+      // accessibility tree.
+      className={cn(
+        "flex items-start gap-3 border-b py-3 md:gap-4 md:py-4",
+        HAIRLINE,
+        hidden && "hidden"
+      )}
     >
       <span className="min-w-[20px] pt-0.5 font-body text-sm font-semibold tabular-nums text-yealth-grey md:min-w-[24px]">
         {way.n}
