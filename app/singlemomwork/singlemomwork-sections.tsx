@@ -1352,6 +1352,17 @@ export function SingleMomWorkSections() {
     const SETTLE_FRAMES = 30;
     const measure = () => {
       cancelAnimationFrame(frame);
+      // Same reasoning as the mount read below, applied to the update path.
+      // Every trigger here (resize, scroll, both observers, fonts.ready) only
+      // reached the loop, so where rAF never fires a resize left the offset at
+      // whatever it was at mount. Measured: after mounting at 375, resizing to
+      // 768 held 72px and gave -28px, and 1440 gave -8px. Negative means the
+      // bar sits under the navbar. One synchronous read makes every trigger
+      // correct immediately; the loop below still refines it.
+      const now = nav.getBoundingClientRect().bottom;
+      setNavBottom((prev) =>
+        prev !== null && Math.abs(prev - now) < 0.5 ? prev : now
+      );
       let n = 0;
       const step = () => {
         const next = nav.getBoundingClientRect().bottom;
