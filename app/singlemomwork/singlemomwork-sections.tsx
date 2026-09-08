@@ -1363,6 +1363,15 @@ export function SingleMomWorkSections() {
       frame = requestAnimationFrame(step);
     };
 
+    // One synchronous read before the frame loop starts. Every read below is
+    // scheduled through requestAnimationFrame, so anywhere rAF never fires the
+    // effect produced no value at all and the bar fell back to the CSS
+    // constants, which overlap the navbar by 59.5px in the state where it does
+    // honour --announce-h. Measured on production: rAF fired 0 times and the
+    // inline top was never written. This guarantees a correct offset even if no
+    // frame is ever delivered; the settle loop then refines it as before.
+    setNavBottom(nav.getBoundingClientRect().bottom);
+
     measure();
     window.addEventListener("resize", measure);
     // Scroll is the dependable catch-all. The navbar is fixed, so its bottom
