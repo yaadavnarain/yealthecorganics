@@ -1313,6 +1313,88 @@ export function SingleMomWorkSections() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  /**
+   * The sticky offset is MEASURED from the navbar's real bottom edge, not
+   * computed from --announce-h and not hard-coded.
+   *
+   * Both of the obvious approaches were tried and both failed. Using
+   * calc(var(--announce-h) + navHeight) left a 41.63px gap at every width,
+   * because the navbar's top computed to 0px while this bar added the variable.
+   * Replacing that with flat pixels equal to the navbar height then put the bar
+   * 59.5px UNDERNEATH the navbar in the other state, because the navbar
+   * sometimes does honour the variable: measured navTopCss "58.5px",
+   * navBottom 131.5, bar pinned at 72.
+   *
+   * The navbar's behaviour is not consistent between those two states and the
+   * cause is not established, so neither constant is safe. Measuring its bottom
+   * edge is correct in both, needs no theory about why, and stays correct if
+   * navbar.tsx is ever repaired.
+   *
+   * The Tailwind classes below remain as the pre-hydration fallback, so the
+   * first paint is close and this only refines it.
+   */
+  const [navBottom, setNavBottom] = useState<number | null>(null);
+
+  useEffect(() => {
+    const nav = document.querySelector("header#top");
+    if (!nav) return;
+
+    // A single read after any trigger is not enough, and this was learned by
+    // measuring rather than assumed. The navbar's border arrives via its own
+    // React render, AnnouncementBar publishes its height a tick after mount,
+    // and a viewport resize settles over several frames. Sampling once caught
+    // all three mid-flight: a -1px overlap at 375 and a +15.98px gap at 768.
+    //
+    // So each trigger opens a short settling window and reads on every frame
+    // for ~500ms, keeping the last value. Bounded, cheap (one rect read per
+    // frame), and it converges wherever the navbar ends up.
+    let frame = 0;
+    const SETTLE_FRAMES = 30;
+    const measure = () => {
+      cancelAnimationFrame(frame);
+      let n = 0;
+      const step = () => {
+        const next = nav.getBoundingClientRect().bottom;
+        setNavBottom((prev) =>
+          prev !== null && Math.abs(prev - next) < 0.5 ? prev : next
+        );
+        if (++n < SETTLE_FRAMES) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    // Scroll is the dependable catch-all. The navbar is fixed, so its bottom
+    // barely moves, but this re-measures after AnnouncementBar mounts, after it
+    // is dismissed, and after the navbar takes its scrolled border. Cheap: one
+    // getBoundingClientRect, and the guard above makes it a no-op setState.
+    window.addEventListener("scroll", measure, { passive: true });
+    // Fires when the announcement bar publishes --announce-h and moves the
+    // navbar down. Observing body as well as the navbar catches that, because
+    // the navbar's position changes without its own size changing.
+    const ro = new ResizeObserver(measure);
+    ro.observe(nav);
+    ro.observe(document.body);
+    // --announce-h is written as an inline style on <html>.
+    const mo = new MutationObserver(measure);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
+    // Late web fonts change the navbar's height after first layout.
+    let cancelled = false;
+    document.fonts?.ready.then(() => {
+      if (!cancelled) measure();
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure);
+      ro.disconnect();
+      mo.disconnect();
+    };
+  }, []);
+
   return (
     <>
       {/* Hero */}
@@ -1355,47 +1437,79 @@ export function SingleMomWorkSections() {
         </motion.div>
       </section>
 
-      {/* Filters. Sticky, offset below the fixed navbar.
-          The navbar is fixed at top: var(--announce-h), the height AnnouncementBar
-          publishes for itself, so its bottom edge is that variable plus its own
-          height. The offset therefore carries the same variable rather than a
-          flat pixel, because --announce-h is itself responsive: measured at
-          58.5px at 375 where the bar wraps to two lines, and 40.625px at 768 and
-          1440.
-          Navbar height was measured on this page with fonts loaded and the page
-          scrolled, which is when the bar actually sticks and when the navbar
-          carries its border: 73px at 375, 101px at 768, 81px at 1440. The 100px
-          band runs from 768 to about 1045, where the nav links, the Mauritius
-          pill and the Apply Now button stop fitting on one line. The switch back
-          is content-driven, not a media query, so the 1100px variant sits
-          deliberately above it: over-clearing leaves a gap, under-clearing
-          covers the bar.
+      {/* The filter heading sits OUTSIDE the sticky region so it scrolls away.
+          Inside, it cost 36px of permanent chrome (20px line + 16px margin) on
+          every screen. It names the pills once; it does not need to persist. */}
+      <motion.div {...pageFade(0.22)} className={cn(WRAP, "pt-8")}>
+        <h2 className={cn(EYEBROW, "text-yealth-grey md:tracking-[2px]")}>
+          What Is True For You Right Now
+        </h2>
+      </motion.div>
+
+      {/* Filters. Sticky, pinned to the navbar's measured bottom edge; see the
+          navBottom effect above for why it is measured rather than computed.
+          The Tailwind top-* classes are only the pre-hydration fallback and are
+          overridden by the inline value as soon as the effect runs. They use the
+          navbar's own heights (72 / 100 / 80), which is right whenever its top
+          is 0. The 100px band runs from 768 to about 1045, where the nav links,
+          the Mauritius pill and the Apply Now button stop fitting on one line;
+          that switch is content-driven rather than a media query, so the 1100px
+          variant sits deliberately above it.
           z-30 keeps it above content, below the navbar (z-50) and below
           FloatingCta (z-40). */}
       <section
         aria-label="Filter the list"
+        style={navBottom !== null ? { top: `${navBottom}px` } : undefined}
         className={cn(
-          "sticky top-[calc(var(--announce-h,0px)+73px)] z-30 border-b bg-yealth-black py-4 md:top-[calc(var(--announce-h,0px)+101px)] min-[1100px]:top-[calc(var(--announce-h,0px)+81px)]",
+          "sticky top-[72px] z-30 border-b bg-yealth-black py-2 md:top-[100px] md:py-4 min-[1100px]:top-[80px]",
           HAIRLINE
         )}
       >
-        <motion.div {...pageFade(0.25)} className={WRAP}>
-          <h2 className={cn(EYEBROW, "mb-4 text-yealth-grey md:tracking-[2px]")}>
-            What Is True For You Right Now
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {FILTERS.map((f) => (
-              <Pill
-                key={f.id}
-                pressed={active.has(f.id)}
-                onClick={() => toggle(f.id)}
-              >
-                {f.label}
+        <motion.div {...pageFade(0.25)} className={cn(WRAP, "flex items-center gap-3")}>
+          {/* Live count, pinned outside the scroll container so it never
+              scrolls out of reach. Mobile only: above md the hero counter is
+              still on screen far less often, but the pills no longer scroll, so
+              a second count would be redundant. Carries the live region on
+              mobile so a filter tap is announced even when the hero counter has
+              scrolled away. */}
+          <div
+            aria-live="polite"
+            className="shrink-0 font-body text-lg font-semibold tabular-nums text-yealth-gold md:hidden"
+          >
+            {visibleCount}
+            <span className="sr-only">
+              {visibleCount === 1 ? " Way showing" : " Ways showing"}
+            </span>
+          </div>
+
+          {/* Below md the pills are one horizontally scrollable row, which is
+              what keeps the sticky region under 64px: wrapped, they took five
+              rows and 222px. Above md they wrap as before. The fade on the
+              right edge is the affordance that the row continues. */}
+          <div className="relative min-w-0 flex-1 md:flex-none">
+            <div
+              className={cn(
+                "flex gap-2 overflow-x-auto pr-6 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+                "md:flex-wrap md:overflow-visible md:pr-0"
+              )}
+            >
+              {FILTERS.map((f) => (
+                <Pill
+                  key={f.id}
+                  pressed={active.has(f.id)}
+                  onClick={() => toggle(f.id)}
+                >
+                  {f.label}
+                </Pill>
+              ))}
+              <Pill clear onClick={clear}>
+                Show all
               </Pill>
-            ))}
-            <Pill clear onClick={clear}>
-              Show all
-            </Pill>
+            </div>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-yealth-black to-transparent md:hidden"
+            />
           </div>
         </motion.div>
       </section>
@@ -1626,6 +1740,10 @@ function Pill({
       onClick={onClick}
       className={cn(
         "cursor-pointer rounded-full border px-4 py-2 font-heading text-sm font-semibold transition-colors duration-150 md:text-base",
+        // 44px minimum tap target on mobile, where the pills are the primary
+        // control. whitespace-nowrap and shrink-0 keep each pill on one line
+        // inside the horizontal scroll row instead of squeezing.
+        "min-h-11 shrink-0 whitespace-nowrap md:min-h-0",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yealth-gold",
         HAIRLINE,
         clear
@@ -1648,9 +1766,12 @@ function WayRow({ way, hidden }: { way: NumberedWay; hidden: boolean }) {
   return (
     <li
       hidden={hidden}
-      className={cn("flex items-start gap-4 border-b py-4", HAIRLINE)}
+      // Tighter on mobile: gap 12 not 16, padding 12 not 16. The narrower gap
+      // and number column hand 8px back to the chip row, which is what lets the
+      // common two-chip case sit on one line instead of two.
+      className={cn("flex items-start gap-3 border-b py-3 md:gap-4 md:py-4", HAIRLINE)}
     >
-      <span className="min-w-[24px] pt-0.5 font-body text-sm font-semibold tabular-nums text-yealth-grey">
+      <span className="min-w-[20px] pt-0.5 font-body text-sm font-semibold tabular-nums text-yealth-grey md:min-w-[24px]">
         {way.n}
       </span>
       <div className="min-w-0 flex-1">
@@ -1658,13 +1779,19 @@ function WayRow({ way, hidden }: { way: NumberedWay; hidden: boolean }) {
           {way.name}
         </div>
 
+        {/* Chips already wrapped correctly; measured across all 66 rows, zero
+            stacked while they still fit. They wrapped because the labels are
+            genuinely wider than the 287px available. So this narrows them
+            rather than changing how they wrap: 13px text and 6px padding and
+            gap on mobile, which brings the common two-chip row onto one line.
+            Labels are content and are untouched. */}
         {chips.length > 0 ? (
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="mt-1.5 flex flex-wrap gap-1.5 md:mt-2 md:gap-2">
             {chips.map((t) => (
               <span
                 key={t}
                 className={cn(
-                  "rounded-full border border-white/10 bg-white/[0.04] px-2 font-heading text-sm font-medium md:text-base",
+                  "rounded-full border border-white/10 bg-white/[0.04] px-1.5 font-heading text-[13px] font-medium md:px-2 md:text-base",
                   t === "fast" ? "text-yealth-mint" : "text-yealth-grey"
                 )}
               >
@@ -1674,13 +1801,19 @@ function WayRow({ way, hidden }: { way: NumberedWay; hidden: boolean }) {
           </div>
         ) : null}
 
-        <details className="group mt-4">
+        <details className="group mt-3 md:mt-4">
           <summary
             className={cn(
-              "inline-flex cursor-pointer list-none items-center gap-2 font-heading text-sm font-semibold text-yealth-gold md:text-base",
+              "relative inline-flex cursor-pointer list-none items-center gap-2 font-heading text-sm font-semibold text-yealth-gold md:text-base",
               "[&::-webkit-details-marker]:hidden",
               "before:h-2 before:w-2 before:-rotate-45 before:border-b-2 before:border-r-2 before:border-yealth-gold before:transition-transform before:duration-150 before:content-['']",
-              "group-open:before:rotate-45"
+              "group-open:before:rotate-45",
+              // The visible summary is a 20px line, well under the 44px tap
+              // target. Padding it to 44px would add 24px to all 66 rows and
+              // undo the tightening, so the hit area is expanded with an
+              // absolutely positioned ::after instead: 20 + 12 + 12 = 44px
+              // tappable, zero layout cost. The chevron already owns ::before.
+              "after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
             )}
           >
             Get a step by step plan

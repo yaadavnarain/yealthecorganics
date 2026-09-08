@@ -1,11 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
+/**
+ * Routes that carry their own closing CTA and must not also show the global
+ * floating one. The id="contact" suppression below only hides it while that
+ * section is actually on screen, so on a long page it still floats over the
+ * whole scroll. This list is the per-route opt-out.
+ */
+const HIDE_ON = ["/singlemomwork"];
+
 export function FloatingCta() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +35,9 @@ export function FloatingCta() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // After the hooks, so hook order is identical on every route.
+  if (HIDE_ON.includes(pathname)) return null;
 
   return (
     <AnimatePresence>
