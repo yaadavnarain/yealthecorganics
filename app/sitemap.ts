@@ -13,6 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: "https://yealth.mu/pricing",
     },
     {
+      url: "https://yealth.mu/singlemomwork",
+    },
+    {
       url: "https://yealth.mu/terms",
     },
     {

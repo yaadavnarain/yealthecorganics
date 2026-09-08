@@ -11,7 +11,9 @@ import ClarityAnalytics from "@/components/ClarityAnalytics";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
-  weight: ["500", "700"],
+  // 600 is required by /singlemomwork (pills, disclosure summaries, buttons).
+  // Without it the browser synthesises a faux-bold from 500.
+  weight: ["500", "600", "700"],
   variable: "--font-quicksand",
   display: "swap",
 });
