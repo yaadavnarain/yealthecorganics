@@ -99,3 +99,15 @@ git add path/to/first-file.tsx path/to/second-file.tsx
 git commit -m "your message"
 git push origin main
 ```
+
+## Text opacity (approved 26 October 2026)
+
+Keep original brand text colors, headline treatments/gradients, font sizes and
+weights, and CTA backgrounds/labels. Ordinary text uses its original color at
+full alpha; do not mute it through color-alpha utilities or parent opacity.
+Only genuine form helper/support text uses 84% alpha of its original color.
+Exception: the user subsequently requested restoring /membership/reserve to
+its pre-78260ef styling (baseline 4ba439a), including its original text alpha
+and helper colors. Keep this form's scoped CSS intact. Preserve decorative/icon
+opacity, animation visibility, and existing CTA disabled/hover styling. Do not
+force white text or darken button fills to implement this rule.

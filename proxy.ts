@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isReservationRoot } from "@/lib/reservations/routing.mjs";
 
 // HTTP Basic Auth gate for the off-grid solar calculator only. The matcher
 // restricts this proxy to exactly two paths, so the rest of the site is
@@ -34,6 +35,13 @@ function safeEqual(a: string, b: string): boolean {
 const PROTECTED = new Set(["/pvcalculatoroffgrid", "/tools/pvcalculator.html"]);
 
 export function proxy(req: NextRequest) {
+  // Prepared for the separately approved future form hostname. This branch
+  // alone does not add a domain, change DNS or enable production storage.
+  if (isReservationRoot(req.nextUrl, req.headers.get("host"))) {
+    const target = req.nextUrl.clone();
+    target.pathname = "/membership/reserve";
+    return NextResponse.rewrite(target);
+  }
   // Defensive: anything the matcher lets through that isn't a protected path
   // passes untouched.
   if (!PROTECTED.has(req.nextUrl.pathname)) {
@@ -76,5 +84,8 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/pvcalculatoroffgrid", "/tools/pvcalculator.html"],
+  matcher: [
+    "/pvcalculatoroffgrid", "/tools/pvcalculator.html",
+    { source: "/", has: [{ type: "host", value: "membership.yealth.mu" }] },
+  ],
 };
