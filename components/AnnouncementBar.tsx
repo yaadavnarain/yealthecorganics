@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 export default function AnnouncementBar() {
+  const segments = useSelectedLayoutSegments();
   // Starts false on purpose, so the server and client markup agree on the first
   // render. The effect below turns the bar on after mount instead.
   const [visible, setVisible] = useState(false);
@@ -44,7 +46,7 @@ export default function AnnouncementBar() {
     };
   }, [visible]);
 
-  if (!visible) return null;
+  if (!visible || segments[0] === "membership") return null;
 
   const dismiss = (e: React.MouseEvent<HTMLButtonElement>) => {
     // The button is a sibling of the anchor, not a child, so no click should
