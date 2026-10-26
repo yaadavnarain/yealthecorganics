@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -11,11 +11,12 @@ import { motion, AnimatePresence } from "motion/react";
  * section is actually on screen, so on a long page it still floats over the
  * whole scroll. This list is the per-route opt-out.
  */
-const HIDE_ON = ["/singlemomwork"];
+const HIDE_ON = ["/singlemomwork", "/membership"];
 
 export function FloatingCta() {
   const [visible, setVisible] = useState(false);
   const pathname = usePathname();
+  const segments = useSelectedLayoutSegments();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +38,7 @@ export function FloatingCta() {
   }, []);
 
   // After the hooks, so hook order is identical on every route.
-  if (HIDE_ON.includes(pathname)) return null;
+  if (HIDE_ON.includes(pathname) || segments[0] === "membership") return null;
 
   return (
     <AnimatePresence>

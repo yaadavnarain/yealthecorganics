@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 export function AmbientParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const segments = useSelectedLayoutSegments();
+  const quietForm = segments[0] === "membership" && segments[1] === "reserve";
 
   useEffect(() => {
+    if (quietForm) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -121,7 +125,9 @@ export function AmbientParticles() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", setSize);
     };
-  }, []);
+  }, [quietForm]);
+
+  if (quietForm) return null;
 
   return (
     <canvas
