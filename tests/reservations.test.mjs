@@ -170,3 +170,44 @@ test("local durable adapter deduplicates retries and contacts, detects changed i
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+test("live challenges survive separate server instances and accept valid real-format contacts", async () => {
+  let time = 100000;
+  const saved = [];
+  const options = { mode: "live", signingSecret: "synthetic-test-secret-not-for-deployment", allowedHosts: ["membership.yealth.mu"], now: () => time,
+    store: { async allow() { return true; }, async save(value) { saved.push(value); } } };
+  const first = createReservationHandler(options);
+  const second = createReservationHandler(options);
+  const endpoint = "https://membership.yealth.mu/api/membership-reservations";
+  const challenge = await first(new Request(endpoint));
+  const { token, mode } = await challenge.json();
+  assert.equal(mode, "live");
+  time += 3000;
+  const response = await second(new Request(endpoint, { method: "POST", headers: { origin: "https://membership.yealth.mu", "content-type": "application/json" },
+    body: JSON.stringify({ ...valid(), email: "synthetic-fixture@yealth.invalid", address: "Synthetic integration fixture address", token, website: "", requestKey: randomUUID() }) }));
+  assert.equal(response.status, 201);
+  assert.equal((await response.json()).mode, "live");
+  assert.equal(saved.length, 1);
+});
+
+test("live mode rejects unapproved hosts, cross-site writes and insecure URLs", async () => {
+  const handler = createReservationHandler({ mode: "live", signingSecret: "test-secret", allowedHosts: ["membership.yealth.mu"], store: { async allow() { return true; } } });
+  for (const url of ["https://evil.example/api/membership-reservations", "http://membership.yealth.mu/api/membership-reservations"]) {
+    assert.equal((await handler(new Request(url))).status, 403);
+  }
+  assert.equal((await handler(new Request("https://membership.yealth.mu/api/membership-reservations", { headers: { origin: "https://evil.example" } }))).status, 403);
+  assert.throws(() => createReservationHandler({ mode: "live", store: {} }));
+});
+
+test("live mode uses persistent rate limits without retaining raw IPs and fails closed on storage errors", async () => {
+  let key;
+  const options = { mode: "live", signingSecret: "test-secret", allowedHosts: ["membership.yealth.mu"], store: { async allow(value) { key=value; return false; } } };
+  const request = () => new Request("https://membership.yealth.mu/api/membership-reservations", { headers: { "x-vercel-forwarded-for": "192.0.2.1" } });
+  assert.equal((await createReservationHandler(options)(request())).status, 429);
+  assert.match(key, /^[a-f0-9]{64}$/);
+  assert.ok(!key.includes("192.0.2.1"));
+  options.store.allow = async () => { throw new Error("private configuration"); };
+  const response = await createReservationHandler(options)(request());
+  assert.equal(response.status, 503);
+  assert.ok(!(await response.text()).includes("private configuration"));
+});
