@@ -1,7 +1,8 @@
 .page { min-height: 100vh; overflow-x: hidden; background: #1d1c1f; color: #fffff4; }
-.hero { min-height: 82svh; display: grid; grid-template-rows: minmax(0, 1fr) auto minmax(140px, 1fr); padding: 140px 0 0; position: relative; background: radial-gradient(ellipse at 50% 20%, #f5c84208, transparent 65%); }
-.heroInner { grid-row: 2; width: 100%; max-width: 1028px; padding: 0 24px; margin: 0 auto; text-align: center; }
-.heroAnimation { grid-row: 3; display: grid; align-items: center; width: 100%; }
+.hero { min-height: calc(100svh - var(--announce-h, 0px)); display: flex; align-items: center; padding: 112px 0 32px; position: relative; background: radial-gradient(ellipse at 50% 20%, #f5c84208, transparent 65%); }
+.heroGroup { width: 100%; }
+.heroInner { width: 100%; max-width: 1028px; padding: 0 24px; margin: 0 auto; text-align: center; }
+.heroAnimation { width: 100%; }
 .hero h1 { font-family: var(--font-quicksand), sans-serif; font-size: clamp(32px, 5vw, 64px); font-weight: 700; line-height: 1.1; color: #f5c842; letter-spacing: -.035em; text-wrap: balance; }
 .subheadline { max-width: 760px; margin: 28px auto 0; font-size: 18px; line-height: 1.7; text-wrap: pretty; }
 .buttons { display: flex; flex-direction: column; align-items: stretch; gap: 16px; margin: 36px auto 0; max-width: 620px; }
@@ -31,6 +32,6 @@
 .questions details > p { padding-bottom: 24px; font-size: 16px; line-height: 1.8; }
 .closing { max-width: 1060px; margin: auto; padding: 86px 28px 110px; text-align: center; }
 @media (min-width: 768px) { .buttons { flex-direction: row; justify-content: center; } .buttons .button { flex: 1; } }
-@media (max-width: 767px) { .hero { min-height: 78svh; padding: 126px 22px 64px; } .subheadline { font-size: 16px; line-height: 1.7; } .buttons { max-width: 380px; gap: 14px; } .offer, .faq, .closing { padding: 58px 22px; } .offer > p:not(.eyebrow) { font-size: 16px; } .singleButton .button { width: 100%; } .questions details { padding: 0 18px; } .questions summary { font-size: 16px; gap: 15px; } .closing { padding-bottom: 80px; } }
+@media (max-width: 767px) { .hero { padding: 104px 0 24px; } .subheadline { font-size: 16px; line-height: 1.7; } .buttons { max-width: 380px; gap: 14px; } .offer, .faq, .closing { padding: 58px 22px; } .offer > p:not(.eyebrow) { font-size: 16px; } .singleButton .button { width: 100%; } .questions details { padding: 0 18px; } .questions summary { font-size: 16px; gap: 15px; } .closing { padding-bottom: 80px; } }
 @media (prefers-reduced-motion: reduce) { .button, .questions summary svg { transition: none; } }
-@media (max-width: 767px) { .hero { padding: 126px 0 0; grid-template-rows: minmax(0, 1fr) auto minmax(96px, 1fr); } .heroInner { padding: 0 22px; } }
+@media (max-width: 767px) { .heroInner { padding: 0 22px; } }
