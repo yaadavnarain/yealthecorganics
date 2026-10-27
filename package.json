@@ -9,9 +9,11 @@
     "prebuild": "node scripts/check-brand.mjs && node scripts/compliance-check.mjs",
     "build": "next build",
     "start": "next start",
+    "test": "node --test tests/*.test.mjs",
     "lint": "next lint"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
