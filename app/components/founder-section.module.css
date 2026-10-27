@@ -1,0 +1,3 @@
+.background { background-position: 70% center; }
+/* Keep the hanging roots in frame when cover crops the wide original image. */
+@media (max-width: 767px) { .background { background-position: 30% center; } }

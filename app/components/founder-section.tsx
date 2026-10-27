@@ -4,15 +4,15 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { fadeUp } from "@/lib/motion";
 import { Glow } from "@/app/components/ui/glow";
+import styles from "./founder-section.module.css";
 
 export function FounderSection() {
   return (
     <section className="section-pad relative overflow-hidden bg-yealth-black">
       <div
-        className="pointer-events-none absolute inset-0 bg-cover"
+        className={`pointer-events-none absolute inset-0 bg-cover ${styles.background}`}
         style={{
           backgroundImage: "url('/images/founder-aqua.jpg')",
-          backgroundPosition: "70% center",
           opacity: 0.38,
           mixBlendMode: "lighten",
         }}

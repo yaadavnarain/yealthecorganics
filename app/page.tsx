@@ -15,7 +15,7 @@ export default function Page() {
       <Navbar />
       <main>
         <HomeContent section="hero" />
-        <BrandEquation />
+        <div className={styles.brandAnimation}><BrandEquation /></div>
         <HomeContent section="offers" />
         <FounderSection />
         <HomeContent section="faq" />
