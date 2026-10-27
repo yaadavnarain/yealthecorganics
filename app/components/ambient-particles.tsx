@@ -6,7 +6,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 export function AmbientParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const segments = useSelectedLayoutSegments();
-  const quietForm = segments[0] === "membership" && segments[1] === "reserve";
+  const quietForm = ["membership", "agribusiness"].includes(segments[0]) && segments[1] === "reserve";
 
   useEffect(() => {
     if (quietForm) return;

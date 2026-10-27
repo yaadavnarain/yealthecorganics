@@ -46,7 +46,7 @@ export default function AnnouncementBar() {
     };
   }, [visible]);
 
-  if (!visible || segments[0] === "membership") return null;
+  if (!visible || segments[0] === "membership" || (segments[0] === "agribusiness" && segments[1] === "reserve")) return null;
 
   const dismiss = (e: React.MouseEvent<HTMLButtonElement>) => {
     // The button is a sibling of the anchor, not a child, so no click should

@@ -10,6 +10,7 @@ export function ReservationCta() {
       <a className={styles.cta} href={RESERVATION_URL}>
         Reserve My Membership <ArrowUpRight size={20} aria-hidden="true" />
       </a>
+      <p className={styles.ctaHelper}>It's free and takes 1 minute.</p>
     </div>
   );
 }

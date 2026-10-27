@@ -49,7 +49,7 @@ export function AgribusinessHero() {
             {...heroFade(0)}
             className="font-heading text-[28px] font-bold leading-[1.1] text-yealth-gold md:text-[52px] xl:text-[60px]"
           >
-            Be Part of a New Generation of Agribusiness Owners.
+            Be Part of a New Generation of <span className="text-yealth-mint">Agribusiness Owners</span>.
           </motion.h1>
 
           <motion.p
@@ -88,20 +88,20 @@ export function AgribusinessHero() {
             width. The headline block above keeps its own left alignment. */}
         <div className="flex w-full max-w-[620px] flex-col items-center gap-5 md:gap-6">
           <motion.div {...heroFade(0.35)}>
-            <button
-              type="button" disabled aria-describedby="agribusiness-reservation-status"
+            <a
+              href="https://agribusiness.yealth.mu" aria-describedby="agribusiness-reservation-status"
               className="gold-cta inline-flex items-center justify-center gap-2 rounded-yealth px-8 py-4 font-heading text-base md:px-10 md:py-5 md:text-lg"
             >
               Reserve my Agribusiness
               <ArrowRight className="h-4 w-4 md:h-5 md:w-5" aria-hidden />
-            </button>
+            </a>
           </motion.div>
 
           <motion.p
             {...heroFade(0.4)}
             id="agribusiness-reservation-status" className="text-sm text-yealth-offwhite/50"
           >
-            Reservation link currently unavailable.
+            It's free and takes 30 seconds.
           </motion.p>
         </div>
       </motion.div>
