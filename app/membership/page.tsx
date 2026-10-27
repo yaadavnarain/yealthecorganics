@@ -8,7 +8,7 @@ import { MembershipFooter } from "./membership-footer";
 import { BrandEquation } from "@/app/components/yealth-equation";
 
 export const metadata: Metadata = {
-  title: "yealth Membership | Earn. Save. Live Well.",
+  title: { absolute: "Earn. Save. Live Well." },
   description: "Side hustles to help you meet the high cost of living. Support to grow your career or start a business.",
   robots: { index: false, follow: false },
   openGraph: {
