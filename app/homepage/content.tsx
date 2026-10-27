@@ -24,12 +24,14 @@ const FAQ = [
 export function HomeContent({ section }: { section: "hero" | "offers" | "faq" | "closing" }) {
   if (section === "hero") return (
     <section className={styles.hero} aria-labelledby="home-title">
+      <div className={styles.heroGroup}>
       <div className={styles.heroInner}>
         <h1 id="home-title">Financial Freedom for the Youth.</h1>
         <p className={styles.subheadline}>Become an agribusiness owner, develop your career and business skills, and make nutritious food part of your routine.</p>
         <ReservationLinks />
       </div>
       <div className={styles.heroAnimation}><BrandEquation trigger="load" /></div>
+      </div>
     </section>
   );
   if (section === "offers") return <>
