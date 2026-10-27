@@ -12,6 +12,10 @@ import { FaqSection } from "@/app/components/faq-section";
 import { FinalCtaSection } from "@/app/components/final-cta-section";
 import { Footer } from "@/app/components/footer";
 
+export const metadata = {
+  title: { absolute: "Financial Freedom for the Youth" },
+};
+
 export default function Page() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-yealth-black text-yealth-offwhite">
