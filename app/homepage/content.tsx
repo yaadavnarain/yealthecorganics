@@ -1,4 +1,5 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
+import { BrandEquation } from "@/app/components/yealth-equation";
 import styles from "./homepage.module.css";
 
 function ReservationLink({ membership = false }: { membership?: boolean }) {
@@ -28,6 +29,7 @@ export function HomeContent({ section }: { section: "hero" | "offers" | "faq" | 
         <p className={styles.subheadline}>Become an agribusiness owner, develop your career and business skills, and make nutritious food part of your routine.</p>
         <ReservationLinks />
       </div>
+      <div className={styles.heroAnimation}><BrandEquation trigger="load" /></div>
     </section>
   );
   if (section === "offers") return <>

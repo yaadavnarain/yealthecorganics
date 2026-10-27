@@ -5,9 +5,9 @@ import Image from "next/image";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
+import styles from "./navbar.module.css";
 
 const NAV_LINKS = [
-  { label: "About", href: "/#about" },
   { label: "Agribusiness", href: "https://yealth.mu/agribusiness" },
   { label: "Membership", href: "https://yealth.mu/membership" },
   // TEMP-HIDE-SOLAR-CALC: nav link removed; page still live at /pvcalculatoroffgrid
@@ -180,7 +180,7 @@ export function Navbar() {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            <div className="mt-8 flex flex-col gap-8 px-8">
+            <div className="mt-8 flex max-h-[calc(100svh-100px)] flex-col gap-8 overflow-y-auto px-8 pb-8">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.label}
@@ -195,16 +195,10 @@ export function Navbar() {
                 <MauritiusFlag />
                 Mauritius
               </span>
-              <a
-                href="https://join.yealth.mu/securemyspot"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMenuOpen(false)}
-                className="gold-cta inline-flex w-fit items-center gap-2 rounded-yealth px-6 py-3 font-heading text-base"
-              >
-                Apply Now
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              <div className={styles.actions}>
+                <a href="https://yealth.mu/agribusiness" onClick={() => setMenuOpen(false)} className={`${styles.button} ${styles.amber}`}>Become an Agribusiness Owner</a>
+                <a href="https://yealth.mu/membership" onClick={() => setMenuOpen(false)} className={`${styles.button} ${styles.mint}`}>Earn &amp; Save Now</a>
+              </div>
             </div>
           </motion.div>
         )}
