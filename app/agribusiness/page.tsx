@@ -16,9 +16,9 @@ export default function Page() {
             <p className="font-body text-base md:text-lg">Farm tour video coming soon.</p>
           </div>
           <div className="mt-10 text-center">
-            <button type="button" disabled aria-describedby="agribusiness-reservation-status" className="gold-cta inline-flex items-center justify-center rounded-yealth px-8 py-4 font-heading text-base md:px-10 md:py-5 md:text-lg">
+            <a href="https://agribusiness.yealth.mu" aria-describedby="agribusiness-reservation-status" className="gold-cta inline-flex items-center justify-center rounded-yealth px-8 py-4 font-heading text-base md:px-10 md:py-5 md:text-lg">
               Reserve my Agribusiness
-            </button>
+            </a>
           </div>
         </section>
       </main>
