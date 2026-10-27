@@ -17,9 +17,9 @@ const SOCIALS = [
 
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
-  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Agribusiness", href: "https://yealth.mu/agribusiness" },
+  { label: "Membership", href: "https://yealth.mu/membership" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Apply Now", href: "https://join.yealth.mu/securemyspot", external: true },
 ];
 
 const LEGAL_LINKS = [
