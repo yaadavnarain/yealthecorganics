@@ -30,7 +30,7 @@ export default function MembershipPage() {
         <Link href="/" aria-label="yealth home" className={styles.logo}>
           <Image src="/images/yealth-mark.png" alt="yealth" width={683} height={336} priority />
         </Link>
-        <span className={styles.previewBadge}>Membership preview</span>
+        {process.env.VERCEL_ENV !== "production" && <span className={styles.previewBadge}>Membership preview</span>}
       </header>
 
       <main id="membership-content">
