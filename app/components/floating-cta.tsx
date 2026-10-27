@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from "motion/react";
  * section is actually on screen, so on a long page it still floats over the
  * whole scroll. This list is the per-route opt-out.
  */
-const HIDE_ON = ["/singlemomwork", "/membership"];
+const HIDE_ON = ["/singlemomwork", "/membership", "/agribusiness"];
 
 export function FloatingCta() {
   const [visible, setVisible] = useState(false);
