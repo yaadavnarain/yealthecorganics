@@ -22,6 +22,7 @@ export function ReservationForm() {
   const [announcement, setAnnouncement] = useState("");
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [mode, setMode] = useState<"local-test" | "live">("local-test");
   const honeypot = useRef<HTMLInputElement>(null);
   const summary = useRef<HTMLDivElement>(null);
   const success = useRef<HTMLDivElement>(null);
@@ -32,11 +33,12 @@ export function ReservationForm() {
     try {
       const response = await fetch("/api/membership-reservations", { cache: "no-store", credentials: "same-origin" });
       const data = await response.json();
-      if (!response.ok || !data.token) throw new Error(data.message || "Preview storage is unavailable.");
+      if (!response.ok || !data.token || !["local-test", "live"].includes(data.mode)) throw new Error("Storage unavailable");
+      setMode(data.mode);
       setToken(data.token);
       setRequestKey(crypto.randomUUID());
     } catch {
-      setMessage("Preview storage is unavailable. You can review the form, but nothing can be saved right now.");
+      setMessage("Reservation storage is unavailable. Nothing can be saved right now. Please try again later.");
     }
   }
 
@@ -65,7 +67,7 @@ export function ReservationForm() {
     const result = validateReservation(input);
     const nextErrors: Errors = { ...result.errors };
     const syntheticOnly = isSyntheticReservation({ ...fields, email: fields.email.trim().toLowerCase(), address: fields.address.trim() });
-    if (!syntheticOnly) nextErrors.form = "Live reservations are not available yet. No details were saved.";
+    if (mode === "local-test" && !syntheticOnly) nextErrors.form = "Live reservations are not available yet. No details were saved.";
     if (Object.values(nextErrors).some(Boolean)) {
       setErrors(nextErrors);
       requestAnimationFrame(() => summary.current?.focus());
@@ -89,12 +91,12 @@ export function ReservationForm() {
         requestAnimationFrame(() => summary.current?.focus());
         return;
       }
-      if (data.mode !== "local-test") throw new Error("Unexpected response");
+      if (data.mode !== mode) throw new Error("Unexpected response");
       setSaved(true);
       setFields(initial);
       requestAnimationFrame(() => success.current?.focus());
     } catch {
-      setMessage("The connection was interrupted. Your entries are still here. Try again; duplicate attempts will not create another test reservation.");
+      setMessage("The connection was interrupted. Your entries are still here. Try again; duplicate attempts will not create another reservation.");
       requestAnimationFrame(() => summary.current?.focus());
     } finally {
       clearTimeout(timeout);
@@ -105,8 +107,8 @@ export function ReservationForm() {
   if (saved) return (
     <div ref={success} tabIndex={-1} className={styles.success} role="status">
       <Check aria-hidden="true" size={36} />
-      <h2>Test details saved.</h2>
-      <p>These synthetic details were saved locally on this laptop. No real reservation was made, no payment was taken and no messages were sent.</p>
+      <h2>{mode === "live" ? "Reservation received." : "Test details saved."}</h2>
+      <p>{mode === "live" ? "Your interest and priorities have been recorded. No payment was taken and membership activation is not guaranteed." : "These synthetic details were saved locally on this laptop. No real reservation was made, no payment was taken and no messages were sent."}</p>
       <a href="https://yealth.mu/membership">Back to yealth Membership <ArrowUpRight size={18} aria-hidden="true" /></a>
     </div>
   );
@@ -119,7 +121,7 @@ export function ReservationForm() {
         <div ref={summary} tabIndex={-1} className={styles.errorSummary} role="alert">
           <strong>{message || "Please check the following fields."}</strong>
           {invalid && <ul>{Object.entries(errors).filter(([, value]) => value).map(([key, value]) => <li key={key}><a href={`#${key}`}>{value}</a></li>)}</ul>}
-          {!token && <button type="button" onClick={() => void prepare()}>Check preview storage again</button>}
+          {!token && <button type="button" onClick={() => void prepare()}>Try again</button>}
         </div>
       )}
       <fieldset disabled={pending}>
@@ -201,7 +203,7 @@ export function ReservationForm() {
         <p>This form records interest only. No payment is collected and membership activation is not guaranteed.</p>
       </div>
       <button className={styles.submit} type="submit" disabled={pending || !token}>
-        {pending ? "Saving test details…" : "Submit"}<ArrowUpRight size={20} aria-hidden="true" />
+        {pending ? "Submitting…" : "Submit"}<ArrowUpRight size={20} aria-hidden="true" />
       </button>
     </form>
   );
