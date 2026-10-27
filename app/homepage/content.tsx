@@ -37,9 +37,8 @@ export function HomeContent({ section }: { section: "hero" | "offers" | "faq" | 
   if (section === "offers") return <>
     <section id="about" className={styles.offer} aria-labelledby="agribusiness-title">
       <p className={styles.eyebrow}>yealth Agribusiness</p>
-      <h2 id="agribusiness-title">Be Part of a New Generation of Agribusiness Owners.</h2>
-      <p>yealth handles farm construction, farm operations and produce distribution. You can own and grow an agribusiness without managing its daily operations yourself.</p>
-      <p>Learn how the business works, what ownership involves and what you need to consider before deciding.</p>
+      <h2 id="agribusiness-title">Build an Agribusiness Alongside Your Career.</h2>
+      <p>Own an agribusiness without taking on daily farm management. yealth handles farm construction, operations and produce distribution, so you can continue focusing on your career and other commitments.</p>
       <div className={styles.singleButton}><ReservationLink /></div>
     </section>
     <section id="how-it-works" className={`${styles.offer} ${styles.membership}`} aria-labelledby="membership-title">
