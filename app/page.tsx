@@ -1,16 +1,9 @@
 import { Navbar } from "@/app/components/navbar";
-import { Hero } from "@/app/components/hero";
 import { BrandEquation } from "@/app/components/yealth-equation";
-import { PainSection } from "@/app/components/pain-section";
-import { SolutionSection } from "@/app/components/solution-section";
-import { OutcomesSection } from "@/app/components/outcomes-section";
-import { ProductCardsSection } from "@/app/components/product-cards-section";
-import { AgribusinessOwnerSection } from "@/app/components/agribusiness-owner-section";
-import { HowItWorksSection } from "@/app/components/how-it-works-section";
-import { FounderSection } from "@/app/components/founder-section";
-import { FaqSection } from "@/app/components/faq-section";
-import { FinalCtaSection } from "@/app/components/final-cta-section";
 import { Footer } from "@/app/components/footer";
+import { FounderSection } from "@/app/components/founder-section";
+import { HomeContent } from "./homepage/content";
+import styles from "./homepage/homepage.module.css";
 
 export const metadata = {
   title: { absolute: "Financial Freedom for the Youth" },
@@ -18,20 +11,15 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-yealth-black text-yealth-offwhite">
+    <div className={styles.page}>
       <Navbar />
       <main>
-        <Hero />
+        <HomeContent section="hero" />
         <BrandEquation />
-        <PainSection />
-        <SolutionSection />
-        <OutcomesSection />
-        <ProductCardsSection />
-        <AgribusinessOwnerSection />
-        <HowItWorksSection />
+        <HomeContent section="offers" />
         <FounderSection />
-        <FaqSection />
-        <FinalCtaSection />
+        <HomeContent section="faq" />
+        <HomeContent section="closing" />
       </main>
       <Footer />
     </div>
