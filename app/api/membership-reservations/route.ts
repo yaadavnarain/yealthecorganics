@@ -2,9 +2,11 @@ import { createReservationHandler } from "@/lib/reservations/handler.mjs";
 import { createLocalTestStore } from "@/lib/reservations/local-store.mjs";
 import { createNeonStore } from "@/lib/reservations/neon-store.mjs";
 import { createHash } from "node:crypto";
+import { scheduleDelivery } from '@/lib/reservations/dispatch';
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 let handler: ReturnType<typeof createReservationHandler> | undefined;
 let initialization: Promise<void> | undefined;
@@ -31,7 +33,9 @@ async function respond(request: Request) {
       }
     })();
     await initialization;
-    return handler!(request);
+    const response = await handler!(request);
+    scheduleDelivery(request, response);
+    return response;
   } catch {
     return Response.json({ message: "Preview storage is unavailable. No details were saved." }, {
       status: 503, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" },

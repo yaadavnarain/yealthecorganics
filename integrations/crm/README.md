@@ -1,0 +1,15 @@
+# Native reservation delivery
+
+Neon remains authoritative. A transactional INSERT trigger queues new membership and agribusiness reservations separately. No historical backfill is automatic. A restricted execute-only worker claims leased events and sends HMAC-signed requests to an owner-controlled Apps Script receiver. The receiver writes only the two configured reservation tabs and sends a minimal alert to notifications@yealth.mu. Existing CRM tables and sharing are preserved.
+
+The public receiver source is a deployment template: substitute the private spreadsheet ID in the private Apps Script project before deployment. Keep actual deployment IDs, personal account identifiers and secrets out of this repository. The manifest explicitly lists Sheets read/write and send-mail, with no inbox permission. Google web apps cannot use bound active-container methods; openById requires the full Sheets OAuth scope even though code targets one spreadsheet.
+
+Production settings: CRM_DELIVERY_DATABASE_URL (restricted forms_delivery role), CRM_ENDPOINT (HTTPS Apps Script exec URL), CRM_SIGNING_SECRET (32 random bytes or stronger), CRON_SECRET (independent random token). Never use an owner database URL. Missing settings disable immediate dispatch. The internal drain route requires the cron bearer token and returns no records. Protected settings belong only in the hosting platform, never client code or logs.
+
+Dispatch runs after an accepted form response, so Google outages cannot turn a saved reservation into a failure. Existing Pro hosting supports the five-minute retry cron without an upgrade. A batch processes at most two events within the 60-second function bound. SQL leases prevent concurrent claims; stale leases recover and failed events back off. Twelve unsuccessful attempts move to manual review. Monitor pending/review work privately, especially during quota exhaustion or sustained backlog.
+
+Sheet rows deduplicate immutable submission IDs under a script lock. Formula-like cell strings are escaped. Email contains only the form name and a private Sheet link, no contact/address/ranking/contribution data. Before sending, intent is flushed; ambiguous sends become review rather than blind resend. Consumer MailApp quota is currently 100 recipients/day per executing user; zero available quota leaves the alert pending. This is retry/dedupe with manual ambiguity handling, not a claim of exactly-once email delivery.
+
+The endpoint verifies HMAC over the exact timestamp and serialized payload plus a five-minute freshness bound before any Sheet access. It has no GET/read handler and returns generic errors. The transport endpoint is public; authentication does not prevent execution-quota denial of service, so protect the signing key.
+
+Tests cover ID replay, formula escaping, quota failure, ambiguous sends, crash recovery, signed requests and invalid/expired signature rejection. The SQL migration must be tested on an isolated branch before production. Live release requires synthetic saves in both forms, private row and alert verification, duplicate/retry checks, unauthorized-worker rejection and existing-route regression tests.
