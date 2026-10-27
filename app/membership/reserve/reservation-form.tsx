@@ -159,6 +159,7 @@ export function ReservationForm() {
       <fieldset disabled={pending} id="ranking">
         <legend>Your priorities</legend>
         <p className={styles.instructions}>Rank all ten perks from most important to least important. Priority 1 is your highest.</p>
+        <p className={styles.help}>*Terms &amp; Conditions apply.</p>
         <p className={styles.live} aria-live="polite" aria-atomic="true">{announcement}</p>
         <ol className={styles.ranking}>
           {order.map((id, index) => {
