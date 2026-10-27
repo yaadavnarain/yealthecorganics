@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { scheduleAfterPageLoad } from "@/lib/homepage-animation.mjs";
 
 // The brand equation: health + wealth + youth = yealth. All lowercase, always.
 //
@@ -274,7 +275,7 @@ const WORDS: Array<{ key: Source; letters: string[]; startIndex: number }> = [
 // The result, always lowercase.
 const RESULT = ["y", "e", "a", "l", "t", "h"];
 
-export function BrandEquation() {
+export function BrandEquation({ trigger = "scroll" }: { trigger?: "scroll" | "load" }) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const reduce = prefersReduced === true;
@@ -283,6 +284,7 @@ export function BrandEquation() {
   // value identifies the current run. It also keys the visual tree and scopes
   // every layoutId, so dropping to 0 remounts the subtree blank in one frame.
   const [run, setRun] = useState(0);
+  const [loadTiming, setLoadTiming] = useState<{ scheduledAt: number; startedAt: number } | null>(null);
   const stageRef = useRef<Stage>(S.IDLE);
 
   // Write through a ref so an unchanged stage costs no render at all. The loop
@@ -314,6 +316,7 @@ export function BrandEquation() {
   // mid-scroll: percentage margins shift the band by a few tens of pixels, but
   // with the latch closed a re-entry does nothing.
   useEffect(() => {
+    if (trigger === "load") return;
     const el = ref.current;
     if (!el) return;
 
@@ -345,7 +348,15 @@ export function BrandEquation() {
       start.disconnect();
       alive.disconnect();
     };
-  }, []);
+  }, [trigger]);
+
+  useEffect(() => {
+    if (trigger !== "load" || reduce) return;
+    return scheduleAfterPageLoad(window, (timing: { scheduledAt: number; startedAt: number }) => {
+      setLoadTiming(timing);
+      setRun(1);
+    });
+  }, [trigger, reduce]);
 
   useEffect(() => {
     // Reduced motion: land on the finished state once, and never replay.
@@ -771,7 +782,8 @@ export function BrandEquation() {
   }
 
   return (
-    <section className="bg-yealth-black">
+    <section className="bg-yealth-black" data-equation-trigger={trigger} data-equation-stage={stage}
+      data-equation-run={run} data-equation-load-delay={loadTiming ? loadTiming.startedAt - loadTiming.scheduledAt : undefined}>
       <div
         ref={ref}
         className="mx-auto max-w-[1200px] px-6 py-8 text-center md:px-8 md:py-10"

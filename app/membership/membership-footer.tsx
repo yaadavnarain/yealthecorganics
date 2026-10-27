@@ -16,7 +16,6 @@ const SOCIALS = [
 ];
 
 const NAV_LINKS = [
-  { label: "About", href: "/#about" },
   { label: "Agribusiness", href: "https://yealth.mu/agribusiness" },
   { label: "Membership", href: "https://yealth.mu/membership" },
   { label: "FAQ", href: "/#faq" },

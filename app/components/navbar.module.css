@@ -1,0 +1,8 @@
+.actions { display: flex; flex-direction: column; gap: 14px; }
+.button { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 14px 18px; border-radius: 12px; color: #000; text-align: center; font-family: var(--font-quicksand), sans-serif; font-size: 16px; font-weight: 700; line-height: 1.35; transition: background-color 200ms ease; }
+.amber { background: #f5c842; }
+.mint { background: #34d399; }
+.amber:hover, .amber:focus-visible { background: #34d399; color: #000; }
+.mint:hover, .mint:focus-visible { background: #f5c842; color: #000; }
+.button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .button { transition: none; } }

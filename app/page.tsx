@@ -1,5 +1,4 @@
 import { Navbar } from "@/app/components/navbar";
-import { BrandEquation } from "@/app/components/yealth-equation";
 import { Footer } from "@/app/components/footer";
 import { FounderSection } from "@/app/components/founder-section";
 import { HomeContent } from "./homepage/content";
@@ -15,7 +14,6 @@ export default function Page() {
       <Navbar />
       <main>
         <HomeContent section="hero" />
-        <div className={styles.brandAnimation}><BrandEquation /></div>
         <HomeContent section="offers" />
         <FounderSection />
         <HomeContent section="faq" />
