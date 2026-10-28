@@ -38,7 +38,7 @@ export function FloatingCta() {
   }, []);
 
   // After the hooks, so hook order is identical on every route.
-  if (HIDE_ON.includes(pathname) || segments[0] === "membership" || segments[0] === "agribusiness") return null;
+  if (HIDE_ON.includes(pathname) || segments[0] === "website-feedback" || segments[0] === "membership" || segments[0] === "agribusiness") return null;
 
   return (
     <AnimatePresence>

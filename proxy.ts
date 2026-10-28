@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isReservationRoot, isAgribusinessRoot } from "@/lib/reservations/routing.mjs";
+import { isReservationRoot, isAgribusinessRoot, isWebsiteFeedbackRoot } from "@/lib/reservations/routing.mjs";
 
 // HTTP Basic Auth gate for the off-grid solar calculator only. The matcher
 // restricts this proxy to exactly two paths, so the rest of the site is
@@ -45,6 +45,10 @@ export function proxy(req: NextRequest) {
   if (isAgribusinessRoot(req.nextUrl, req.headers.get("host"))) {
     const target = req.nextUrl.clone();
     target.pathname = "/agribusiness/reserve";
+    return NextResponse.rewrite(target);
+  }
+  if (isWebsiteFeedbackRoot(req.nextUrl, req.headers.get("host"))) {
+    const target = req.nextUrl.clone(); target.pathname = "/website-feedback";
     return NextResponse.rewrite(target);
   }
   // Defensive: anything the matcher lets through that isn't a protected path
@@ -93,5 +97,6 @@ export const config = {
     "/pvcalculatoroffgrid", "/tools/pvcalculator.html",
     { source: "/", has: [{ type: "host", value: "membership.yealth.mu" }] },
     { source: "/", has: [{ type: "host", value: "agribusiness.yealth.mu" }] },
+    { source: "/", has: [{ type: "host", value: "websitefeedback1.yealth.mu" }] },
   ],
 };
