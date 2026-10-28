@@ -13,3 +13,16 @@ function fixture(){let time=100000;const rows=new Map();let allowed=true,fail=fa
 test('API accepts one submission and idempotent retries; changed payload conflicts',async()=>{const f=fixture(),token=(await(await f.request()).json()).token;f.advance();const body={...valid(),token,website:'',requestKey:randomUUID()};for(let i=0;i<2;i++){const r=await f.request('POST',body);assert.equal(r.status,201);assert.equal((await r.json()).message,THANK_YOU);}assert.equal(f.rows.size,1);assert.equal((await f.request('POST',{...body,improvement:'different'})).status,409);});
 test('API rejects CSRF, spam traps, missing questions, forged tokens and oversized bodies',async()=>{const f=fixture(),token=(await(await f.request()).json()).token;f.advance();const b={...valid(),token,website:'',requestKey:randomUUID()};assert.equal((await f.request('POST',b,{origin:'https://evil.example'})).status,403);assert.equal((await f.request('POST',{...b,website:'spam'})).status,400);assert.equal((await f.request('POST',{...b,token:'forged'})).status,400);assert.equal((await f.request('POST',{...b,membershipUnderstanding:''})).status,422);assert.equal((await f.request('POST',{...b,improvement:'x'.repeat(40000)})).status,413);assert.equal(f.rows.size,0);});
 test('API throttles and reports storage failure without leaking details',async()=>{const f=fixture(),token=(await(await f.request()).json()).token;f.advance();f.allow(false);assert.equal((await f.request()).status,429);f.allow(true);f.fail();const r=await f.request('POST',{...valid(),token,website:'',requestKey:randomUUID()});assert.equal(r.status,503);assert.equal((await r.text()).includes('private database'),false);assert.equal(f.rows.size,0);});
+
+import {createFeedbackStore} from '../lib/feedback/store.mjs';
+test('cached feedback storage creates fresh per-query deadlines and parameterizes answers',async()=>{
+ const calls=[];
+ const store=createFeedbackStore('postgresql://membership_ingest:test@unit.neon.tech/yealth_forms',()=>({query:async(text,params,options)=>{calls.push({text,params,options});return text.includes('rate_limit')?[{allowed:true}]:[{id:params[0]}];}}));
+ assert.equal(await store.allow('a'.repeat(64)),true);
+ await store.save(valid(),'fee1bac0-0000-4000-8000-000000000001');
+ assert.equal(await store.allow('a'.repeat(64)),true);
+ assert.equal(new Set(calls.map(c=>c.options.fetchOptions.signal)).size,3);
+ assert.equal(calls.every(c=>!c.options.fetchOptions.signal.aborted),true);
+ assert.equal(calls[1].params[0],'fee1bac0-0000-4000-8000-000000000001');
+ assert.equal(calls[1].text.includes('Mo pa sir'),false);
+});
