@@ -76,3 +76,32 @@
   .footer nav { flex-direction: column; gap: 10px; text-align: right; font-size: 12px; }
   .footer > a img { width: 110px; }
 }
+
+/* ---- guided card + spotlight perks (see membership-perks.tsx) ---- */
+.panelBottom { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.guide, .guideStrip p { min-width: 0; text-align: right; font-size: 12px; letter-spacing: .1em; line-height: 1.4; color: #fffff4; font-variant-numeric: tabular-nums; }
+.guide b, .guideStrip b { display: block; font-family: var(--font-quicksand), sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+.guideBar { height: 3px; margin-top: 18px; border-radius: 3px; background: #fffff41c; overflow: hidden; }
+.guideBar i { display: block; height: 100%; background: linear-gradient(90deg, #f5c842, #34d399); transform-origin: left center; transition: transform .45s cubic-bezier(.22, 1, .36, 1); }
+.perksColumn { min-width: 0; }
+.guideStrip { display: none; }
+.perk { position: relative; transition: opacity .35s ease; }
+.perk::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: #f5c842; transform: scaleX(0); transform-origin: left center; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.perkMint::before { background: #34d399; }
+.perk h3 { transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.perkActive::before { transform: scaleX(1); }
+.perkActive h3 { transform: translateX(8px); }
+/* Dimming is a mouse-only state: it never mutes text on a touch screen. */
+@media (hover: hover) and (pointer: fine) {
+  .perks:hover .perk { opacity: .42; }
+  .perks:hover .perk:hover { opacity: 1; }
+}
+@media (max-width: 600px) {
+  .guide, .pricePanel > .guideBar { display: none; }
+  .guideStrip { display: block; position: sticky; top: 10px; z-index: 5; margin-bottom: 18px; padding: 10px 16px 12px; border: 1px solid #f5c84240; border-radius: 12px; background: #232226; box-shadow: 0 12px 30px #00000059; }
+  .guideStrip p { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; text-align: left; }
+  .guideStrip .guideBar { margin-top: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .perk, .perk::before, .perk h3, .guideBar i { transition: none; }
+}

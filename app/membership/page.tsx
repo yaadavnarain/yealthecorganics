@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ReservationCta } from "./reservation-cta";
-import { MEMBERSHIP_PERKS, GREEN_PERKS } from "@/lib/membership-perks.mjs";
+import { MembershipPerks } from "./membership-perks";
 import styles from "./membership.module.css";
 import { Footer } from "@/app/components/footer";
 import { BrandEquation } from "@/app/components/yealth-equation";
@@ -52,32 +52,7 @@ export default function MembershipPage() {
 
         <BrandEquation />
 
-        <section className={styles.membership} aria-labelledby="membership-title">
-          <div className={styles.membershipIntro}>
-            <div className={styles.pricePanel}>
-              <div className={styles.panelMark} aria-hidden="true"><span /><span /><span /></div>
-              <h2 id="membership-title">yealth Membership</h2>
-              <p className={styles.price}>
-                <strong>Rs 2,800</strong>{" "}one-time joining fee,{" "}
-                <strong>Rs 2,800</strong>{" "}per month thereafter.
-              </p>
-              <div className={styles.panelBottom}>
-                <Image src="/images/yealth-logo-og.png" alt="yealth" width={300} height={54} />
-              </div>
-            </div>
-          </div>
-          <ol className={styles.perks}>
-            {MEMBERSHIP_PERKS.map(({ id, title, description }, index) => {
-              return (
-              <li key={title} className={styles.perk}>
-                <span className={styles.number} aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <h3 className={GREEN_PERKS.has(id) ? styles.mint : styles.gold}>{title}</h3>
-                <p>{description}</p>
-              </li>
-              );
-            })}
-          </ol>
-        </section>
+        <MembershipPerks />
 
         <section className={styles.closing} aria-label="Reserve your membership">
           <p className={styles.termsNote}>* Terms &amp; Conditions Apply.</p>

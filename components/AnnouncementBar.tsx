@@ -10,6 +10,15 @@ export default function AnnouncementBar() {
   // render. The effect below turns the bar on after mount instead.
   const [visible, setVisible] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
+  // Routes with their own header never show the bar.
+  const hiddenRoute =
+    segments[0] === "website-feedback" ||
+    segments[0] === "membership" ||
+    (segments[0] === "agribusiness" && segments[1] === "reserve");
+  // Re-measure whenever the bar comes back. Keyed on `shown`, not `visible`:
+  // after a client-side trip through a hidden route, `visible` never changes,
+  // so the height stayed at 0px and the navbar slid under the bar.
+  const shown = visible && !hiddenRoute;
 
   // Dismissal lasts for this page view only. Nothing is persisted, so every
   // page load shows the bar again.
@@ -25,7 +34,7 @@ export default function AnnouncementBar() {
     const root = document.documentElement;
     const node = barRef.current;
 
-    if (!visible || !node) {
+    if (!shown || !node) {
       root.style.setProperty("--announce-h", "0px");
       return;
     }
@@ -44,9 +53,9 @@ export default function AnnouncementBar() {
       observer.disconnect();
       root.style.setProperty("--announce-h", "0px");
     };
-  }, [visible]);
+  }, [shown]);
 
-  if (!visible || segments[0] === "website-feedback" || segments[0] === "membership" || (segments[0] === "agribusiness" && segments[1] === "reserve")) return null;
+  if (!shown) return null;
 
   const dismiss = (e: React.MouseEvent<HTMLButtonElement>) => {
     // The button is a sibling of the anchor, not a child, so no click should

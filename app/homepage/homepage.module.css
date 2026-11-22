@@ -33,6 +33,6 @@
 .questions details > p { padding-bottom: 24px; font-size: 16px; line-height: 1.8; }
 .closing { max-width: 1060px; margin: auto; padding: 86px 28px 110px; text-align: center; }
 @media (min-width: 768px) { .buttons { flex-direction: row; justify-content: center; } .buttons .button { flex: 1; } }
-@media (max-width: 767px) { .hero { padding: 104px 0 24px; } .subheadline { font-size: 16px; line-height: 1.7; } .buttons { max-width: 380px; gap: 14px; } .offer, .faq, .closing { padding: 58px 22px; } .offer > p:not(.eyebrow) { font-size: 16px; } .singleButton .button { width: 100%; } .questions details { padding: 0 18px; } .questions summary { font-size: 16px; gap: 15px; } .closing { padding-bottom: 80px; } }
+@media (max-width: 767px) { .hero { min-height: 0; align-items: flex-start; padding: 100px 0 24px; } .subheadline { font-size: 16px; line-height: 1.7; } .buttons { max-width: 380px; gap: 14px; } .offer, .faq, .closing { padding: 58px 22px; } .offer > p:not(.eyebrow) { font-size: 16px; } .singleButton .button { width: 100%; } .questions details { padding: 0 18px; } .questions summary { font-size: 16px; gap: 15px; } .closing { padding-bottom: 80px; } }
 @media (prefers-reduced-motion: reduce) { .button, .questions summary svg { transition: none; } }
 @media (max-width: 767px) { .heroInner { padding: 0 22px; } }

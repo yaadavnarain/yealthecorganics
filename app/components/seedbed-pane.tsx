@@ -9,9 +9,9 @@ import styles from "./seedbed-pane.module.css";
 // Fine pointer (desktop): the rows slide slowly with the scroll position, a
 // fast scroll sends a wave of growth through them, and seeds near the cursor
 // grow and turn mint.
-// Touch build (coarse pointer or narrow screen) and reduced motion: the pane
-// is drawn once and never redrawn on scroll. A phone pays for every pixel a
-// full-screen shader repaints, so the seeds hold still there.
+// Touch build (coarse pointer or narrow screen): the same motion, made light.
+// 1x pixels, about 0.45 MP, 30 frames a second, and a finger touch grows the
+// seeds under it. Reduced motion: one still frame, never redrawn.
 // No WebGL, a failed shader or a lost context: the CSS seed grid on the
 // wrapper stays visible, so the page never shows a blank or black pane.
 
@@ -30,6 +30,7 @@ uniform float u_vel;
 uniform vec2 u_mouse;
 uniform float u_pres;
 uniform float u_k;
+uniform float u_boost;
 const vec3 BG = vec3(0.114, 0.110, 0.122);
 const vec3 GOLD = vec3(0.961, 0.784, 0.259);
 const vec3 MINT = vec3(0.204, 0.827, 0.600);
@@ -55,12 +56,12 @@ void main(){
   float aa = 1.0 / cell;
   float seed = 1.0 - smoothstep(r - aa, r + aa, length(f));
   vec3 tone = mix(GOLD, MINT, clamp(cur * 1.1 + u_vel * wave * 0.4, 0.0, 1.0));
-  float alpha = mix(0.07, 0.30, grow) * mix(0.35, 1.0, max(field, cur));
+  float alpha = min(1.0, mix(0.07, 0.30, grow) * mix(0.35, 1.0, max(field, cur)) * u_boost);
   vec3 col = mix(BG, tone, seed * alpha);
   gl_FragColor = vec4(col, 1.0);
 }`;
 
-const UNIFORMS = ["u_res", "u_time", "u_scroll", "u_vel", "u_mouse", "u_pres", "u_k"] as const;
+const UNIFORMS = ["u_res", "u_time", "u_scroll", "u_vel", "u_mouse", "u_pres", "u_k", "u_boost"] as const;
 
 export function SeedbedPane() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -80,7 +81,10 @@ export function SeedbedPane() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const touch = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
-    const still = reduced || touch;
+    // Reduced motion: one still frame. Phones get a light live build (the
+    // owner asked for motion there): 1x pixels, a small pixel budget and 30
+    // frames a second, and the finger plays the cursor's part.
+    const still = reduced;
 
     const gl = canvas.getContext("webgl", {
       antialias: false,
@@ -117,9 +121,11 @@ export function SeedbedPane() {
     for (const name of UNIFORMS) uniform[name] = gl.getUniformLocation(program, name);
 
     // The still build draws one frame, so it can afford a sharp buffer. The
-    // live build repaints every frame, so it gets a pixel budget instead.
-    const maxDpr = still ? 2 : 1.5;
-    const maxPixels = still ? 2_000_000 : 1_400_000;
+    // live builds repaint, so they get a pixel budget instead.
+    const maxDpr = still ? 2 : touch ? 1 : 1.5;
+    const maxPixels = still ? 2_000_000 : touch ? 450_000 : 1_400_000;
+    const minFrameMs = touch ? 1000 / 30 - 2 : 0;
+    let lastDraw = -Infinity;
     let cssW = 1;
     let cssH = 1;
     let k = 1;
@@ -168,7 +174,8 @@ export function SeedbedPane() {
         // viewport-heights per second, eased up fast and down slowly
         const speed = dt > 0 ? Math.abs(y - lastY) / vh / dt : 0;
         lastY = y;
-        const target = Math.min(1, speed * 0.45);
+        // Touch scrolls arrive in bursts, so the wave is damped there.
+        const target = Math.min(1, speed * (touch ? 0.3 : 0.45));
         vel += (target - vel) * (target > vel ? 0.3 : 1 - Math.exp(-2.4 * dt));
         scroll += (y - scroll) * (dt === 0 ? 1 : 1 - Math.exp(-8 * dt));
         const follow = dt === 0 ? 1 : 1 - Math.exp(-10 * dt);
@@ -176,6 +183,13 @@ export function SeedbedPane() {
         mouseY += (targetY - mouseY) * follow;
         presence += (targetPresence - presence) * follow;
       }
+
+      // Phones: state keeps easing every frame, but the pane draws at 30 fps.
+      if (!still && now - lastDraw < minFrameMs) {
+        if (document.visibilityState !== "hidden") request();
+        return;
+      }
+      lastDraw = now;
 
       resize();
       gl.uniform2f(uniform.u_res, canvas!.width, canvas!.height);
@@ -185,6 +199,8 @@ export function SeedbedPane() {
       gl.uniform2f(uniform.u_mouse, mouseX * k, (cssH - mouseY) * k);
       gl.uniform1f(uniform.u_pres, still ? 0 : presence);
       gl.uniform1f(uniform.u_k, k);
+      // Small, bright phone screens wash the faint seeds out, so they get more weight.
+      gl.uniform1f(uniform.u_boost, touch ? 1.7 : 1);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       canvas!.dataset.live = "true";
 
@@ -203,6 +219,16 @@ export function SeedbedPane() {
     };
     const onPointerLeave = () => {
       targetPresence = 0;
+    };
+    // A finger only counts while it is down; lifting it lets the seeds settle.
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") return;
+      targetX = mouseX = event.clientX;
+      targetY = mouseY = event.clientY;
+      targetPresence = 1;
+    };
+    const onPointerUp = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") targetPresence = 0;
     };
     const onVisibility = () => {
       if (document.visibilityState !== "hidden") request();
@@ -224,8 +250,15 @@ export function SeedbedPane() {
     window.addEventListener("resize", onResize);
     canvas.addEventListener("webglcontextlost", onContextLost);
     if (!still) {
-      window.addEventListener("pointermove", onPointerMove, { passive: true });
-      document.documentElement.addEventListener("pointerleave", onPointerLeave);
+      if (touch) {
+        window.addEventListener("pointerdown", onPointerDown, { passive: true });
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        window.addEventListener("pointerup", onPointerUp, { passive: true });
+        window.addEventListener("pointercancel", onPointerUp, { passive: true });
+      } else {
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        document.documentElement.addEventListener("pointerleave", onPointerLeave);
+      }
       document.addEventListener("visibilitychange", onVisibility);
     }
 
@@ -238,6 +271,9 @@ export function SeedbedPane() {
       window.removeEventListener("resize", onResize);
       canvas.removeEventListener("webglcontextlost", onContextLost);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
       document.documentElement.removeEventListener("pointerleave", onPointerLeave);
       document.removeEventListener("visibilitychange", onVisibility);
       delete canvas.dataset.live;
