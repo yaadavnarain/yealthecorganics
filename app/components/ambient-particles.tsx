@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useSelectedLayoutSegments } from "next/navigation";
+import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 
 export function AmbientParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const segments = useSelectedLayoutSegments();
+  // The homepage has its own background (SeedbedPane), which replaces these.
+  const replaced = usePathname() === "/";
   const quietForm = segments[0] === "website-feedback" || ["membership", "agribusiness"].includes(segments[0]) && segments[1] === "reserve";
 
   useEffect(() => {
-    if (quietForm) return;
+    if (quietForm || replaced) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -125,9 +127,9 @@ export function AmbientParticles() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", setSize);
     };
-  }, [quietForm]);
+  }, [quietForm, replaced]);
 
-  if (quietForm) return null;
+  if (quietForm || replaced) return null;
 
   return (
     <canvas

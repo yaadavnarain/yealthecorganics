@@ -30,103 +30,89 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-yealth-black">
-      <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-8 md:py-20">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-5">
-            <a href="/" className="inline-flex items-center">
+    <footer className="relative border-t border-yealth-offwhite/10 bg-yealth-black">
+      <div className="mx-auto max-w-[1200px] px-6 py-8 md:px-8 md:py-9">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-8">
+          <div className="flex items-center gap-4">
+            <a href="/" className="inline-flex shrink-0 items-center">
               <Image
                 src="/images/yealth-mark.png"
                 alt="yealth"
                 width={683}
                 height={336}
-                className="h-9 w-auto"
+                className="h-8 w-auto"
               />
             </a>
-            <p className="mt-4 max-w-[360px] font-body text-base leading-relaxed text-yealth-offwhite/70">
+            <p className="max-w-[330px] font-body text-sm leading-snug text-yealth-offwhite/70">
               Real programs. Real ownership. Built for the youth of Mauritius who refuse to wait for a future that never comes.
             </p>
-            <div className="mt-6 flex items-center gap-3">
-              {SOCIALS.map(({ label, icon: Icon, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-yealth-offwhite/10 text-yealth-offwhite/60 transition-colors hover:border-yealth-mint/40 hover:bg-yealth-mint/5 hover:text-yealth-mint"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
           </div>
 
-          <div className="md:col-span-3">
-            <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-yealth-offwhite/50">
-              Explore
-            </h3>
-            <ul className="mt-4 flex flex-col gap-3 font-body text-base">
+          <nav aria-label="Footer">
+            <ul className="flex flex-wrap items-center gap-x-6 gap-y-1 font-body text-base">
               {NAV_LINKS.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    {...("external" in link && link.external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                    className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
+                    className="inline-block py-1 text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
                   >
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div className="md:col-span-4">
-            <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-yealth-offwhite/50">
-              Get in touch
-            </h3>
-            <ul className="mt-4 flex flex-col gap-3 font-body text-base">
-              <li>
-                <a
-                  href="https://wa.me/23054523432"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
-                >
-                  WhatsApp: +230 5452 3432
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:86662"
-                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
-                >
-                  Hotline: 86662
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:info@yealth.mu"
-                  className="text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
-                >
-                  info@yealth.mu
-                </a>
-              </li>
-              <li className="text-yealth-offwhite/70">Mauritius</li>
-            </ul>
+          <div className="flex items-center gap-2.5">
+            {SOCIALS.map(({ label, icon: Icon, href }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-yealth-offwhite/10 text-yealth-offwhite/60 transition-colors hover:border-yealth-mint/40 hover:bg-yealth-mint/5 hover:text-yealth-mint"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-yealth-offwhite/10 pt-8 md:mt-16 md:flex-row md:items-center md:justify-between">
-          <p className="font-body text-sm text-yealth-offwhite/50">
-            © {year} yealth.
-          </p>
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 font-body text-sm">
+        <div className="mt-6 flex flex-col gap-3 border-t border-yealth-offwhite/10 pt-5 font-body text-sm md:flex-row md:items-center md:justify-between">
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <li>
+              <a
+                href="https://wa.me/23054523432"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block py-1 text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
+              >
+                WhatsApp: +230 5452 3432
+              </a>
+            </li>
+            <li>
+              <a
+                href="tel:86662"
+                className="inline-block py-1 text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
+              >
+                Hotline: 86662
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:info@yealth.mu"
+                className="inline-block py-1 text-yealth-offwhite/70 transition-colors hover:text-yealth-mint"
+              >
+                info@yealth.mu
+              </a>
+            </li>
+          </ul>
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-yealth-offwhite/50">
+            <li>© {year} yealth. Mauritius</li>
             {LEGAL_LINKS.map((link) => (
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className="text-yealth-offwhite/50 transition-colors hover:text-yealth-mint"
+                  className="inline-block py-1 transition-colors hover:text-yealth-mint"
                 >
                   {link.label}
                 </a>

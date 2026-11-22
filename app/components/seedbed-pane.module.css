@@ -1,0 +1,28 @@
+/* One fixed pane behind the whole homepage. z-index -1 keeps it under every
+   section without making a new stacking context, so the navbar, the mobile
+   menu and the cookie banner keep their order. The page wrapper must stay
+   transparent for it to show (see .page in homepage.module.css). */
+.pane {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100vw;
+  /* the large viewport, so a collapsing address bar never resizes the buffer */
+  height: 100vh;
+  height: 100lvh;
+  pointer-events: none;
+  /* The still seed grid. It shows when WebGL is missing or fails, and under
+     the canvas until its first frame. Same 30px rows as the shader. */
+  background-color: #1d1c1f;
+  background-image: radial-gradient(circle, rgba(245, 200, 66, 0.08) 1.3px, transparent 2px);
+  background-size: 30px 30px;
+}
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.canvas[data-live="true"] {
+  opacity: 1;
+}

@@ -1,3 +1,34 @@
-.background { background-position: 70% center; }
-/* Keep the hanging roots in frame when cover crops the wide original image. */
-@media (max-width: 767px) { .background { background-position: 30% center; } }
+/* The gold strike through each "Not a ..." line.
+   It is fully drawn by default, so it shows on every browser and with motion
+   off. Where the browser can tie an animation to the scroll position, the
+   line draws itself as the heading comes up the screen. No script involved. */
+.strike {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 54%;
+  height: 3px;
+  border-radius: 9999px;
+  background: #f5c842;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+@media (min-width: 768px) {
+  .strike { height: 4px; }
+}
+@keyframes strikeDraw {
+  from { transform: rotate(-2deg) scaleX(0); }
+  to { transform: rotate(-2deg) scaleX(1); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .strike {
+      animation: strikeDraw linear both;
+      animation-timeline: view();
+      animation-range: entry 80% cover 36%;
+    }
+    .second {
+      animation-range: entry 160% cover 42%;
+    }
+  }
+}
