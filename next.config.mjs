@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Next 16.4 writes an AGENTS.md file into the repo on every dev start. Not wanted here.
+  agentRules: false,
   async rewrites() {
     return [
       // Serve the password-gated off-grid solar tool at a clean URL.
