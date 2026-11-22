@@ -782,7 +782,7 @@ export function BrandEquation({ trigger = "scroll" }: { trigger?: "scroll" | "lo
   }
 
   return (
-    <section className="bg-yealth-black" data-equation-trigger={trigger} data-equation-stage={stage}
+    <section data-equation-trigger={trigger} data-equation-stage={stage}
       data-equation-run={run} data-equation-load-delay={loadTiming ? loadTiming.startedAt - loadTiming.scheduledAt : undefined}>
       <div
         ref={ref}

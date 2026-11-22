@@ -4,7 +4,7 @@ import styles from "./homepage.module.css";
 
 function ReservationLink({ membership = false }: { membership?: boolean }) {
   return <a className={`${styles.button} ${membership ? styles.mint : styles.amber}`}
-    href={membership ? "https://yealth.mu/membership" : "https://yealth.mu/agribusiness"}>
+    href={membership ? "/membership" : "/agribusiness"}>
     {membership ? "Earn & Save Now" : "Become an Agribusiness Owner"}
     <ArrowRight size={18} aria-hidden="true" />
   </a>;

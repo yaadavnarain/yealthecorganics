@@ -1,4 +1,4 @@
-.page { position: relative; isolation: isolate; background: #1d1c1f; color: #fffff4; }
+.page { position: relative; isolation: isolate; background: transparent; color: #fffff4; }
 .page a:focus-visible, .page button:focus-visible { outline: 2px solid #34d399; outline-offset: 6px; }
 .skip { position: absolute; top: 8px; left: 20px; z-index: 100; padding: 12px 18px; color: #1d1c1f; background: #f5c842; transform: translateY(-150%); }
 .skip:focus { transform: translateY(0); }
@@ -6,7 +6,8 @@
 .logo img { width: auto; height: 34px; }
 .previewBadge { border: 1px solid #fffff42b; border-radius: 999px; padding: 7px 13px; font-size: 12px; letter-spacing: .04em; color: #fffff4; }
 .hero { position: relative; max-width: 1280px; margin: auto; padding: 66px 48px 0; }
-.heroAura { position: absolute; z-index: -1; pointer-events: none; inset: -70px 0 0 30%; background: radial-gradient(ellipse at 65% 28%, #34d3990d, transparent 58%), radial-gradient(ellipse at 30% 55%, #f5c8420b, transparent 60%); }
+/* Each glow eases out to zero before its box ends (closest-side), and the blur removes any ring where it reaches zero. */
+.heroAura { position: absolute; z-index: -1; pointer-events: none; inset: -70px 0 -60px 12%; filter: blur(48px); background: radial-gradient(closest-side at 70% 30%, #34d3990d 0%, #34d39909 30%, #34d39904 58%, #34d39901 80%, #34d39900 100%), radial-gradient(closest-side at 42% 55%, #f5c8420b 0%, #f5c84208 30%, #f5c84203 58%, #f5c84201 80%, #f5c84200 100%); }
 .headline { max-width: 1000px; font-family: var(--font-quicksand), sans-serif; font-size: clamp(58px, 8.3vw, 112px); font-weight: 700; letter-spacing: -.065em; line-height: 1.05; }
 .headline span:last-child { display: block; }
 .gold { color: #f5c842; }

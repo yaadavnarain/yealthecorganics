@@ -1,10 +1,5 @@
-/* Transparent on purpose: the body paints the charcoal and SeedbedPane sits between the two. */
+/* Transparent on purpose: the body paints the charcoal and SeedbedPane (in the root layout) sits between the two. */
 .page { min-height: 100vh; overflow-x: hidden; background: transparent; color: #fffff4; }
-/* The footer is solid. This strip fades the seed rows out before it. */
-.footerFrame { position: relative; }
-.footerFrame::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 80px; pointer-events: none; background: linear-gradient(to bottom, #1d1c1f00, #1d1c1f); }
-/* The equation strip paints its own charcoal box on other pages. Here it must let the seed rows through. */
-.heroAnimation > section { background-color: transparent; }
 .hero { min-height: calc(100svh - var(--announce-h, 0px)); display: flex; align-items: center; padding: 112px 0 32px; position: relative; background: radial-gradient(ellipse at 50% 20%, #f5c84208, transparent 65%); }
 .heroGroup { width: 100%; }
 .heroInner { width: 100%; max-width: 1028px; padding: 0 24px; margin: 0 auto; text-align: center; }
@@ -40,4 +35,4 @@
 @media (min-width: 768px) { .buttons { flex-direction: row; justify-content: center; } .buttons .button { flex: 1; } }
 @media (max-width: 767px) { .hero { padding: 104px 0 24px; } .subheadline { font-size: 16px; line-height: 1.7; } .buttons { max-width: 380px; gap: 14px; } .offer, .faq, .closing { padding: 58px 22px; } .offer > p:not(.eyebrow) { font-size: 16px; } .singleButton .button { width: 100%; } .questions details { padding: 0 18px; } .questions summary { font-size: 16px; gap: 15px; } .closing { padding-bottom: 80px; } }
 @media (prefers-reduced-motion: reduce) { .button, .questions summary svg { transition: none; } }
-@media (max-width: 767px) { .heroInner { padding: 0 22px; } .footerFrame::before { height: 52px; } }
+@media (max-width: 767px) { .heroInner { padding: 0 22px; } }

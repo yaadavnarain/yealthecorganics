@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Footer } from "@/app/components/footer";
 
 export const metadata = {
   title: "Terms of Use | yealth",
@@ -82,7 +83,8 @@ const linkClass =
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-yealth-black text-yealth-offwhite font-body">
+    <>
+    <main className="min-h-screen text-yealth-offwhite font-body">
       <div className="mx-auto max-w-[800px] px-6 py-24 leading-relaxed">
         <Link
           href="/"
@@ -148,5 +150,7 @@ export default function TermsPage() {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   );
 }

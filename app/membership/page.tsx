@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ReservationCta } from "./reservation-cta";
 import { MEMBERSHIP_PERKS, GREEN_PERKS } from "@/lib/membership-perks.mjs";
 import styles from "./membership.module.css";
-import { MembershipFooter } from "./membership-footer";
+import { Footer } from "@/app/components/footer";
 import { BrandEquation } from "@/app/components/yealth-equation";
 
 export const metadata: Metadata = {
@@ -85,7 +85,7 @@ export default function MembershipPage() {
         </section>
       </main>
 
-      <MembershipFooter />
+      <Footer />
     </div>
   );
 }

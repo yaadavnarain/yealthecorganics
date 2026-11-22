@@ -28,7 +28,7 @@ export function AgribusinessHero() {
     <section
       ref={heroRef}
       data-hero
-      className="relative flex min-h-[100svh] overflow-hidden bg-yealth-black"
+      className="relative flex min-h-[100svh] overflow-hidden"
     >
       <motion.div
         style={{ opacity: contentOpacity }}

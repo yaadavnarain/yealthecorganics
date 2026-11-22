@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils";
  * kept for fidelity.
  */
 
-const CTA_HREF = "https://yealth.mu";
+const CTA_HREF = "/";
 
 type Group = "low" | "skill";
 type Tag = "phone" | "nomoney" | "fast" | "remote" | "training";

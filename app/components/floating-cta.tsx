@@ -29,7 +29,11 @@ export function FloatingCta() {
         nearContact = rect.top < window.innerHeight && rect.bottom > 0;
       }
 
-      setVisible(scrolledPastHero && !nearContact);
+      // Also step aside for the footer, so the button never covers its links.
+      const footer = document.querySelector("footer");
+      const nearFooter = footer ? footer.getBoundingClientRect().top < window.innerHeight : false;
+
+      setVisible(scrolledPastHero && !nearContact && !nearFooter);
     };
 
     handleScroll();

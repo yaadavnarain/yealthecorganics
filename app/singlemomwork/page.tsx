@@ -15,7 +15,7 @@ export default function SingleMomWorkPage() {
     // scroll container, and the filter bar's position:sticky then sticks to it
     // instead of the viewport, so the bar scrolled away entirely. overflow:clip
     // gives the same horizontal guard without creating a scroll container.
-    <div className="min-h-screen overflow-x-clip bg-yealth-black text-yealth-offwhite">
+    <div className="min-h-screen overflow-x-clip text-yealth-offwhite">
       <Navbar />
       <main>
         <SingleMomWorkSections />

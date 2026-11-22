@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useSelectedLayoutSegments } from "next/navigation";
 import styles from "./seedbed-pane.module.css";
 
 // The homepage background: one fixed pane of seed rows behind every section.
@@ -63,8 +64,17 @@ const UNIFORMS = ["u_res", "u_time", "u_scroll", "u_vel", "u_mouse", "u_pres", "
 
 export function SeedbedPane() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Form pages keep their own calm background, so the pane is not drawn there.
+  // The Agribusiness and Membership pages stay plain charcoal by the owner's choice.
+  const segments = useSelectedLayoutSegments();
+  const quiet =
+    segments[0] === "agribusiness" ||
+    segments[0] === "membership" ||
+    segments[0] === "website-feedback" ||
+    (["membership", "agribusiness"].includes(segments[0]) && segments[1] === "reserve");
 
   useEffect(() => {
+    if (quiet) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -234,7 +244,9 @@ export function SeedbedPane() {
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
     };
-  }, []);
+  }, [quiet]);
+
+  if (quiet) return null;
 
   return (
     <div className={styles.pane} aria-hidden="true">

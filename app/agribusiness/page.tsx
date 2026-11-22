@@ -5,7 +5,7 @@ import { AgribusinessHero } from "./hero";
 
 export default function Page() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-yealth-black text-yealth-offwhite">
+    <div className="min-h-screen overflow-x-hidden text-yealth-offwhite">
       <Navbar />
       <main>
         <AgribusinessHero />

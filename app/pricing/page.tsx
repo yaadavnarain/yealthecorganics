@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-yealth-black text-yealth-offwhite">
+    <div className="min-h-screen overflow-x-hidden text-yealth-offwhite">
       <Navbar />
       <main>
         <PricingSections />

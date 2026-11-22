@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 import styles from "./navbar.module.css";
 
 const NAV_LINKS = [
-  { label: "Agribusiness", href: "https://yealth.mu/agribusiness" },
-  { label: "Membership", href: "https://yealth.mu/membership" },
+  { label: "Agribusiness", href: "/agribusiness" },
+  { label: "Membership", href: "/membership" },
   // TEMP-HIDE-SOLAR-CALC: nav link removed; page still live at /pvcalculatoroffgrid
   // { label: "Solar Calculator", href: "/pvcalculatoroffgrid" },
   { label: "FAQ", href: "/#faq" },
@@ -196,8 +196,8 @@ export function Navbar() {
                 Mauritius
               </span>
               <div className={styles.actions}>
-                <a href="https://yealth.mu/agribusiness" onClick={() => setMenuOpen(false)} className={`${styles.button} ${styles.amber}`}>Become an Agribusiness Owner</a>
-                <a href="https://yealth.mu/membership" onClick={() => setMenuOpen(false)} className={`${styles.button} ${styles.mint}`}>Earn &amp; Save Now</a>
+                <a href="/agribusiness" onClick={() => setMenuOpen(false)} className={`${styles.button} ${styles.amber}`}>Become an Agribusiness Owner</a>
+                <a href="/membership" onClick={() => setMenuOpen(false)} className={`${styles.button} ${styles.mint}`}>Earn &amp; Save Now</a>
               </div>
             </div>
           </motion.div>
