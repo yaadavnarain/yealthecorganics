@@ -14,7 +14,7 @@ Any push to `main` triggers Vercel auto-deploy in ~90 seconds.
 
 ## Tech stack
 
-- Next.js 16.2 (App Router, not Pages Router)
+- Next.js 16.4.6 (App Router, not Pages Router). `agentRules: false` in `next.config.mjs` stops dev runs from writing an `AGENTS.md` into the repo
 - React 19
 - Tailwind CSS with custom brand tokens
 - `motion/react` (Framer Motion via the new package name: never import from `framer-motion`)
@@ -31,13 +31,19 @@ Any push to `main` triggers Vercel auto-deploy in ~90 seconds.
 
 ## Homepage section order (`app/page.tsx`)
 
-Navbar → Hero → BrandEquation → PainSection → SolutionSection → OutcomesSection → ProductCardsSection → AgribusinessOwnerSection → HowItWorksSection → FounderSection → FaqSection → FinalCtaSection → Footer
+Navbar → Hero (with BrandEquation) → Agribusiness offer → Membership offer → FounderSection → FAQ → Closing → Footer
 
-`ProductCardsSection` keeps its original filename and export name but now renders the **Benefits** grid ("What your membership gives you", seven cards). Do not rename it: a rename is unnecessary churn, and the brand guard rejects any identifier carrying a cased brand token.
+Hero, the two offers, FAQ and Closing are rendered by `HomeContent` in `app/homepage/content.tsx`, styled by `app/homepage/homepage.module.css`. The older section components in `app/components/` (Pain, Solution, Outcomes, ProductCards, AgribusinessOwner, HowItWorks, FaqSection, FinalCta) are no longer on the homepage.
+
+`FounderSection` is the "crossed out" manifesto: "Not a business move." and "Not a side project." struck out in gold, "My life's work." left standing, portrait in an offset gold frame. No photo backdrop. The strike lines are pure CSS (`founder-section.module.css`): fully drawn by default, drawn by scroll where `animation-timeline: view()` is supported.
 
 ## Key files
 
-- `app/layout.tsx`: root layout, includes AmbientParticles + FloatingCta
+- `app/layout.tsx`: root layout, includes SeedbedPane + FloatingCta
+- `app/components/seedbed-pane.tsx`: the site background. One fixed WebGL pane of gold seed rows behind the page. Desktop: rows slide with scroll, grow and turn mint near the cursor, and a fast scroll sends a growth wave. Touch screens and reduced motion: drawn once, never redrawn on scroll. CSS seed-grid fallback when WebGL is missing. It is switched OFF (draws nothing) on `/agribusiness`, `/membership` (and their `/reserve` forms) and `/website-feedback`, by the owner's choice. Page wrappers must stay transparent for it to show
+- `app/components/footer.tsx`: the one shared footer on every main page (two compact rows, full-alpha text, a fade above it). The three form pages keep their own small footers
+- `app/components/floating-cta.tsx`: the floating Apply Now button. Hidden on the routes in `HIDE_ON`, near `#contact`, and while the footer is on screen
+- Site links (navbar, footer, homepage buttons) are relative (`/membership`, not `https://yealth.mu/membership`), so a local run stays local. The form pages keep absolute links because they are served on their own subdomains
 - `app/page.tsx`: homepage section composition
 - `app/components/`: every homepage section as its own .tsx file
 - `app/components/HeroFlywheel.tsx`: the looping farm animation inside the hero. Pure SVG + CSS keyframes, no JS at runtime
@@ -52,18 +58,20 @@ Navbar → Hero → BrandEquation → PainSection → SolutionSection → Outcom
 
 ## Visual system convention: section blending
 
-For sections with image backgrounds (Pain, HowItWorks, Founder), the seamless-edge pattern is:
+For section components with image backgrounds (Pain, HowItWorks; neither is on the homepage now), the seamless-edge pattern is:
 
 - No `maskImage` on the image div: causes flat black bands at section boundaries
 - Instead, a 5-stop linear gradient overlay: solid `yealth-black` at 0% → ~0.5 opacity at 14% → ~0.3 opacity at 50% → ~0.5 opacity at 86% → solid `yealth-black` at 100%
 - Image opacity 0.42–0.50 with `mixBlendMode: "lighten"` for warm integration
 
-This pattern is already implemented across all three sections. Do not reintroduce mask-based fading.
+This pattern is already implemented in both. Do not reintroduce mask-based fading.
+
+Glows behind content (for example `.heroAura` on `/membership`) use `radial-gradient(closest-side ...)` with eased stops plus a blur, so they reach zero before their box ends. A glow that is still visible at its box edge shows as a hard line or a ring.
 
 ## Already done
 
-- All animation layers (fade-ins, hero parallax, floating CTA, magnetic cards, smooth scroll, ambient particles, reduced-motion gating)
-- AmbientParticles canvas (45 desktop / 20 mobile)
+- All animation layers (fade-ins, hero parallax, floating CTA, magnetic cards, smooth scroll, reduced-motion gating)
+- SeedbedPane background (replaced and deleted the old AmbientParticles "bubbles" on 2026-11-23)
 - HeroFlywheel farm animation and the BrandEquation strip
 - All image-backed sections wired with the seamless gradient blending described above
 - `/terms` and `/privacy` pages exist and are linked from the footer
