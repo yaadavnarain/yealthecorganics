@@ -92,6 +92,11 @@
 .perkActive::before { transform: scaleX(1); }
 .perkActive h3 { transform: translateX(8px); }
 /* Dimming is a mouse-only state: it never mutes text on a touch screen. */
+/* Touch spotlight: after a tap, the other perks step back. cursor: pointer also
+   makes iPhone Safari deliver taps on these list items. */
+.perk { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.perksPicked .perk { opacity: .42; }
+.perksPicked .perk.perkActive { opacity: 1; }
 @media (hover: hover) and (pointer: fine) {
   .perks:hover .perk { opacity: .42; }
   .perks:hover .perk:hover { opacity: 1; }

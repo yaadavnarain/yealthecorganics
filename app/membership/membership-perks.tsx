@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MEMBERSHIP_PERKS, GREEN_PERKS } from "@/lib/membership-perks.mjs";
 import styles from "./membership.module.css";
 
@@ -10,18 +10,35 @@ import styles from "./membership.module.css";
 // Card ("guided"): a counter, the perk's name and a gold progress bar. It
 // shows PT Work by default and on every scroll; only hovering a perk (or
 // tapping one on a phone) shows that perk instead.
-// Perks ("spotlight"): with a mouse, the perk under the pointer lights up, the
-// others step back and a line draws above it. Nothing is dimmed on touch.
+// Perks ("spotlight"): the perk under the mouse, or the perk last tapped on a
+// phone, lights up, the others step back and a line draws above it.
 // Small screens: the card is not sticky there, so a slim strip carries the
 // counter and the bar instead.
 export function MembershipPerks() {
   const [active, setActive] = useState(0);
-  // Scrolling always brings the card back to the first perk (PT Work).
+  // True after a tap on a touch screen: the spotlight dims the other perks.
+  const [picked, setPicked] = useState(false);
+  // Scroll position when a perk was chosen. Phones nudge scrollY by a few
+  // pixels around a tap (address bar, sticky strip), so only a real scroll
+  // brings the card back to the first perk (PT Work).
+  const anchor = useRef(0);
+
   useEffect(() => {
-    const reset = () => setActive(0);
-    window.addEventListener("scroll", reset, { passive: true });
-    return () => window.removeEventListener("scroll", reset);
+    const onScroll = () => {
+      if (Math.abs(window.scrollY - anchor.current) < 40) return;
+      anchor.current = window.scrollY;
+      setActive(0);
+      setPicked(false);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const choose = (index: number, byTouch: boolean) => {
+    anchor.current = window.scrollY;
+    setActive(index);
+    setPicked(byTouch);
+  };
 
   const total = MEMBERSHIP_PERKS.length;
   const count = `${String(active + 1).padStart(2, "0")} / ${total}`;
@@ -57,16 +74,30 @@ export function MembershipPerks() {
           </p>
           <div className={styles.guideBar}><i style={fill} /></div>
         </div>
-        <ol className={styles.perks} onPointerLeave={() => setActive(0)}>
+        <ol
+          className={`${styles.perks} ${picked ? styles.perksPicked : ""}`}
+          // Mouse only: a finger lifting also fires pointerleave, which would
+          // undo the tap straight away.
+          onPointerLeave={(event) => {
+            if (event.pointerType === "mouse") choose(0, false);
+          }}
+        >
           {MEMBERSHIP_PERKS.map(({ id, title, description }, index) => (
             <li
               key={title}
               className={`${styles.perk} ${GREEN_PERKS.has(id) ? styles.perkMint : ""} ${index === active ? styles.perkActive : ""}`}
               // Mouse: hovering a perk shows it on the card. Touch: a tap does.
+              // pointerup handles the tap; click is the fallback (keyboard,
+              // browsers without pointer events).
               onPointerMove={(event) => {
-                if (event.pointerType === "mouse") setActive(index);
+                if (event.pointerType === "mouse" && index !== active) choose(index, false);
               }}
-              onClick={() => setActive(index)}
+              onPointerUp={(event) => {
+                if (event.pointerType !== "mouse") choose(index, true);
+              }}
+              onClick={() => {
+                if (index !== active) choose(index, picked);
+              }}
             >
               <span className={styles.number} aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <h3 className={GREEN_PERKS.has(id) ? styles.mint : styles.gold}>{title}</h3>
