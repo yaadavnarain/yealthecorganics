@@ -8,7 +8,10 @@
 .hero { position: relative; max-width: 1280px; margin: auto; padding: 66px 48px 0; }
 /* Each glow eases out to zero before its box ends (closest-side), and the blur removes any ring where it reaches zero. */
 .heroAura { position: absolute; z-index: -1; pointer-events: none; inset: -70px 0 -60px 12%; filter: blur(48px); background: radial-gradient(closest-side at 70% 30%, #34d3990d 0%, #34d39909 30%, #34d39904 58%, #34d39901 80%, #34d39900 100%), radial-gradient(closest-side at 42% 55%, #f5c8420b 0%, #f5c84208 30%, #f5c84203 58%, #f5c84201 80%, #f5c84200 100%); }
-.headline { max-width: 1000px; font-family: var(--font-quicksand), sans-serif; font-size: clamp(58px, 8.3vw, 112px); font-weight: 700; letter-spacing: -.065em; line-height: 1.05; }
+/* Same size as the Agribusiness hero h1: 28px, 52px from 768px, 60px from 1280px. */
+.headline { max-width: 1000px; font-family: var(--font-quicksand), sans-serif; font-size: 28px; font-weight: 700; letter-spacing: 0; line-height: 1.1; }
+@media (min-width: 768px) { .headline { font-size: 52px; } }
+@media (min-width: 1280px) { .headline { font-size: 60px; } }
 .headline span:last-child { display: block; }
 .gold { color: #f5c842; }
 .mint { color: #34d399; }
@@ -57,7 +60,6 @@
   .logo img { width: 59px; height: auto; }
   .previewBadge { flex-shrink: 0; padding: 6px 10px; font-size: 10px; }
   .hero { padding: 48px 22px 0; }
-  .headline { font-size: clamp(54px, 14.3vw, 80px); letter-spacing: -.065em; }
   .intro { grid-template-columns: 1fr; gap: 13px; margin-top: 30px; font-size: 15px; }
   .intro p { padding-left: 10px; }
   .ctaGroup { margin-top: 29px; }
